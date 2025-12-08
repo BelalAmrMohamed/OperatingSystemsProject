@@ -8,73 +8,49 @@ namespace Operating_Systems_Project
     internal class FileWriter
     {
 
-#region 2 Writing Methods, for Text and Binary
+        #region 2 Writing Methods, for Text and Binary
         private static void WriteToTextFile(string path, string content)
         {
-            try
-            {
-                string dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
-                using (FileStream fileS = new FileStream(path, FileMode.Append))
-                using (BufferedStream buffer = new BufferedStream(fileS))
-                using (StreamWriter writer = new StreamWriter(buffer))
-                    writer.WriteLine(content);
-            }
-            catch (Exception ex)
-            {
-                throw new IOException($"Failed to write text file: {ex.Message}", ex);
-            }
+            using (FileStream fileS = new FileStream(path, FileMode.Append))
+            using (BufferedStream buffer = new BufferedStream(fileS))
+            using (StreamWriter writer = new StreamWriter(buffer))
+                writer.WriteLine(content);
         }
 
         private static void WriteToBinaryFile(string path, string content)
         {
-            try
-            {
-                string dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
-                // This is the part that we learned at the section
-                using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Append)))
-                    writer.Write(content);
-            }
-            catch (Exception ex)
-            {
-                throw new IOException($"Failed to write binary file: {ex.Message}", ex);
-            }
+            using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Append)))
+                writer.Write(content);
         }
-        #endregion        
+        #endregion
 
         private static void WriteFile(TextBox pathTextBox, TextBox contentTextBox, Label messageLabel)
         {
             string path = pathTextBox.Text.Trim();
             string content = contentTextBox.Text;
 
-            if (string.IsNullOrWhiteSpace(path))
+            if (string.IsNullOrWhiteSpace(path) || string.IsNullOrEmpty(content))
             {
-                ShowMessage(messageLabel, "⚠ Please enter a file path.", Operating_Systems.ErrorColor);
+                ShowMessage(messageLabel, "⚠ Please path and content.", Operating_Systems.ErrorColor);
                 return;
             }
 
-            if (string.IsNullOrEmpty(content))
+            // If directory doesn't exist, create it
+            string dir = Path.GetDirectoryName(path);
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
             {
-                ShowMessage(messageLabel, "⚠ Content cannot be empty.", Operating_Systems.ErrorColor);
-                return;
+                Directory.CreateDirectory(dir);
+                ShowMessage(messageLabel, "✓ Created the directory.", Operating_Systems.ErrorColor);
             }
 
             try
             {
                 string filetype = Path.GetExtension(path).ToLower();
 
-                if (filetype == ".txt")
-                    WriteToTextFile(path, content);
-
-                else // binary
+                if (filetype == ".bin")
                     WriteToBinaryFile(path, content);
+
+                else WriteToTextFile(path, content);
 
 
                 long size = new FileInfo(path).Length;
@@ -89,6 +65,9 @@ namespace Operating_Systems_Project
             }
         }
 
+        // ===============================
+        // UI
+        // ===============================
         public static void ShowFileWriter(Operating_Systems OperatingSystems)
         {
             const int PanelWidth = 1104;
@@ -114,6 +93,33 @@ namespace Operating_Systems_Project
                 Size = new Size(PanelWidth, 750), // Set a fixed height that accommodates all elements
                 BackColor = Operating_Systems.Background,
                 Margin = new Padding(0)
+            };
+
+            Label HeaderLabel = new Label
+            {
+                Text = "📝 File Writer",
+                Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
+                MinimumSize = new Size(200, 30),
+                Location = new Point(457, 8),
+                Size = new Size(200, 30),
+
+                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.FromArgb(230, 230, 130),
+                BackColor = Color.FromArgb(31, 31, 31),
+            };
+            Label SubHeaderLabel = new Label
+            {
+                Text = "Create and write content to text or binary files.",
+                Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
+                MinimumSize = new Size(300, 20),
+                Location = new Point(414, 38),
+                Size = new Size(300, 20),
+
+                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.FromArgb(230, 230, 230),
+                BackColor = Color.FromArgb(31, 31, 31),
             };
             currentY += 32;
 
@@ -306,6 +312,8 @@ namespace Operating_Systems_Project
 
             contentHolder.Controls.AddRange(new Control[]
             {
+                HeaderLabel,
+                SubHeaderLabel,
             labelInputPath,
             pathPanel,
             contentLabel,

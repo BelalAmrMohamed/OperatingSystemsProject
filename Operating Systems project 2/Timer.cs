@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
@@ -11,346 +13,666 @@ namespace Operating_Systems_Project
     internal class Timer
     {
         // UI references
-        private static Label _timerLabel;
-        private static ListBox _lapListBox;
-        private static Label _lapCountLabel;
-        private static Button _startButton;
-        private static Button _pauseButton;
-        private static Button _resetButton;
-        private static Button _lapButton;
+        private static ComboBox _testTypeCombo;
+        private static NumericUpDown _iterationsInput;
+        private static NumericUpDown _durationInput;
+        private static Button _runTestButton;
+        private static Button _clearResultsButton;
+        private static TextBox _resultsTextBox;
+        private static Panel _chartPanel;
+        private static Label _statusLabel;
+        private static ProgressBar _progressBar;
 
-        // Timing
-        private static readonly Stopwatch _stopwatch = new Stopwatch();
-        private static readonly System.Windows.Forms.Timer _uiTimer = new System.Windows.Forms.Timer();
-        private static volatile bool _isRunning = false;
-        private static readonly List<TimeSpan> _laps = new List<TimeSpan>();
+        // Test data
+        private static List<TestResult> _testResults = new List<TestResult>();
+        private static volatile bool _testRunning = false;
+
+        // Test result structure
+        private class TestResult
+        {
+            public string TimerName { get; set; }
+            public double MinMs { get; set; }
+            public double MaxMs { get; set; }
+            public double MeanMs { get; set; }
+            public double StdDevMs { get; set; }
+            public double DriftMs { get; set; }
+            public long ResolutionTicks { get; set; }
+            public List<double> Samples { get; set; } = new List<double>();
+        }
 
         public static void ShowTimer(Operating_Systems OperatingSystems)
-        {            
-            // Stop UI timer if previously running
-            _uiTimer.Stop();
-            _uiTimer.Tick -= UiTimer_Tick;
-            _uiTimer.Interval = 25; // ~40 FPS updates
-            _uiTimer.Tick += UiTimer_Tick;
+        {
+            const int PanelWidth = 1110;
+            int currentY = 20;
+            const int Spacing = 12;
+            const int LabelWidth = 120;
+            const int ControlWidth = 200;
 
-            // Layout constants (compact)
-            const int PanelWidth = 1104;
-            const int ContainerHeight = 482;
-            const int VerticalSpacing = 8;
-            int currentY = 0;
-
-            // Centering flow + fixed content holder
-            FlowLayoutPanel centerFlow = new FlowLayoutPanel
+            // Main container
+            Panel mainPanel = new Panel
             {
                 Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
                 BackColor = Operating_Systems.Background,
-                Padding = new Padding(0),
-                AutoScroll = false
+                AutoScroll = true
             };
 
-            Panel contentHolder = new Panel
+            // Header
+            Label headerLabel = new Label
             {
-                Size = new Size(PanelWidth, ContainerHeight),
-                BackColor = Operating_Systems.Background,
-                Margin = new Padding(0)
-            };
-            
-            currentY += 40;
-
-            // Timer display (compact large number)
-            Panel timerPanel = new Panel
-            {
-                Location = new Point(0, currentY),
-                Size = new Size(PanelWidth - 16, 96),
-                BackColor = Operating_Systems.Background,
-                BorderStyle = BorderStyle.None
-            };
-
-            _timerLabel = new Label
-            {
-                Name = "timerLabel",
-                Text = "00:00:00.000",
-                Font = new Font("Consolas", 36F, FontStyle.Bold),
-                ForeColor = Operating_Systems.AccentGreen,
-                AutoSize = false,
-                Size = new Size(timerPanel.Width, timerPanel.Height),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-
-            timerPanel.Controls.Add(_timerLabel);
-            currentY += timerPanel.Height + VerticalSpacing;
-
-            // Buttons row (compact)
-            FlowLayoutPanel buttonsRow = new FlowLayoutPanel
-            {
-                Location = new Point(0, currentY),
-                Size = new Size(PanelWidth - 16, 48),
-                FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = false,
-                BackColor = Operating_Systems.Background
-            };
-
-            _startButton = MakeButton("▶ Start", 120, Operating_Systems.AccentGreen, 10, fontSize: 10.5f);
-            _pauseButton = MakeButton("⏸ Pause", 120, Color.FromArgb(255, 193, 7), 0, fontSize: 10.5f);
-            _resetButton = MakeButton("⏹ Reset", 120, Operating_Systems.ErrorColor, 0, fontSize: 10.5f);
-            _lapButton = MakeButton("📍 Lap", 120, Operating_Systems.AccentBlue, 0, fontSize: 10.5f);
-
-            _pauseButton.Enabled = false;
-            _resetButton.Enabled = false;
-            _lapButton.Enabled = false;
-
-            _startButton.Click += (s, e) => Start();
-            _pauseButton.Click += (s, e) => Pause();
-            _resetButton.Click += (s, e) => Reset();
-            _lapButton.Click += (s, e) => RecordLap();
-
-            buttonsRow.Controls.Add(_startButton);
-            buttonsRow.Controls.Add(_pauseButton);
-            buttonsRow.Controls.Add(_resetButton);
-            buttonsRow.Controls.Add(_lapButton);
-
-            currentY += buttonsRow.Height + (VerticalSpacing * 2);
-
-            // Laps header (compact)
-            Label lapsHeader = new Label
-            {
-                Text = "Laps",
-                Font = new Font("Segoe UI Semibold", 11F),
+                Text = "Timer Diagnostics & Benchmarking",
+                Font = new Font("Segoe UI Semibold", 14F),
                 ForeColor = Operating_Systems.TextPrimary,
-                AutoSize = true,
-                Location = new Point(0, currentY)
+                Location = new Point(30, currentY),
+                AutoSize = true
             };
+            mainPanel.Controls.Add(headerLabel);
+            currentY += 35;
 
-            _lapCountLabel = new Label
+            Label descLabel = new Label
             {
-                Text = "No laps recorded",
+                Text = "Compare timing accuracy and resolution of .NET timer mechanisms",
                 Font = new Font("Segoe UI", 9F),
                 ForeColor = Operating_Systems.TextSecondary,
-                AutoSize = true,
-                Location = new Point(80, currentY + 2)
+                Location = new Point(30, currentY),
+                AutoSize = true
             };
+            mainPanel.Controls.Add(descLabel);
+            currentY += 30;
 
-            currentY += lapsHeader.Height + 6;
-
-            // Compute remaining height for lap list and actions
-            int bottomRowHeight = 46;
-            int lapAreaHeight = contentHolder.Height - currentY - bottomRowHeight - (VerticalSpacing * 2);
-            if (lapAreaHeight < 120) lapAreaHeight = 120;
-
-            Panel lapPanel = new Panel
+            // Configuration section
+            Panel configPanel = new Panel
             {
                 Location = new Point(0, currentY),
-                Size = new Size(PanelWidth - 16, lapAreaHeight),
+                Size = new Size(PanelWidth - 20, 180),
                 BackColor = Operating_Systems.PanelColor,
-                BorderStyle = BorderStyle.FixedSingle,
-                Padding = new Padding(8)
+                BorderStyle = BorderStyle.FixedSingle
             };
 
-            _lapListBox = new ListBox
+            int configY = 15;
+            int configX = 15;
+
+            // Test Type
+            Label testTypeLabel = new Label
             {
-                Dock = DockStyle.Fill,
-                Font = new Font("Consolas", 10F),
+                Text = "Test Type:",
+                Font = new Font("Segoe UI", 10F),
+                ForeColor = Operating_Systems.TextPrimary,
+                Location = new Point(configX, configY + 3),
+                Size = new Size(LabelWidth, 20)
+            };
+            configPanel.Controls.Add(testTypeLabel);
+
+            _testTypeCombo = new ComboBox
+            {
+                Location = new Point(configX + LabelWidth, configY),
+                Size = new Size(ControlWidth, 25),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 9F),
+                BackColor = Operating_Systems.Background,
+                ForeColor = Operating_Systems.TextPrimary
+            };
+            _testTypeCombo.Items.AddRange(new object[] {
+                "Resolution Test",
+                "Accuracy Test (Short Intervals)",
+                "Accuracy Test (Long Intervals)",
+                "Drift Test",
+                "Overhead Test"
+            });
+            _testTypeCombo.SelectedIndex = 0;
+            configPanel.Controls.Add(_testTypeCombo);
+
+            configY += 35;
+
+            // Iterations
+            Label iterLabel = new Label
+            {
+                Text = "Iterations:",
+                Font = new Font("Segoe UI", 10F),
+                ForeColor = Operating_Systems.TextPrimary,
+                Location = new Point(configX, configY + 3),
+                Size = new Size(LabelWidth, 20)
+            };
+            configPanel.Controls.Add(iterLabel);
+
+            _iterationsInput = new NumericUpDown
+            {
+                Location = new Point(configX + LabelWidth, configY),
+                Size = new Size(ControlWidth, 25),
+                Minimum = 10,
+                Maximum = 100000,
+                Value = 1000,
+                Font = new Font("Segoe UI", 9F),
+                BackColor = Operating_Systems.Background,
+                ForeColor = Operating_Systems.TextPrimary
+            };
+            configPanel.Controls.Add(_iterationsInput);
+
+            configY += 35;
+
+            // Duration
+            Label durLabel = new Label
+            {
+                Text = "Interval (ms):",
+                Font = new Font("Segoe UI", 10F),
+                ForeColor = Operating_Systems.TextPrimary,
+                Location = new Point(configX, configY + 3),
+                Size = new Size(LabelWidth, 20)
+            };
+            configPanel.Controls.Add(durLabel);
+
+            _durationInput = new NumericUpDown
+            {
+                Location = new Point(configX + LabelWidth, configY),
+                Size = new Size(ControlWidth, 25),
+                Minimum = 1,
+                Maximum = 10000,
+                Value = 100,
+                Font = new Font("Segoe UI", 9F),
+                BackColor = Operating_Systems.Background,
+                ForeColor = Operating_Systems.TextPrimary
+            };
+            configPanel.Controls.Add(_durationInput);
+
+            configY += 45;
+
+            // Buttons
+            _runTestButton = new Button
+            {
+                Text = "▶ Run Test",
+                Location = new Point(configX, configY),
+                Size = new Size(120, 35),
+                BackColor = Operating_Systems.AccentGreen,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI Semibold", 10F),
+                Cursor = Cursors.Hand
+            };
+            _runTestButton.FlatAppearance.BorderSize = 0;
+            _runTestButton.Click += async (s, e) => await RunTest(OperatingSystems);
+            configPanel.Controls.Add(_runTestButton);
+
+            _clearResultsButton = new Button
+            {
+                Text = "Clear Results",
+                Location = new Point(configX + 130, configY),
+                Size = new Size(120, 35),
+                BackColor = Color.FromArgb(90, 90, 90),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI Semibold", 10F),
+                Cursor = Cursors.Hand
+            };
+            _clearResultsButton.FlatAppearance.BorderSize = 0;
+            _clearResultsButton.Click += (s, e) => ClearResults();
+            configPanel.Controls.Add(_clearResultsButton);
+
+            mainPanel.Controls.Add(configPanel);
+            currentY += configPanel.Height + Spacing;
+
+            // Progress bar
+            _progressBar = new ProgressBar
+            {
+                Location = new Point(0, currentY),
+                Size = new Size(PanelWidth - 20, 20),
+                Style = ProgressBarStyle.Continuous,
+                Visible = false
+            };
+            mainPanel.Controls.Add(_progressBar);
+            currentY += 25;
+
+            // Status label
+            _statusLabel = new Label
+            {
+                Text = "Ready to run tests",
+                Font = new Font("Segoe UI", 9F),
+                ForeColor = Operating_Systems.TextSecondary,
+                Location = new Point(0, currentY),
+                AutoSize = true
+            };
+            mainPanel.Controls.Add(_statusLabel);
+            currentY += 25;
+
+            // Results section - split into text and chart
+            int resultsWidth = (PanelWidth - 30) / 2;
+
+            // Results text box
+            Panel resultsPanel = new Panel
+            {
+                Location = new Point(0, currentY),
+                Size = new Size(resultsWidth, 280),
                 BackColor = Operating_Systems.PanelColor,
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            Label resultsHeader = new Label
+            {
+                Text = "Results Summary",
+                Font = new Font("Segoe UI Semibold", 10F),
+                ForeColor = Operating_Systems.TextPrimary,
+                Location = new Point(10, 8),
+                AutoSize = true
+            };
+            resultsPanel.Controls.Add(resultsHeader);
+
+            _resultsTextBox = new TextBox
+            {
+                Location = new Point(10, 35),
+                Size = new Size(resultsWidth - 20, 235),
+                Multiline = true,
+                ReadOnly = true,
+                ScrollBars = ScrollBars.Vertical,
+                Font = new Font("Consolas", 8.5F),
+                BackColor = Operating_Systems.Background,
                 ForeColor = Operating_Systems.TextPrimary,
                 BorderStyle = BorderStyle.None
             };
-            lapPanel.Controls.Add(_lapListBox);
+            resultsPanel.Controls.Add(_resultsTextBox);
+            mainPanel.Controls.Add(resultsPanel);
 
-            currentY += lapPanel.Height + VerticalSpacing;
-
-            // Lap actions row
-            FlowLayoutPanel lapActions = new FlowLayoutPanel
+            // Chart panel
+            _chartPanel = new Panel
             {
-                Location = new Point(0, currentY),
-                Size = new Size(PanelWidth - 16, bottomRowHeight),
-                FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = false,
-                BackColor = Operating_Systems.Background
+                Location = new Point(resultsWidth + 10, currentY),
+                Size = new Size(resultsWidth, 280),
+                BackColor = Operating_Systems.PanelColor,
+                BorderStyle = BorderStyle.FixedSingle
             };
+            _chartPanel.Paint += (s, e) => DrawChart(e.Graphics, _chartPanel.Width, _chartPanel.Height, OperatingSystems);
 
-            Button clearLapsBtn = MakeButton("Clear Laps", 110, Color.FromArgb(90, 90, 90), 0, fontSize: 9f);
-            Button copyBtn = MakeButton("📋 Copy Time", 120, Color.FromArgb(90, 90, 90), 8, fontSize: 9f);
-            Button exportBtn = MakeButton("💾 Export Laps", 120, Color.FromArgb(90, 90, 90), 8, fontSize: 9f);
-
-            clearLapsBtn.Click += (s, e) => ClearLaps();
-            copyBtn.Click += (s, e) => CopyCurrentTime();
-            exportBtn.Click += (s, e) => ExportLaps();
-
-            lapActions.Controls.Add(clearLapsBtn);
-            lapActions.Controls.Add(copyBtn);
-            lapActions.Controls.Add(exportBtn);
-
-            // Add everything into content holder in order
-            contentHolder.Controls.Add(timerPanel);
-            contentHolder.Controls.Add(buttonsRow);
-            contentHolder.Controls.Add(lapsHeader);
-            contentHolder.Controls.Add(_lapCountLabel);
-            contentHolder.Controls.Add(lapPanel);
-            contentHolder.Controls.Add(lapActions);
-
-            centerFlow.Controls.Add(contentHolder);
-            OperatingSystems.AddToMainContainer(centerFlow);
-
-            // safety: make sure UI timer is stopped until user starts
-            _uiTimer.Stop();
-        }
-
-        // helper to create consistent styled buttons
-        private static Button MakeButton(string text, int width, Color back, int leftMargin = 0, float fontSize = 10f)
-        {
-            var btn = new Button
+            Label chartHeader = new Label
             {
-                Text = text,
-                Size = new Size(width, 40),
-                BackColor = back,
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI Semibold", fontSize),
-                Cursor = Cursors.Hand,
-                Margin = new Padding(leftMargin, 0, 0, 0)
+                Text = "Visual Comparison",
+                Font = new Font("Segoe UI Semibold", 10F),
+                ForeColor = Operating_Systems.TextPrimary,
+                Location = new Point(10, 8),
+                AutoSize = true
             };
-            btn.FlatAppearance.BorderSize = 0;
-            return btn;
+            _chartPanel.Controls.Add(chartHeader);
+            mainPanel.Controls.Add(_chartPanel);
+
+            OperatingSystems.AddToMainContainer(mainPanel);
         }
 
-        // UI timer tick — updates label from the stopwatch (runs on UI thread)
-        private static void UiTimer_Tick(object sender, EventArgs e)
+        private static async Task RunTest(Operating_Systems os)
         {
-            if (_timerLabel == null || _timerLabel.IsDisposed) return;
-            _timerLabel.Text = FormatTimeSpan(_stopwatch.Elapsed);
-        }
+            if (_testRunning) return;
 
-        // Controls behavior
-        private static void Start()
-        {
-            if (_isRunning) return;
+            _testRunning = true;
+            _runTestButton.Enabled = false;
+            _progressBar.Visible = true;
+            _progressBar.Value = 0;
+            _testResults.Clear();
 
-            _stopwatch.Start();
-            _uiTimer.Start();
-            _isRunning = true;
-            UpdateButtons();
-            UpdateTimerColor();
-        }
+            string testType = _testTypeCombo.SelectedItem.ToString();
+            int iterations = (int)_iterationsInput.Value;
+            int intervalMs = (int)_durationInput.Value;
 
-        private static void Pause()
-        {
-            if (!_isRunning) return;
+            _statusLabel.Text = $"Running {testType}...";
+            _statusLabel.ForeColor = Operating_Systems.AccentBlue;
 
-            _stopwatch.Stop();
-            _uiTimer.Stop();
-            _isRunning = false;
-            UpdateButtons();
-            UpdateTimerColor();
-        }
-
-        private static void Reset()
-        {
-            _stopwatch.Reset();
-            _uiTimer.Stop();
-            _isRunning = false;
-            _timerLabel.Text = "00:00:00.000";
-            ClearLaps();
-            UpdateButtons();
-            UpdateTimerColor();
-        }
-
-        private static void RecordLap()
-        {
-            if (!_stopwatch.IsRunning) return;
-
-            var now = _stopwatch.Elapsed;
-            TimeSpan split = (_laps.Count == 0) ? now : now - _laps[_laps.Count - 1];
-            _laps.Add(now);
-
-            string entry = $"Lap {_laps.Count:D2}: {FormatTimeSpan(now)}  (Split: {FormatTimeSpan(split)})";
-            _lapListBox.Items.Add(entry);
-            _lapListBox.SelectedIndex = _lapListBox.Items.Count - 1;
-            UpdateLapCount();
-        }
-
-        private static void ClearLaps()
-        {
-            _laps.Clear();
-            _lapListBox.Items.Clear();
-            UpdateLapCount();
-        }
-
-        private static void UpdateLapCount()
-        {
-            if (_lapCountLabel == null) return;
-
-            if (_laps.Count == 0) _lapCountLabel.Text = "No laps recorded";
-            else if (_laps.Count == 1) _lapCountLabel.Text = "1 lap recorded";
-            else _lapCountLabel.Text = $"{_laps.Count} laps recorded";
-        }
-
-        private static void CopyCurrentTime()
-        {
-            string now = (_timerLabel?.Text) ?? "00:00:00.000";
-            Clipboard.SetText(now);
-            MessageBox.Show($"Current time copied to clipboard:\n{now}", "Copy Time", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private static void ExportLaps()
-        {
-            if (_laps.Count == 0)
+            await Task.Run(() =>
             {
-                MessageBox.Show("No lap times to export.", "Export Laps", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                switch (_testTypeCombo.SelectedIndex)
+                {
+                    case 0: // Resolution Test
+                        RunResolutionTest(iterations);
+                        break;
+                    case 1: // Accuracy Test (Short)
+                        RunAccuracyTest(iterations, intervalMs, true);
+                        break;
+                    case 2: // Accuracy Test (Long)
+                        RunAccuracyTest(iterations, intervalMs, false);
+                        break;
+                    case 3: // Drift Test
+                        RunDriftTest(iterations, intervalMs);
+                        break;
+                    case 4: // Overhead Test
+                        RunOverheadTest(iterations);
+                        break;
+                }
+            });
+
+            DisplayResults();
+            _chartPanel.Invalidate();
+
+            _progressBar.Visible = false;
+            _statusLabel.Text = "Test completed successfully";
+            _statusLabel.ForeColor = Operating_Systems.AccentGreen;
+            _runTestButton.Enabled = true;
+            _testRunning = false;
+        }
+
+        private static void RunResolutionTest(int iterations)
+        {
+            // Test Stopwatch resolution
+            var swResult = new TestResult { TimerName = "Stopwatch" };
+            swResult.ResolutionTicks = Stopwatch.Frequency;
+
+            for (int i = 0; i < iterations; i++)
+            {
+                long t1 = Stopwatch.GetTimestamp();
+                long t2 = Stopwatch.GetTimestamp();
+                double diff = (t2 - t1) * 1000.0 / Stopwatch.Frequency;
+                swResult.Samples.Add(diff);
+                UpdateProgress(i, iterations);
+            }
+            CalculateStats(swResult);
+            _testResults.Add(swResult);
+
+            // Test DateTime.Now resolution
+            var dtResult = new TestResult { TimerName = "DateTime.Now" };
+            dtResult.ResolutionTicks = TimeSpan.TicksPerMillisecond;
+
+            for (int i = 0; i < iterations; i++)
+            {
+                DateTime t1 = DateTime.Now;
+                DateTime t2 = DateTime.Now;
+                double diff = (t2 - t1).TotalMilliseconds;
+                dtResult.Samples.Add(diff);
+            }
+            CalculateStats(dtResult);
+            _testResults.Add(dtResult);
+
+            // Test Environment.TickCount resolution
+            var tcResult = new TestResult { TimerName = "TickCount" };
+            tcResult.ResolutionTicks = 10000; // ~1ms
+
+            for (int i = 0; i < iterations; i++)
+            {
+                int t1 = Environment.TickCount;
+                int t2 = Environment.TickCount;
+                double diff = t2 - t1;
+                tcResult.Samples.Add(diff);
+            }
+            CalculateStats(tcResult);
+            _testResults.Add(tcResult);
+        }
+
+        private static void RunAccuracyTest(int iterations, int targetMs, bool shortInterval)
+        {
+            int actualInterval = shortInterval ? Math.Max(1, targetMs / 10) : targetMs;
+
+            // Stopwatch accuracy
+            var swResult = new TestResult { TimerName = "Stopwatch" };
+            for (int i = 0; i < iterations; i++)
+            {
+                Stopwatch sw = Stopwatch.StartNew();
+                Thread.Sleep(actualInterval);
+                sw.Stop();
+                double measured = sw.Elapsed.TotalMilliseconds;
+                swResult.Samples.Add(Math.Abs(measured - actualInterval));
+                UpdateProgress(i, iterations);
+            }
+            CalculateStats(swResult);
+            _testResults.Add(swResult);
+
+            // DateTime.Now accuracy
+            var dtResult = new TestResult { TimerName = "DateTime.Now" };
+            for (int i = 0; i < iterations; i++)
+            {
+                DateTime start = DateTime.Now;
+                Thread.Sleep(actualInterval);
+                double measured = (DateTime.Now - start).TotalMilliseconds;
+                dtResult.Samples.Add(Math.Abs(measured - actualInterval));
+            }
+            CalculateStats(dtResult);
+            _testResults.Add(dtResult);
+
+            // TickCount accuracy
+            var tcResult = new TestResult { TimerName = "TickCount" };
+            for (int i = 0; i < iterations; i++)
+            {
+                int start = Environment.TickCount;
+                Thread.Sleep(actualInterval);
+                double measured = Environment.TickCount - start;
+                tcResult.Samples.Add(Math.Abs(measured - actualInterval));
+            }
+            CalculateStats(tcResult);
+            _testResults.Add(tcResult);
+        }
+
+        private static void RunDriftTest(int iterations, int intervalMs)
+        {
+            // Measure cumulative drift over many intervals
+            int actualInterval = Math.Max(10, intervalMs / 10);
+
+            // Stopwatch drift
+            var swResult = new TestResult { TimerName = "Stopwatch" };
+            Stopwatch sw = Stopwatch.StartNew();
+            for (int i = 0; i < iterations; i++)
+            {
+                long expected = (i + 1) * actualInterval;
+                Thread.Sleep(actualInterval);
+                double actual = sw.Elapsed.TotalMilliseconds;
+                swResult.Samples.Add(Math.Abs(actual - expected));
+                UpdateProgress(i, iterations);
+            }
+            CalculateStats(swResult);
+            swResult.DriftMs = swResult.Samples.Last();
+            _testResults.Add(swResult);
+
+            // DateTime drift
+            var dtResult = new TestResult { TimerName = "DateTime.Now" };
+            DateTime dtStart = DateTime.Now;
+            for (int i = 0; i < iterations; i++)
+            {
+                double expected = (i + 1) * actualInterval;
+                Thread.Sleep(actualInterval);
+                double actual = (DateTime.Now - dtStart).TotalMilliseconds;
+                dtResult.Samples.Add(Math.Abs(actual - expected));
+            }
+            CalculateStats(dtResult);
+            dtResult.DriftMs = dtResult.Samples.Last();
+            _testResults.Add(dtResult);
+
+            // TickCount drift
+            var tcResult = new TestResult { TimerName = "TickCount" };
+            int tcStart = Environment.TickCount;
+            for (int i = 0; i < iterations; i++)
+            {
+                double expected = (i + 1) * actualInterval;
+                Thread.Sleep(actualInterval);
+                double actual = Environment.TickCount - tcStart;
+                tcResult.Samples.Add(Math.Abs(actual - expected));
+            }
+            CalculateStats(tcResult);
+            tcResult.DriftMs = tcResult.Samples.Last();
+            _testResults.Add(tcResult);
+        }
+
+        private static void RunOverheadTest(int iterations)
+        {
+            // Measure the overhead of calling each timer
+
+            // Stopwatch overhead
+            var swResult = new TestResult { TimerName = "Stopwatch" };
+            Stopwatch master = Stopwatch.StartNew();
+            for (int i = 0; i < iterations; i++)
+            {
+                long dummy = Stopwatch.GetTimestamp();
+                UpdateProgress(i, iterations);
+            }
+            master.Stop();
+            double swOverhead = master.Elapsed.TotalMilliseconds / iterations;
+            swResult.Samples.Add(swOverhead);
+            swResult.MeanMs = swOverhead;
+            _testResults.Add(swResult);
+
+            // DateTime overhead
+            var dtResult = new TestResult { TimerName = "DateTime.Now" };
+            master.Restart();
+            for (int i = 0; i < iterations; i++)
+            {
+                DateTime dummy = DateTime.Now;
+            }
+            master.Stop();
+            double dtOverhead = master.Elapsed.TotalMilliseconds / iterations;
+            dtResult.Samples.Add(dtOverhead);
+            dtResult.MeanMs = dtOverhead;
+            _testResults.Add(dtResult);
+
+            // TickCount overhead
+            var tcResult = new TestResult { TimerName = "TickCount" };
+            master.Restart();
+            for (int i = 0; i < iterations; i++)
+            {
+                int dummy = Environment.TickCount;
+            }
+            master.Stop();
+            double tcOverhead = master.Elapsed.TotalMilliseconds / iterations;
+            tcResult.Samples.Add(tcOverhead);
+            tcResult.MeanMs = tcOverhead;
+            _testResults.Add(tcResult);
+        }
+
+        private static void CalculateStats(TestResult result)
+        {
+            if (result.Samples.Count == 0) return;
+
+            result.MinMs = result.Samples.Min();
+            result.MaxMs = result.Samples.Max();
+            result.MeanMs = result.Samples.Average();
+
+            // Standard deviation
+            double sumSquares = result.Samples.Sum(x => Math.Pow(x - result.MeanMs, 2));
+            result.StdDevMs = Math.Sqrt(sumSquares / result.Samples.Count);
+        }
+
+        private static void DisplayResults()
+        {
+            if (_testResults.Count == 0)
+            {
+                _resultsTextBox.Text = "No test results available.";
                 return;
             }
 
-            using (SaveFileDialog dlg = new SaveFileDialog())
+            var sb = new StringBuilder();
+            sb.AppendLine("═══════════════════════════════════════");
+            sb.AppendLine("  TIMER DIAGNOSTICS RESULTS");
+            sb.AppendLine("═══════════════════════════════════════");
+            sb.AppendLine();
+
+            foreach (var result in _testResults)
             {
-                dlg.Title = "Export Lap Times";
-                dlg.Filter = "Text Files (*.txt)|*.txt|CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
-                dlg.FileName = $"Stopwatch_Laps_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
-                if (dlg.ShowDialog() != DialogResult.OK) return;
+                sb.AppendLine($"Timer: {result.TimerName}");
+                sb.AppendLine(new string('-', 39));
 
-                try
-                {
-                    var sb = new StringBuilder();
-                    sb.AppendLine("Stopwatch Lap Times");
-                    sb.AppendLine($"Exported: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-                    sb.AppendLine(new string('-', 60));
-                    for (int i = 0; i < _laps.Count; i++)
-                    {
-                        TimeSpan split = i == 0 ? _laps[i] : _laps[i] - _laps[i - 1];
-                        sb.AppendLine($"Lap {i + 1:D2}: Total={FormatTimeSpan(_laps[i])}  Split={FormatTimeSpan(split)}");
-                    }
-                    sb.AppendLine(new string('-', 60));
-                    sb.AppendLine($"Total Laps: {_laps.Count}");
-                    sb.AppendLine($"Final Time: {FormatTimeSpan(_laps[_laps.Count - 1])}");
+                if (result.ResolutionTicks > 0)
+                    sb.AppendLine($"  Resolution: {result.ResolutionTicks:N0} ticks");
 
-                    File.WriteAllText(dlg.FileName, sb.ToString());
-                    MessageBox.Show($"Lap times exported successfully to:\n{dlg.FileName}", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
+                sb.AppendLine($"  Min:        {result.MinMs:F6} ms");
+                sb.AppendLine($"  Max:        {result.MaxMs:F6} ms");
+                sb.AppendLine($"  Mean:       {result.MeanMs:F6} ms");
+                sb.AppendLine($"  Std Dev:    {result.StdDevMs:F6} ms");
+
+                if (result.DriftMs > 0)
+                    sb.AppendLine($"  Total Drift: {result.DriftMs:F3} ms");
+
+                sb.AppendLine($"  Samples:    {result.Samples.Count:N0}");
+                sb.AppendLine();
+            }
+
+            sb.AppendLine("═══════════════════════════════════════");
+            sb.AppendLine($"Test completed: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+
+            _resultsTextBox.Text = sb.ToString();
+        }
+
+        private static void DrawChart(Graphics g, int width, int height, Operating_Systems os)
+        {
+            if (_testResults.Count == 0) return;
+
+            int chartTop = 40;
+            int chartBottom = height - 30;
+            int chartLeft = 60;
+            int chartRight = width - 20;
+            int chartHeight = chartBottom - chartTop;
+            int chartWidth = chartRight - chartLeft;
+
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            // Draw axes
+            using (Pen axisPen = new Pen(Operating_Systems.TextSecondary, 1))
+            {
+                g.DrawLine(axisPen, chartLeft, chartBottom, chartRight, chartBottom); // X-axis
+                g.DrawLine(axisPen, chartLeft, chartTop, chartLeft, chartBottom);     // Y-axis
+            }
+
+            // Find max value for scaling
+            double maxValue = _testResults.Max(r => r.MeanMs);
+            if (maxValue == 0) maxValue = 1;
+
+            // Bar chart
+            int barWidth = chartWidth / (_testResults.Count * 2);
+            Color[] colors = { Operating_Systems.AccentGreen, Operating_Systems.AccentBlue, Color.FromArgb(255, 193, 7) };
+
+            for (int i = 0; i < _testResults.Count; i++)
+            {
+                var result = _testResults[i];
+                int barHeight = (int)(result.MeanMs / maxValue * chartHeight);
+                int x = chartLeft + (i * 2 + 1) * barWidth;
+                int y = chartBottom - barHeight;
+
+                using (SolidBrush brush = new SolidBrush(colors[i % colors.Length]))
                 {
-                    MessageBox.Show($"Failed to export lap times:\n{ex.Message}", "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    g.FillRectangle(brush, x, y, barWidth, barHeight);
                 }
+
+                // Label
+                using (Font font = new Font("Segoe UI", 7F))
+                using (SolidBrush textBrush = new SolidBrush(Operating_Systems.TextPrimary))
+                {
+                    string label = result.TimerName;
+                    SizeF labelSize = g.MeasureString(label, font);
+                    g.DrawString(label, font, textBrush, x + barWidth / 2 - labelSize.Width / 2, chartBottom + 5);
+
+                    string value = $"{result.MeanMs:F3}ms";
+                    SizeF valueSize = g.MeasureString(value, font);
+                    g.DrawString(value, font, textBrush, x + barWidth / 2 - valueSize.Width / 2, y - 15);
+                }
+            }
+
+            // Y-axis labels
+            using (Font font = new Font("Segoe UI", 7F))
+            using (SolidBrush textBrush = new SolidBrush(Operating_Systems.TextSecondary))
+            {
+                for (int i = 0; i <= 5; i++)
+                {
+                    double value = maxValue * i / 5.0;
+                    int y = chartBottom - (int)(chartHeight * i / 5.0);
+                    g.DrawString($"{value:F2}", font, textBrush, 5, y - 7);
+                }
+            }
+
+            // Title
+            using (Font titleFont = new Font("Segoe UI Semibold", 9F))
+            using (SolidBrush titleBrush = new SolidBrush(Operating_Systems.TextPrimary))
+            {
+                g.DrawString("Mean Time Comparison", titleFont, titleBrush, chartLeft, 10);
             }
         }
 
-        // helper to set button enabled states and colors
-        private static void UpdateButtons()
+        private static void UpdateProgress(int current, int total)
         {
-            if (_startButton != null) _startButton.Enabled = !_isRunning;
-            if (_pauseButton != null) _pauseButton.Enabled = _isRunning;
-            if (_resetButton != null) _resetButton.Enabled = !_isRunning && _stopwatch.Elapsed.TotalMilliseconds > 0;
-            if (_lapButton != null) _lapButton.Enabled = _isRunning;
+            if (_progressBar.InvokeRequired)
+            {
+                _progressBar.Invoke(new Action(() =>
+                {
+                    _progressBar.Value = Math.Min(100, (int)(current * 100.0 / total));
+                }));
+            }
+            else
+            {
+                _progressBar.Value = Math.Min(100, (int)(current * 100.0 / total));
+            }
         }
 
-        private static void UpdateTimerColor()
+        private static void ClearResults()
         {
-            if (_timerLabel == null) return;
-            _timerLabel.ForeColor = _isRunning ? Operating_Systems.AccentGreen : Operating_Systems.AccentBlue;
-        }
-
-        private static string FormatTimeSpan(TimeSpan t)
-        {
-            return $"{t.Hours:D2}:{t.Minutes:D2}:{t.Seconds:D2}.{t.Milliseconds:D3}";
+            _testResults.Clear();
+            _resultsTextBox.Text = string.Empty;
+            _chartPanel.Invalidate();
+            _statusLabel.Text = "Results cleared. Ready to run tests.";
         }
     }
 }

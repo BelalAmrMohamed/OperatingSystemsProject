@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Operating_Systems_Project
 {
@@ -42,7 +35,7 @@ namespace Operating_Systems_Project
 
         public Operating_Systems()
         {
-            InitializeComponent();            
+            InitializeComponent();
             FileWriter.ShowFileWriter(this);
         }
 
@@ -59,26 +52,20 @@ namespace Operating_Systems_Project
         private void FileWriter_Button_Click(object sender, EventArgs e)
         {
             ClearContent();
-            ButtonsPanel.Visible = false;
-            HeaderLabel.Text = "📝 File Writer";
-            SmallHeaderLabel.Text = "Create and write content to text or binary files.";
+            ButtonsPanel.Visible = false;            
             FileWriter.ShowFileWriter(this);
         }
         private void FileReader_Button_Click(object sender, EventArgs e)
         {
             ClearContent();
-            ButtonsPanel.Visible = false;
-            HeaderLabel.Text = "📖 File Reader";
-            SmallHeaderLabel.Text = "Read and display content from text or binary files.";
+            ButtonsPanel.Visible = false;            
             FileReader.ShowFileReader(this);
         }
 
         private void FolderWatcher_Button_Click(object sender, EventArgs e)
         {
             ClearContent();
-            ButtonsPanel.Visible = false;
-            HeaderLabel.Text = "📁 Folder Watcher";
-            SmallHeaderLabel.Text = "Monitor file system changes in real-time.";
+            ButtonsPanel.Visible = false;            
             FolderMonitor.ShowFolderMonitor(this);
         }
 
@@ -86,8 +73,8 @@ namespace Operating_Systems_Project
         {
             ClearContent();
             ButtonsPanel.Visible = false;
-            HeaderLabel.Text = "⏱️ Stopwatch Timer";
-            SmallHeaderLabel.Text = "Precision stopwatch. Know the difference between different timers.";
+            //"⏱️ Stopwatch Timer";
+            //"Precision stopwatch. Know the difference between different timers.";
             Timer.ShowTimer(this);
         }
 
@@ -95,38 +82,48 @@ namespace Operating_Systems_Project
         {
             ClearContent();
             ButtonsPanel.Visible = false;
-            HeaderLabel.Text = "💻 WMI";
-            SmallHeaderLabel.Text = "Windows Management Instrumentation. many queries.";
+            MainContainer.AutoScroll = true;
             WMI.ShowWMI(this);
         }
 
         private void PowerOptions_Button_Click(object sender, EventArgs e)
         {
             ClearContent();
-            ButtonsPanel.Visible = false;
-            HeaderLabel.Text = "🔋 Power Options";
-            SmallHeaderLabel.Text = "Manage system power states"; 
-            // "⚠ Warning: These actions will affect your computer immediately. Make sure to save your work before proceeding."
+            ButtonsPanel.Visible = false;            
             PowerOptions.ShowPowerOption(this);
         }
 
         private void About_Button_Click(object sender, EventArgs e)
         {
-            ClearAllContent();
-            ButtonsPanel.Visible = false;
-            HeaderLabel.Text = string.Empty;
-            SmallHeaderLabel.Text = string.Empty;
+            ClearContent();
+            ButtonsPanel.Visible = false;            
             About.ShowAbout(this);
         }
-
-
-
 
         public void AddToMainContainer(Control c)
         {
             MainContainer.Controls.Add(c);
         }
-        
+
+        public void ClearWMI()
+        {
+            if (MainContainer == null) return;
+
+            for (int i = MainContainer.Controls.Count - 1; i >= 0; i--)
+            {
+                Control ctrl = MainContainer.Controls[i];
+                if (ctrl != Menu_Closed &&
+                    ctrl != WMI.HeaderLabel &&
+                    ctrl != WMI.HeaderLabel &&
+                    ctrl != WMI.SubHeaderLabel &&
+                    ctrl != WMI.queryLabel &&
+                    ctrl != WMI.querySelector &&
+                    ctrl != WMI.runQueryButton)
+
+                    MainContainer.Controls.RemoveAt(i);
+            }
+        }
+
         public void ClearContent()
         {
             if (MainContainer == null) return;
@@ -134,22 +131,7 @@ namespace Operating_Systems_Project
             for (int i = MainContainer.Controls.Count - 1; i >= 0; i--)
             {
                 Control ctrl = MainContainer.Controls[i];
-
-                if (ctrl != Menu_Closed && ctrl != SmallHeaderLabel && ctrl != HeaderLabel)   // ✅ keep these.
-                    MainContainer.Controls.RemoveAt(i);
-            }
-        }
-        public void ClearAllContent()
-        {
-            if (MainContainer == null) return;
-
-            for (int i = MainContainer.Controls.Count - 1; i >= 0; i--)
-            {
-                Control ctrl = MainContainer.Controls[i];
-                if (ctrl == Menu_Closed) { }   // ✅ keep.
-                else if (ctrl == HeaderLabel) HeaderLabel.Text = string.Empty; // Temporarily hide it
-                else if (ctrl == SmallHeaderLabel) SmallHeaderLabel.Text = string.Empty; // Temporarily hide it
-                else MainContainer.Controls.RemoveAt(i);
+                if (ctrl != Menu_Closed) MainContainer.Controls.RemoveAt(i);  // ✅ keep.
             }
         }
     }

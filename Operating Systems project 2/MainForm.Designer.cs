@@ -30,8 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Operating_Systems));
             this.MainContainer = new System.Windows.Forms.Panel();
-            this.SmallHeaderLabel = new System.Windows.Forms.Label();
-            this.HeaderLabel = new System.Windows.Forms.Label();
             this.Menu_Closed = new System.Windows.Forms.PictureBox();
             this.ButtonsPanel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -53,40 +51,12 @@
             // 
             // MainContainer
             // 
-            this.MainContainer.Controls.Add(this.SmallHeaderLabel);
-            this.MainContainer.Controls.Add(this.HeaderLabel);
             this.MainContainer.Controls.Add(this.Menu_Closed);
             this.MainContainer.Location = new System.Drawing.Point(12, 5);
             this.MainContainer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MainContainer.Name = "MainContainer";
             this.MainContainer.Size = new System.Drawing.Size(1110, 533);
             this.MainContainer.TabIndex = 1;
-            // 
-            // SmallHeaderLabel
-            // 
-            this.SmallHeaderLabel.AutoSize = true;
-            this.SmallHeaderLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SmallHeaderLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.SmallHeaderLabel.Location = new System.Drawing.Point(414, 38);
-            this.SmallHeaderLabel.MinimumSize = new System.Drawing.Size(300, 20);
-            this.SmallHeaderLabel.Name = "SmallHeaderLabel";
-            this.SmallHeaderLabel.Size = new System.Drawing.Size(300, 20);
-            this.SmallHeaderLabel.TabIndex = 12;
-            this.SmallHeaderLabel.Text = "Place Holder, describtion";
-            this.SmallHeaderLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // HeaderLabel
-            // 
-            this.HeaderLabel.AutoSize = true;
-            this.HeaderLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 13.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HeaderLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(130)))));
-            this.HeaderLabel.Location = new System.Drawing.Point(457, 8);
-            this.HeaderLabel.MinimumSize = new System.Drawing.Size(200, 30);
-            this.HeaderLabel.Name = "HeaderLabel";
-            this.HeaderLabel.Size = new System.Drawing.Size(200, 30);
-            this.HeaderLabel.TabIndex = 11;
-            this.HeaderLabel.Text = "📝 Place Holder";
-            this.HeaderLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Menu_Closed
             // 
@@ -301,7 +271,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Operating Systems";
             this.MainContainer.ResumeLayout(false);
-            this.MainContainer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Menu_Closed)).EndInit();
             this.ButtonsPanel.ResumeLayout(false);
             this.ButtonsPanel.PerformLayout();
@@ -325,8 +294,6 @@
         private System.Windows.Forms.PictureBox Menu_Closed;
         private System.Windows.Forms.PictureBox pictureBox1;
         public System.Windows.Forms.Panel MainContainer;
-        private System.Windows.Forms.Label SmallHeaderLabel;
-        public System.Windows.Forms.Label HeaderLabel;
     }
 }
 

@@ -11,16 +11,17 @@ namespace Operating_Systems_Project
     {
         // ---- Constants ----
         // Use a shortened version of app version format. "1.0" instead of "1.0.0", which stand for "MAJOR.MINOR.PATCH"
-        private const string APP_VERSION = "1.3"; 
+        private const string APP_VERSION = "2.4";
         private const string PRIMARY_ACCENT_COLOR = "#4A9EFF";
 
         private static readonly (string Name, string Email)[] DEVELOPERS =
         {
             ("Belal Amr Mohamed", "belalamrofficial@gmail.com"),
             ("Mohamed Ahmed Tawfeeq", "mohamedahmed@gmail.com"),
-            ("Ahmed Mohamed", "ahmedmohamed@gmail.com"),
-            ("Mahmoud Gad", "MahmoudGad@gmail.com"),
-            ("Ahmed Khairy", "AhmedKhairy@gmail.com")
+            ("Ahmed Mohamed Husaini", "ahmedmohamed@gmail.com"),
+            ("Mahmoud Gad Alkareem", "MahmoudGad@gmail.com"),
+            ("Ahmed Khairy Ahmed", "AhmedKhairy@gmail.com"),
+            ("Abdulra'of Mohamed Abdulra'of", "AbdulraofMohamed@gmail.com"),
         };
 
         public static void ShowAbout(Operating_Systems OperatingSystems)
@@ -65,7 +66,7 @@ namespace Operating_Systems_Project
                 Size = new Size(60, 60),
                 BackColor = Operating_Systems.PanelColor,
                 Location = new Point(20, currentY),
-                BorderStyle = BorderStyle.FixedSingle,                
+                BorderStyle = BorderStyle.FixedSingle,
             };
 
             PictureBox pb = new PictureBox
@@ -75,82 +76,16 @@ namespace Operating_Systems_Project
                 SizeMode = PictureBoxSizeMode.Zoom
             };
 
-            // Try to load the logo using multiple fallbacks (no Properties.Resources used)
-            System.Drawing.Image logoImage = null;
-
-            // 1) Try output folder (About_Icon_OS.png next to exe) - recommended if you added the file via Solution Explorer
-            try
+            Label initials = new Label
             {
-                string exeDir = AppDomain.CurrentDomain.BaseDirectory ?? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                string path1 = Path.Combine(exeDir, "About_Icon_OS.png");
-                if (File.Exists(path1))
-                {
-                    using (var tmp = Image.FromFile(path1))
-                        logoImage = new Bitmap(tmp); // clone to avoid locking the file
-                }
-            }
-            catch { /* ignore and try other fallbacks */ }
-
-            // 2) Try common "Resources" subfolder (optional layout)
-            if (logoImage == null)
-            {
-                try
-                {
-                    string exeDir = AppDomain.CurrentDomain.BaseDirectory ?? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                    string path2 = Path.Combine(exeDir, "Resources", "About_Icon_OS.png");
-                    if (File.Exists(path2))
-                    {
-                        using (var tmp = Image.FromFile(path2))
-                            logoImage = new Bitmap(tmp);
-                    }
-                }
-                catch { }
-            }
-
-            // 3) Try embedded resource (if you set Build Action = Embedded Resource)
-            if (logoImage == null)
-            {
-                try
-                {
-                    var asm = Assembly.GetExecutingAssembly();
-                    var names = asm.GetManifestResourceNames();
-                    // look for any resource that ends with About_Icon_OS.png (case-insensitive)
-                    var resName = Array.Find(names, n => n.EndsWith("About_Icon_OS.png", StringComparison.OrdinalIgnoreCase));
-                    if (!string.IsNullOrEmpty(resName))
-                    {
-                        using (var s = asm.GetManifestResourceStream(resName))
-                        {
-                            if (s != null)
-                            {
-                                using (var tmp = Image.FromStream(s))
-                                    logoImage = new Bitmap(tmp);
-                            }
-                        }
-                    }
-                }
-                catch { /* ignore */ }
-            }
-
-            // 4) Assign or fallback to initials
-            if (logoImage != null)
-            {
-                pb.Image = logoImage;
-                logoBox.Controls.Add(pb);
-            }
-            else
-            {
-                var initials = new Label
-                {
-                    Text = "OS",
-                    Font = new Font("Segoe UI Semibold", 18F),
-                    ForeColor = Color.White,
-                    AutoSize = false,
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Dock = DockStyle.Fill
-                };
-                logoBox.Controls.Add(initials);
-            }
-
+                Text = "OS",
+                Font = new Font("Segoe UI Semibold", 18F),
+                ForeColor = Color.White,
+                AutoSize = false,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Fill
+            };
+            logoBox.Controls.Add(initials);
             contentPanel.Controls.Add(logoBox);
 
             // Title

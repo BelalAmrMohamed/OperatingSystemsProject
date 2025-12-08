@@ -11,95 +11,34 @@ namespace Operating_Systems_Project
         #region 2 Reading Methods, for Text and Binary
         private static string ReadTextFile(string path)
         {
-            try
-            {
-                using (FileStream fileS = new FileStream(path, FileMode.Open, FileAccess.Read))
-                using (BufferedStream buffer = new BufferedStream(fileS))
-                using (StreamReader reader = new StreamReader(buffer, Encoding.UTF8, true))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new IOException($"Failed to read text file: {ex.Message}", ex);
-            }
+            using (FileStream fileS = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (BufferedStream buffer = new BufferedStream(fileS))
+            using (StreamReader reader = new StreamReader(buffer, Encoding.UTF8, true))
+                return reader.ReadToEnd();
         }
 
-        private static string ReadBinaryFile(string path)
+        private static string ReadBinaryFile(string path) // Returns text
         {
-            if (string.IsNullOrWhiteSpace(path))
-                throw new ArgumentException("Path cannot be null or empty.", nameof(path));
+            byte[] bytes;
 
-            if (!File.Exists(path))
-                throw new FileNotFoundException($"File not found: {path}", path);
+            using (BinaryReader reader = new BinaryReader(File.Open(path, FileMode.Open)))            
+               bytes = reader.ReadBytes((int)reader.BaseStream.Length);            
 
-            try
-            {
-                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-                using (BinaryReader reader = new BinaryReader(fs))
-                {
-                    long fileLength = fs.Length;
-
-                    if (fileLength == 0)
-                        return "Binary File Content: (empty file)";
-
-                    byte[] data = reader.ReadBytes((int)fileLength);
-
-                    int estimatedSize = data.Length * 3 + 500;
-                    StringBuilder sb = new StringBuilder(estimatedSize);
-
-                    sb.AppendLine("Binary File Content (Hexadecimal):");
-                    sb.AppendLine(new string('-', 50));
-
-                    for (int i = 0; i < data.Length; i += 16)
-                    {
-                        sb.AppendFormat("{0:X8}  ", i);
-
-                        int rowLength = Math.Min(16, data.Length - i);
-                        for (int j = 0; j < rowLength; j++)
-                        {
-                            sb.AppendFormat("{0:X2} ", data[i + j]);
-                            if (j == 7) sb.Append(' ');
-                        }
-
-                        sb.AppendLine();
-                    }
-
-                    sb.AppendLine(new string('-', 50));
-                    sb.AppendLine($"Total bytes: {data.Length:N0}");
-                    sb.AppendLine(new string('-', 50));
-
-                    try
-                    {
-                        string content = Encoding.UTF8.GetString(data);
-                        sb.AppendLine(content);
-                    }
-                    catch
-                    {
-                        try
-                        {
-                            string content = Encoding.ASCII.GetString(data);
-                            sb.AppendLine(content);
-                        }
-                        catch
-                        {
-                            sb.AppendLine("[Binary content cannot be displayed as text]");
-                        }
-                    }
-
-                    return sb.ToString();
-                }
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                throw new UnauthorizedAccessException($"Access denied to file: {path}", ex);
-            }
-            catch (IOException ex)
-            {
-                throw new IOException($"Failed to read binary file '{Path.GetFileName(path)}': {ex.Message}", ex);
-            }
+            return Encoding.UTF8.GetString(bytes);
         }
+
+        private static string ReadBinaryFileAsHexadecimal(string path) // Returns Hexadecimal
+        {
+            byte[] bytes = File.ReadAllBytes(path);
+
+            StringBuilder hex = new StringBuilder(bytes.Length * 3);
+            foreach (byte b in bytes)
+                hex.AppendFormat("{0:X2} ", b);
+
+            return hex.ToString().Trim(); // Remove last space
+        }
+
+
         #endregion
 
         private static void ReadFile(TextBox pathTextBox, TextBox contentTextBox, Label messageLabel, Label fileInfoLabel, Panel fileInfoPanel, Button copyButton)
@@ -122,23 +61,21 @@ namespace Operating_Systems_Project
 
             try
             {
-                string extension = Path.GetExtension(path).ToLower();
-                string content = "";
+                string extension = Path.GetExtension(path).ToLower();                
+                StringBuilder content = new StringBuilder();
 
-                if (extension == ".txt")
+                if (extension == ".bin") 
                 {
-                    content = ReadTextFile(path);
+                    content.AppendLine("Binary File Content (Hexadecimal):");
+                    content.AppendLine(ReadBinaryFileAsHexadecimal(path));
+                    content.AppendLine(new string('=', 109));
+                    content.AppendLine();
+                    content.AppendLine("Binary File Content (Text):");
+                    content.Append(ReadBinaryFile(path));
                 }
-                else if (extension == ".bin")
-                {
-                    content = ReadBinaryFile(path);
-                }
-                else
-                {
-                    content = ReadTextFile(path);
-                }
-
-                contentTextBox.Text = content;
+                else content.Append(ReadTextFile(path));
+                
+                contentTextBox.Text = content.ToString();
 
                 FileInfo fileInfo = new FileInfo(path);
                 fileInfoLabel.Text = $"📄 {Path.GetFileName(path)} | Size: {FormatFileSize(fileInfo.Length)} | Modified: {fileInfo.LastWriteTime:yyyy-MM-dd HH:mm:ss}";
@@ -195,7 +132,34 @@ namespace Operating_Systems_Project
                 Size = new Size(PanelWidth, 500),
                 BackColor = Operating_Systems.Background,
                 Margin = new Padding(0)
-            };            
+            };
+
+            Label HeaderLabel = new Label
+            {
+                Text = "📖 File Reader",
+                Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
+                MinimumSize = new Size(200, 30),
+                Location = new Point(457, 8),
+                Size = new Size(200, 30),
+
+                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.FromArgb(230, 230, 130),
+                BackColor = Color.FromArgb(31, 31, 31),
+            };
+            Label SubHeaderLabel = new Label
+            {
+                Text = "Read and display content from text or binary files.",
+                Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
+                MinimumSize = new Size(300, 20),
+                Location = new Point(414, 38),
+                Size = new Size(300, 20),
+
+                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.FromArgb(230, 230, 230),
+                BackColor = Color.FromArgb(31, 31, 31),
+            };
             currentY += 32;
 
             // File Path label
@@ -253,7 +217,7 @@ namespace Operating_Systems_Project
             // File Info (hidden initially) - styled like FileWriter (dark theme)
             Panel fileInfoPanel = new Panel
             {
-                Location = new Point(0, currentY),
+                Location = new Point(0, currentY - 10),
                 Size = new Size(PanelWidth, 36),
                 BackColor = Color.Transparent,
                 BorderStyle = BorderStyle.None,
@@ -398,6 +362,8 @@ namespace Operating_Systems_Project
             // Add controls to holder
             contentHolder.Controls.AddRange(new Control[]
             {
+                HeaderLabel,
+                SubHeaderLabel,
                 labelInputPath,
                 pathPanel,
                 fileInfoPanel,
@@ -434,7 +400,7 @@ namespace Operating_Systems_Project
                     pathTextBox.Text = openDialog.FileName;
                 }
             }
-        }       
+        }
 
         private static void ShowMessage(Label label, string message, Color color)
         {
