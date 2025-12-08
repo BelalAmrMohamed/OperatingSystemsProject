@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Linq;
 using System.Management;
-using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -538,12 +535,6 @@ namespace Operating_Systems_Project
         #endregion
 
 
-        public static Label HeaderLabel;
-        public static Label SubHeaderLabel;
-        public static Label queryLabel;
-        public static ComboBox querySelector;
-        public static Button runQueryButton;
-
         public static Panel resultsPanel;
         public static void ShowWMI(Operating_Systems OperatingSystems)
         {
@@ -552,7 +543,7 @@ namespace Operating_Systems_Project
             const int VerticalSpacing = 16;
             int currentY = 0;
 
-            HeaderLabel = new Label
+            Label HeaderLabel = new Label
             {
                 Text = "💻 WMI",
                 Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
@@ -565,7 +556,7 @@ namespace Operating_Systems_Project
                 ForeColor = Color.FromArgb(230, 230, 130),
                 BackColor = Color.FromArgb(31, 31, 31),
             };
-            SubHeaderLabel = new Label
+            Label SubHeaderLabel = new Label
             {
                 Text = "Windows Management Instrumentation. many queries.",
                 Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
@@ -583,7 +574,7 @@ namespace Operating_Systems_Project
             currentY += 32;
 
             // --- 4. Query Label ---
-            queryLabel = new Label
+            Label queryLabel = new Label
             {
                 Text = "Choose a query",
                 Font = new Font("Segoe UI Semibold", 11F),
@@ -595,7 +586,7 @@ namespace Operating_Systems_Project
             currentY += queryLabel.Height + 6;
 
             // Query Selector
-            querySelector = new ComboBox
+            ComboBox querySelector = new ComboBox
             {
                 Location = new Point(0, currentY),
                 Size = new Size(PanelWidth, 36),
@@ -653,15 +644,18 @@ namespace Operating_Systems_Project
             resultsPanel = new Panel
             {
                 Location = new Point(0, currentY),
-                Size = new Size(PanelWidth, 10),
+                Size = new Size(PanelWidth, 360),
                 BackColor = Color.FromArgb(31, 31, 31),
+                Padding = new Padding(0, 10, 0, 10),
+                AutoScroll = true,
+                AutoScrollMinSize = new Size(0, 360)
             };
             OperatingSystems.AddToMainContainer(resultsPanel);
 
             runQueryButton.Click += (s, e) =>
             {
                 resultsPanel.Controls.Clear();
-                resultsPanel.Height = 10;
+                resultsPanel.Height = 360;                 
                 ShowQuery(OperatingSystems, querySelector.SelectedItem.ToString());
             };
         }
@@ -684,7 +678,7 @@ namespace Operating_Systems_Project
             const int lineHeight = 21;
             const int minLines = 1;
             const int maxHeight = 400;
-            int currentY = 0;
+            int currentY = 10;
 
             foreach (var raw in infoEnumerable)
             {
@@ -701,7 +695,7 @@ namespace Operating_Systems_Project
                     WordWrap = true,
                     ScrollBars = ScrollBars.None,
                     Margin = new Padding(30, 30, 30, 30),
-                    Width = containerWidth,
+                    Width = containerWidth - 20,
                     Location = new Point(0, currentY),
                     Text = text
                 };
@@ -744,9 +738,8 @@ namespace Operating_Systems_Project
                     resultsTextBox.Height = desiredHeight;
                 }
 
-                //OS.AddToMainContainer(resultsTextBox);
                 resultsPanel.Controls.Add(resultsTextBox);
-                resultsPanel.Height += resultsTextBox.Height + verticalSpacing;
+                //resultsPanel.Height += resultsTextBox.Height + verticalSpacing;
                 currentY += resultsTextBox.Height + verticalSpacing;
             }
         }

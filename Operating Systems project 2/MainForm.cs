@@ -82,7 +82,6 @@ namespace Operating_Systems_Project
         {
             ClearContent();
             ButtonsPanel.Visible = false;
-            MainContainer.AutoScroll = true;
             WMI.ShowWMI(this);
         }
 
@@ -103,25 +102,6 @@ namespace Operating_Systems_Project
         public void AddToMainContainer(Control c)
         {
             MainContainer.Controls.Add(c);
-        }
-
-        public void ClearWMI()
-        {
-            if (MainContainer == null) return;
-
-            for (int i = MainContainer.Controls.Count - 1; i >= 0; i--)
-            {
-                Control ctrl = MainContainer.Controls[i];
-                if (ctrl != Menu_Closed &&
-                    ctrl != WMI.HeaderLabel &&
-                    ctrl != WMI.HeaderLabel &&
-                    ctrl != WMI.SubHeaderLabel &&
-                    ctrl != WMI.queryLabel &&
-                    ctrl != WMI.querySelector &&
-                    ctrl != WMI.runQueryButton)
-
-                    MainContainer.Controls.RemoveAt(i);
-            }
         }
 
         public void ClearContent()
