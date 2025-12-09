@@ -72,7 +72,7 @@
             // 
             // ButtonsPanel
             // 
-            this.ButtonsPanel.BackColor = System.Drawing.Color.Black;
+            this.ButtonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ButtonsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ButtonsPanel.Controls.Add(this.Menu_Button2);
             this.ButtonsPanel.Controls.Add(this.Hacker_Box);
@@ -119,7 +119,7 @@
             // 
             this.About_Button.BackColor = System.Drawing.Color.Transparent;
             this.About_Button.FlatAppearance.BorderSize = 0;
-            this.About_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(130)))));
+            this.About_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.About_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.About_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.About_Button.ForeColor = System.Drawing.Color.White;
@@ -139,7 +139,7 @@
             this.PowerOptions_Button.BackColor = System.Drawing.Color.Transparent;
             this.PowerOptions_Button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.PowerOptions_Button.FlatAppearance.BorderSize = 0;
-            this.PowerOptions_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(130)))));
+            this.PowerOptions_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.PowerOptions_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PowerOptions_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PowerOptions_Button.ForeColor = System.Drawing.Color.White;
@@ -157,7 +157,7 @@
             // 
             this.StopwatchTimer_Button.BackColor = System.Drawing.Color.Transparent;
             this.StopwatchTimer_Button.FlatAppearance.BorderSize = 0;
-            this.StopwatchTimer_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(130)))));
+            this.StopwatchTimer_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.StopwatchTimer_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.StopwatchTimer_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StopwatchTimer_Button.ForeColor = System.Drawing.Color.White;
@@ -175,7 +175,7 @@
             // 
             this.FolderWatcher_Button.BackColor = System.Drawing.Color.Transparent;
             this.FolderWatcher_Button.FlatAppearance.BorderSize = 0;
-            this.FolderWatcher_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(130)))));
+            this.FolderWatcher_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.FolderWatcher_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FolderWatcher_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FolderWatcher_Button.ForeColor = System.Drawing.Color.White;
@@ -194,7 +194,7 @@
             this.WMI_Button.BackColor = System.Drawing.Color.Transparent;
             this.WMI_Button.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.WMI_Button.FlatAppearance.BorderSize = 0;
-            this.WMI_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(130)))));
+            this.WMI_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.WMI_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WMI_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WMI_Button.ForeColor = System.Drawing.Color.White;
@@ -212,7 +212,7 @@
             // 
             this.FileReader_Button.BackColor = System.Drawing.Color.Transparent;
             this.FileReader_Button.FlatAppearance.BorderSize = 0;
-            this.FileReader_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(130)))));
+            this.FileReader_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.FileReader_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FileReader_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FileReader_Button.ForeColor = System.Drawing.Color.White;
@@ -230,7 +230,7 @@
             // 
             this.FileWriter_Button.BackColor = System.Drawing.Color.Transparent;
             this.FileWriter_Button.FlatAppearance.BorderSize = 0;
-            this.FileWriter_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(130)))));
+            this.FileWriter_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.FileWriter_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FileWriter_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FileWriter_Button.ForeColor = System.Drawing.Color.White;
