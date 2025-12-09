@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Management;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
@@ -187,68 +186,67 @@ namespace Operating_Systems_Project
         private static string GetComputerSystemInfo()
         {
             ManagementObjectSearcher Searcher = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystem");
-            StringBuilder info = new StringBuilder();
+            string info = string.Empty;
 
             foreach (ManagementObject obj in Searcher.Get())
             {
-                info.AppendLine($"{"Computer Name:",-22} {obj["Name"]}");
-                info.AppendLine($"{"Domain:",-22} {obj["Domain"]}");
-                info.AppendLine($"{"Model:",-22} {obj["Model"]}");
-                info.AppendLine($"{"Manufacturer:",-22} {obj["Manufacturer"]}");
-                info.AppendLine($"{"Total Physical Memory:",-22} {Math.Round(Convert.ToDouble(obj["TotalPhysicalMemory"]) / (1024.0 * 1024.0 * 1024.0), 2)} GB");
-                info.AppendLine($"{"System Type:",-22} {obj["SystemType"]}");
-                info.AppendLine($"{"Workgroup/Domain Join:",-22} {obj["Workgroup"]}");
-                info.AppendLine($"{"Type:",-22} {GetComputerType()}");
+                info += $"{"Computer Name:",-22} {obj["Name"]}\n";
+                info += $"{"Domain:",-22} {obj["Domain"]}\n";
+                info += $"{"Model:",-22} {obj["Model"]}\n";
+                info += $"{"Manufacturer:",-22} {obj["Manufacturer"]}\n";
+                info += $"{"Total Physical Memory:",-22} {Math.Round(Convert.ToDouble(obj["TotalPhysicalMemory"]) / (1024.0 * 1024.0 * 1024.0), 2)} GB\n";
+                info += $"{"System Type:",-22} {obj["SystemType"]}\n";
+                info += $"{"Workgroup/Domain Join:",-22} {obj["Workgroup"]}\n";
+                info += $"{"Type:",-22} {GetComputerType()}";
             }
-            return info.ToString();
+            return info;
         }
 
         private static string GetComputerType()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystem");
-            StringBuilder type = new StringBuilder(30);
-            type.Append("Type: ");
+            string type = "Type: ";
             foreach (ManagementObject obj in searcher.Get())
             {
                 switch (Convert.ToInt32(obj["DomainRole"]))
                 {
                     case 0:
-                        type.Append("Standalone Workstation");
+                        type += "Standalone Workstation";
                         break;
                     case 1:
-                        type.Append("Member Workstation"); // Represents a member of a domain
+                        type += "Member Workstation"; // Represents a member of a domain
                         break;
                     case 2:
-                        type.Append("Primary Domain Controller");
+                        type += "Primary Domain Controller";
                         break;
                     case 3:
-                        type.Append("Backup Domain Controller");
+                        type += "Backup Domain Controller";
                         break;
                     case 4:
-                        type.Append("Standalone Server"); // Standalone server that's not part of a domain
+                        type += "Standalone Server"; // Standalone server that's not part of a domain
                         break;
                     case 5:
-                        type.Append("Member Server"); // Server that is a member of a domain
+                        type += "Member Server"; // Server that is a member of a domain
                         break;
                     default:
-                        type.Append("Role Undefined (Code: " + Convert.ToInt32(obj["DomainRole"]) + ")");
+                        type += "Role Undefined (Code: " + Convert.ToInt32(obj["DomainRole"]) + ")";
                         break;
                 }
             }
-            return type.ToString();
+            return type;
         }
 
         private static string GetProductInfo()
         {
             ManagementObjectSearcher os = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystemProduct");
-            StringBuilder info = new StringBuilder();
+            string info = string.Empty;
 
             foreach (ManagementObject obj in os.Get())
             {
-                info.AppendLine($"{"Manufacturer:",-20} {obj["Vendor"]}");
-                info.AppendLine($"{"UUID:",-20} {obj["UUID"]}");
-                info.AppendLine($"{"Name:",-20} {obj["Name"]}");
-                info.Append($"{"Identifying Number:",-20} {obj["IdentifyingNumber"]}");
+                info += $"{"Manufacturer:",-20} {obj["Vendor"]}\n";
+                info += $"{"UUID:",-20} {obj["UUID"]}\n";
+                info += $"{"Name:",-20} {obj["Name"]}\n";
+                info += $"{"Identifying Number:",-20} {obj["IdentifyingNumber"]}";
             }
             return info.ToString();
         }
@@ -268,14 +266,14 @@ namespace Operating_Systems_Project
         private static string Get_OS_Info()
         {
             ManagementObjectSearcher osSearcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem");
-            StringBuilder info = new StringBuilder();
+            string info = string.Empty;
 
             foreach (ManagementObject obj in osSearcher.Get())
             {
-                info.AppendLine($"{"Name:",-20}{obj["Caption"]}");
-                info.AppendLine($"{"Version:",-20}{obj["Version"]}");
-                info.AppendLine($"{"Manufacturer:",-20}{obj["Manufacturer"]}");
-                info.Append($"{"Windows Directory:",-20}{obj["WindowsDirectory"]}");
+                info += $"{"Name:",-20}{obj["Caption"]}\n";
+                info += $"{"Version:",-20}{obj["Version"]}\n";
+                info += $"{"Manufacturer:",-20}{obj["Manufacturer"]}\n";
+                info += $"{"Windows Directory:",-20}{obj["WindowsDirectory"]}";
             }
             return info.ToString();
         }
@@ -321,13 +319,13 @@ namespace Operating_Systems_Project
         private static string GetMemoryInformation()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PerfFormattedData_PerfOS_Memory");
-            StringBuilder info = new StringBuilder();
+            string info = string.Empty;
             foreach (ManagementObject obj in searcher.Get())
             {
-                info.AppendLine($"{"Available MBs:",-20} {obj["AvailableMbytes"]}");
-                info.AppendLine($"{"Cache Bytes:",-20} {obj["CacheBytes"]}");
-                info.AppendLine($"{"Committed Bytes:",-20} {obj["CommittedBytes"]}");
-                info.Append($"{"Commit Limit:",-20} {obj["CommitLimit"]}");
+                info += $"{"Available MBs:",-20} {obj["AvailableMbytes"]}\n";
+                info += $"{"Cache Bytes:",-20} {obj["CacheBytes"]}\n";
+                info += $"{"Committed Bytes:",-20} {obj["CommittedBytes"]}\n";
+                info += $"{"Commit Limit:",-20} {obj["CommitLimit"]}";
             }
             return info.ToString();
         }
@@ -553,8 +551,7 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.FromArgb(230, 230, 130),
-                BackColor = Color.FromArgb(31, 31, 31),
+                ForeColor = Operating_Systems.YellowHeader,
             };
             Label SubHeaderLabel = new Label
             {
@@ -566,8 +563,7 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.FromArgb(230, 230, 230),
-                BackColor = Color.FromArgb(31, 31, 31),
+                ForeColor = Operating_Systems.TextPrimary,
             };
             OperatingSystems.AddToMainContainer(HeaderLabel);
             OperatingSystems.AddToMainContainer(SubHeaderLabel);
@@ -578,7 +574,7 @@ namespace Operating_Systems_Project
             {
                 Text = "Choose a query",
                 Font = new Font("Segoe UI Semibold", 11F),
-                ForeColor = Color.FromArgb(230, 230, 230),
+                ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
                 Location = new Point(0, currentY)
             };
@@ -591,9 +587,9 @@ namespace Operating_Systems_Project
                 Location = new Point(0, currentY),
                 Size = new Size(PanelWidth, 36),
                 BackColor = Operating_Systems.PanelColor,
-                ForeColor = Color.White,
+                ForeColor = Operating_Systems.TextPrimary,
                 FlatStyle = FlatStyle.Popup,
-                DropDownStyle = ComboBoxStyle.DropDownList,
+                DropDownStyle = ComboBoxStyle.DropDownList,                
             };
             OperatingSystems.AddToMainContainer(querySelector);
             currentY += querySelector.Height + VerticalSpacing;
@@ -645,17 +641,17 @@ namespace Operating_Systems_Project
             {
                 Location = new Point(0, currentY),
                 Size = new Size(PanelWidth, 360),
-                BackColor = Color.FromArgb(31, 31, 31),
-                Padding = new Padding(0, 10, 0, 10),
+                BackColor = Operating_Systems.PanelColor,
                 AutoScroll = true,
-                AutoScrollMinSize = new Size(0, 360)
+                AutoScrollMinSize = new Size(0, 360),
+                BorderStyle = BorderStyle.FixedSingle,
             };
             OperatingSystems.AddToMainContainer(resultsPanel);
 
             runQueryButton.Click += (s, e) =>
             {
                 resultsPanel.Controls.Clear();
-                resultsPanel.Height = 360;                 
+                resultsPanel.Height = 360;
                 ShowQuery(OperatingSystems, querySelector.SelectedItem.ToString());
             };
         }
@@ -674,11 +670,11 @@ namespace Operating_Systems_Project
                 throw new InvalidOperationException("The provided method must return string or string[] or IEnumerable<string>");
 
             const int containerWidth = 1103;
-            const int verticalSpacing = 12;
+            const int verticalSpacing = 3;
             const int lineHeight = 21;
             const int minLines = 1;
             const int maxHeight = 400;
-            int currentY = 10;
+            int currentY = 3;
 
             foreach (var raw in infoEnumerable)
             {
@@ -687,16 +683,16 @@ namespace Operating_Systems_Project
                 var resultsTextBox = new TextBox
                 {
                     Font = new Font("Segoe UI Semibold", 11F),
-                    ForeColor = Color.FromArgb(230, 230, 230),
-                    BackColor = Color.FromArgb(43, 43, 43),
+                    ForeColor = Color.White, // Color.FromArgb(0, 0, 0), 
+                    BackColor = Color.FromArgb(0, 30, 50), // 1- 59, 60, 109 // 2- AccentBlue // 3- White and black // 4- 108, 250, 125 // 5- 0, 30, 50
                     Multiline = true,
                     BorderStyle = BorderStyle.FixedSingle,
                     ReadOnly = true,
                     WordWrap = true,
                     ScrollBars = ScrollBars.None,
                     Margin = new Padding(30, 30, 30, 30),
-                    Width = containerWidth - 20,
-                    Location = new Point(0, currentY),
+                    Width = containerWidth - 25,
+                    Location = new Point(3, currentY),
                     Text = text
                 };
 
@@ -739,11 +735,15 @@ namespace Operating_Systems_Project
                 }
 
                 resultsPanel.Controls.Add(resultsTextBox);
-                //resultsPanel.Height += resultsTextBox.Height + verticalSpacing;
                 currentY += resultsTextBox.Height + verticalSpacing;
             }
+            Panel ExtraSpaceAtTheBottom = new Panel
+            {
+                Size = new Size(resultsPanel.Width - 100, 3),
+                Location = new Point(0, currentY - verticalSpacing),
+            };
+            resultsPanel.Controls.Add(ExtraSpaceAtTheBottom);
         }
-
 
         private static void ShowQuery(Operating_Systems OS, string query)
         {

@@ -87,28 +87,13 @@ namespace Operating_Systems_Project
             const int VerticalSpacing = 8;
             int currentY = 0;
 
-            FlowLayoutPanel centerFlowPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                BackColor = Operating_Systems.Background
-            };
-
-            Panel contentHolder = new Panel
-            {
-                Size = new Size(PanelWidth, 482),
-                BackColor = Operating_Systems.Background
-            };
-
             Label HeaderLabel = new Label
             {
                 Text = "📁 Folder Watcher",
                 Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
                 Location = new Point(457, 8),
                 AutoSize = true,
-                ForeColor = Color.FromArgb(230, 230, 130),
-                BackColor = Color.FromArgb(31, 31, 31),
+                ForeColor = Operating_Systems.YellowHeader,
             };
 
             Label SubHeaderLabel = new Label
@@ -117,8 +102,7 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
                 Location = new Point(414, 38),
                 AutoSize = true,
-                ForeColor = Color.FromArgb(230, 230, 230),
-                BackColor = Color.FromArgb(31, 31, 31),
+                ForeColor = Operating_Systems.TextPrimary,
             };
 
             currentY += 47;
@@ -147,7 +131,7 @@ namespace Operating_Systems_Project
             {
                 Font = new Font("Segoe UI", 10F),
                 ForeColor = Operating_Systems.TextPrimary,
-                BackColor = Operating_Systems.PanelColor,
+                BackColor = pathPanel.BackColor,
                 BorderStyle = BorderStyle.None,
                 Location = new Point(8, 6),
                 Size = new Size(PanelWidth - 120, 25),
@@ -231,7 +215,7 @@ namespace Operating_Systems_Project
                 Dock = DockStyle.Fill,
                 BorderStyle = BorderStyle.None,
                 ReadOnly = true,
-                BackColor = Operating_Systems.PanelColor,
+                BackColor = pathPanel.BackColor,
                 ForeColor = Operating_Systems.TextPrimary,
                 Text = "Click 'Start Monitoring' to begin tracking file system changes..." // include
             };
@@ -341,17 +325,14 @@ namespace Operating_Systems_Project
                 browseButton.Enabled = true;
                 includeSubdirCheck.Enabled = true;
             };
-
-            contentHolder.Controls.Add(HeaderLabel);
-            contentHolder.Controls.Add(SubHeaderLabel);
-            contentHolder.Controls.Add(labelInputPath);
-            contentHolder.Controls.Add(pathPanel);
-            contentHolder.Controls.Add(optionsFlow);
-            contentHolder.Controls.Add(contentPanel);
-            contentHolder.Controls.Add(buttonFlow);
-
-            centerFlowPanel.Controls.Add(contentHolder);
-            OperatingSystems.AddToMainContainer(centerFlowPanel);
+            OperatingSystems.AddToMainContainer(HeaderLabel);
+            OperatingSystems.AddToMainContainer(SubHeaderLabel);
+            OperatingSystems.AddToMainContainer(labelInputPath);
+            OperatingSystems.AddToMainContainer(pathPanel);
+            OperatingSystems.AddToMainContainer(optionsFlow);
+            OperatingSystems.AddToMainContainer(contentPanel);
+            OperatingSystems.AddToMainContainer(buttonFlow);
+            pathTextBox.Focus();
         }
 
         private static void BrowseForFolder(TextBox pathTextBox)

@@ -30,35 +30,7 @@ namespace Operating_Systems_Project
             int contentWidth = (int)(Operating_Systems.formWidth * 0.95);
             int rowHeight = 55;
             Color cardColor = Operating_Systems.Background;
-
-            FlowLayoutPanel mainFlow = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                BackColor = Operating_Systems.Background,
-                AutoScroll = false
-            };
-
-            // --- Content Panel ---
-            Panel contentPanel = new Panel
-            {
-                Width = contentWidth,
-                BackColor = cardColor,
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink,
-            };
-
-            // keep content centered when mainFlow resizes
-            void RecenterContent()
-            {
-                int left = Math.Max(0, (mainFlow.ClientSize.Width - contentPanel.Width) / 2);
-            }
-            mainFlow.Resize += (s, e) => RecenterContent();
-
-            int currentY = 40;
-
-            // --- 1. Header Section (Logo + Title + Top Buttons) ---
+            int currentY = 30;
 
             // Logo box
             Panel logoBox = new Panel
@@ -86,7 +58,7 @@ namespace Operating_Systems_Project
                 Dock = DockStyle.Fill
             };
             logoBox.Controls.Add(initials);
-            contentPanel.Controls.Add(logoBox);
+            OperatingSystems.AddToMainContainer(logoBox);
 
             // Title
             Label appName = new Label
@@ -97,7 +69,7 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 Location = new Point(90, currentY)
             };
-            contentPanel.Controls.Add(appName);
+            OperatingSystems.AddToMainContainer(appName);
 
             // Version
             Label versionLabel = new Label
@@ -108,7 +80,7 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 Location = new Point(92, currentY + 32)
             };
-            contentPanel.Controls.Add(versionLabel);
+            OperatingSystems.AddToMainContainer(versionLabel);
 
             // Top Right Buttons (Fixed Widths to prevent "Check..." cutoff)
             Button btnUpdate = CreateLinkButton("Check Updates", new Point(contentWidth - 140, currentY + 10));
@@ -121,8 +93,8 @@ namespace Operating_Systems_Project
             btnCopyVer.Click += (s, e) => { Clipboard.SetText(APP_VERSION); MessageBox.Show("Version copied."); };
             btnUpdate.Click += (s, e) => MessageBox.Show("You are on the latest version.");
 
-            contentPanel.Controls.Add(btnUpdate);
-            contentPanel.Controls.Add(btnCopyVer);
+            OperatingSystems.AddToMainContainer(btnUpdate);
+            OperatingSystems.AddToMainContainer(btnCopyVer);
 
             currentY += 80; // Move down past header
 
@@ -136,12 +108,12 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 Location = new Point(20, currentY)
             };
-            contentPanel.Controls.Add(infoLabel);
+            OperatingSystems.AddToMainContainer(infoLabel);
             currentY += infoLabel.Height + 20;
 
             // Divider Line
             Panel divider = new Panel { Height = 1, Width = contentWidth - 40, BackColor = Color.FromArgb(60, 60, 60), Location = new Point(20, currentY) };
-            contentPanel.Controls.Add(divider);
+            OperatingSystems.AddToMainContainer(divider);
             currentY += 20;
 
             currentY -= 7;
@@ -215,7 +187,7 @@ namespace Operating_Systems_Project
                 row.MouseEnter += (s, e) => row.BackColor = Color.FromArgb(35, 35, 35);
                 row.MouseLeave += (s, e) => row.BackColor = Color.Transparent;
 
-                contentPanel.Controls.Add(row);
+                OperatingSystems.AddToMainContainer(row);
                 currentY += rowHeight;
             }
 
@@ -229,13 +201,7 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 Location = new Point(20, currentY)
             };
-            contentPanel.Controls.Add(footer);
-
-            // Initial recenter, add content and attach resize handler
-            RecenterContent();
-            mainFlow.Controls.Add(contentPanel);
-            OperatingSystems.AddToMainContainer(mainFlow);
-
+            OperatingSystems.AddToMainContainer(footer);
         }
 
 

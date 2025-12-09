@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
@@ -13,16 +14,17 @@ namespace Operating_Systems_Project
         /// </summary>
 
         // جميع الألوان المستخدمة في المشروع ، بما في ذلك الألوان المستخدمة في الملفات الأخرى
-        public static readonly Color Background = Color.FromArgb(31, 31, 31);
-        public static readonly Color PanelColor = Color.FromArgb(43, 43, 43);
-        public static readonly Color TextPrimary = Color.FromArgb(230, 230, 230);
+        public static readonly Color Background = Color.FromArgb(32, 32, 32);
+        public static readonly Color PanelColor = Color.FromArgb(43,43,43);
+        public static readonly Color TextPrimary = Color.FromArgb(255,255,255);
         public static readonly Color TextSecondary = Color.FromArgb(160, 160, 160);
         public static readonly Color AccentGreen = Color.FromArgb(40, 167, 69);
         public static readonly Color AccentBlue = Color.FromArgb(0, 122, 204);
         public static readonly Color SuccessColor = Color.FromArgb(40, 200, 90);
         public static readonly Color ErrorColor = Color.FromArgb(220, 53, 69);
         public static readonly Color NeutralColor = Color.FromArgb(108, 117, 125);
-        public static readonly Color HighlightedButton = Color.FromArgb(61, 61, 61);
+        public static readonly Color HighlightedButton = Color.FromArgb(230, 230, 130);
+        public static readonly Color YellowHeader = Color.FromArgb(230, 230, 130);
 
         public static readonly Size ContentSize = new Size(1152, 592);
         public static readonly int ContentWidth = 1110;
@@ -36,36 +38,50 @@ namespace Operating_Systems_Project
         public Operating_Systems()
         {
             InitializeComponent();
-            FileWriter.ShowFileWriter(this);
         }
 
-        private void Menu_Opened_Click(object sender, EventArgs e)
+        private void Operating_Systems_Load(object sender, EventArgs e)
+        {            
+            Splash.ShowSplash();
+
+            //FileWriter.ShowFileWriter(this);
+            //FileReader.ShowFileReader(this);
+            //FolderMonitor.ShowFolderMonitor(this);
+            //Timer.ShowTimer(this);
+            WMI.ShowWMI(this);
+            //PowerOptions.ShowPowerOption(this);
+            //About.ShowAbout(this);
+        }
+        private void Hacker_Box_Click(object sender, EventArgs e)
         {
-            ButtonsPanel.Visible = false;
+            Splash.ShowSplash();
         }
 
-        private void Menu_Closed_Click(object sender, EventArgs e)
+        private void Menu_Button_Click(object sender, EventArgs e)
         {
             ButtonsPanel.Visible = true;
         }
-
+        private void Menu_Button2_Click(object sender, EventArgs e)
+        {
+            ButtonsPanel.Visible = false;
+        }
         private void FileWriter_Button_Click(object sender, EventArgs e)
         {
             ClearContent();
-            ButtonsPanel.Visible = false;            
+            ButtonsPanel.Visible = false;
             FileWriter.ShowFileWriter(this);
         }
         private void FileReader_Button_Click(object sender, EventArgs e)
         {
             ClearContent();
-            ButtonsPanel.Visible = false;            
+            ButtonsPanel.Visible = false;
             FileReader.ShowFileReader(this);
         }
 
         private void FolderWatcher_Button_Click(object sender, EventArgs e)
         {
             ClearContent();
-            ButtonsPanel.Visible = false;            
+            ButtonsPanel.Visible = false;
             FolderMonitor.ShowFolderMonitor(this);
         }
 
@@ -88,14 +104,14 @@ namespace Operating_Systems_Project
         private void PowerOptions_Button_Click(object sender, EventArgs e)
         {
             ClearContent();
-            ButtonsPanel.Visible = false;            
+            ButtonsPanel.Visible = false;
             PowerOptions.ShowPowerOption(this);
         }
 
         private void About_Button_Click(object sender, EventArgs e)
         {
             ClearContent();
-            ButtonsPanel.Visible = false;            
+            ButtonsPanel.Visible = false;
             About.ShowAbout(this);
         }
 
@@ -111,7 +127,7 @@ namespace Operating_Systems_Project
             for (int i = MainContainer.Controls.Count - 1; i >= 0; i--)
             {
                 Control ctrl = MainContainer.Controls[i];
-                if (ctrl != Menu_Closed) MainContainer.Controls.RemoveAt(i);  // ✅ keep.
+                if (ctrl != Menu_Button) MainContainer.Controls.RemoveAt(i);  // ✅ keep.
             }
         }
     }

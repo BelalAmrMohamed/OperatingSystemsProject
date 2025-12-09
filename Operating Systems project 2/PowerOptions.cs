@@ -91,14 +91,7 @@ namespace Operating_Systems_Project
         #endregion
 
         public static void ShowPowerOption(Operating_Systems OperatingSystems)
-        {            
-            // Root panel
-            Panel mainPanel = new Panel
-            {
-                Dock = DockStyle.Fill,
-                BackColor = Operating_Systems.Background
-            };
-
+        {   
             const int PanelWidth = 1110;
             int currentY = 62;
 
@@ -112,10 +105,9 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.FromArgb(230, 230, 130),
-                BackColor = Color.FromArgb(31, 31, 31),
+                ForeColor = Operating_Systems.YellowHeader,
             };
-            mainPanel.Controls.Add(HeaderLabel);
+            OperatingSystems.AddToMainContainer(HeaderLabel);
 
             Label SubHeaderLabel = new Label
             {
@@ -128,9 +120,8 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.FromArgb(230, 230, 230),
-                BackColor = Color.FromArgb(31, 31, 31),
             };
-            mainPanel.Controls.Add(SubHeaderLabel);
+            OperatingSystems.AddToMainContainer(SubHeaderLabel);
 
             Label WarningLabel = new Label
             {             
@@ -143,9 +134,8 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.IndianRed,
-                BackColor = Color.FromArgb(31, 31, 31),
             };
-            mainPanel.Controls.Add(WarningLabel);
+            OperatingSystems.AddToMainContainer(WarningLabel);
 
             // --- Button container ---
             FlowLayoutPanel buttonFlow = new FlowLayoutPanel
@@ -154,7 +144,6 @@ namespace Operating_Systems_Project
                 Size = new Size(PanelWidth, 100),
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
-                BackColor = Operating_Systems.Background,
                 AutoSize = false
             };
 
@@ -170,9 +159,9 @@ namespace Operating_Systems_Project
             buttonFlow.Controls.Add(hibernateBtn);
             buttonFlow.Controls.Add(sleepBtn);
 
-            mainPanel.Controls.Add(buttonFlow);
-            OperatingSystems.AddToMainContainer(mainPanel);
+            OperatingSystems.AddToMainContainer(buttonFlow);
         }
+
         public static Button CreateStyledButton(string text, Size size, Color backgroundColor, Action action)
         {
             Color hoverColor = ControlPaint.Dark(backgroundColor, 0.15f);

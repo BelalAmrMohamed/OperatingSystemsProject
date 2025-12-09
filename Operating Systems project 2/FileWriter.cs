@@ -74,27 +74,6 @@ namespace Operating_Systems_Project
             const int VerticalSpacing = 16;
             int currentY = 0; // Tracks vertical position            
 
-            // Main Flow Panel for Centering Content
-            // We use a FlowLayoutPanel here to easily center a single wide panel.
-            FlowLayoutPanel centerFlowPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                // Align content to center horizontally
-                Padding = new Padding(0, 0, 0, 0),
-                BackColor = Operating_Systems.Background,
-                AutoScroll = false
-            };
-
-            // Main Panel (Acts as the fixed-width content holder)
-            Panel contentHolder = new Panel
-            {
-                Size = new Size(PanelWidth, 750), // Set a fixed height that accommodates all elements
-                BackColor = Operating_Systems.Background,
-                Margin = new Padding(0)
-            };
-
             Label HeaderLabel = new Label
             {
                 Text = "📝 File Writer",
@@ -105,8 +84,7 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.FromArgb(230, 230, 130),
-                BackColor = Color.FromArgb(31, 31, 31),
+                ForeColor = Operating_Systems.YellowHeader,
             };
             Label SubHeaderLabel = new Label
             {
@@ -118,8 +96,7 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.FromArgb(230, 230, 230),
-                BackColor = Color.FromArgb(31, 31, 31),
+                ForeColor = Operating_Systems.TextPrimary,
             };
             currentY += 32;
 
@@ -140,7 +117,7 @@ namespace Operating_Systems_Project
             {
                 Location = new Point(0, currentY),
                 Size = new Size(PanelWidth, 36),  // Full width -> Best!!
-                BackColor = Color.FromArgb(43, 43, 43),
+                BackColor = Operating_Systems.PanelColor,
                 BorderStyle = BorderStyle.FixedSingle,
                 Padding = new Padding(8, 4, 8, 4)
             };
@@ -163,7 +140,7 @@ namespace Operating_Systems_Project
                 Name = "pathTextBox",
                 Font = new Font("Segoe UI", 10F),
                 ForeColor = Operating_Systems.TextPrimary,
-                BackColor = Operating_Systems.PanelColor,
+                BackColor = pathPanel.BackColor,
                 BorderStyle = BorderStyle.None,
                 Location = new Point(8, 8),
                 Size = new Size(PanelWidth - browseButton.Width - 14, 25),
@@ -194,7 +171,7 @@ namespace Operating_Systems_Project
             {
                 Location = new Point(0, currentY),
                 Size = new Size(PanelWidth, ContentPanelHeight - 30),
-                BackColor = Color.FromArgb(43, 43, 43),
+                BackColor = Operating_Systems.PanelColor,
                 BorderStyle = BorderStyle.FixedSingle,
                 Padding = new Padding(8)
             };
@@ -202,8 +179,8 @@ namespace Operating_Systems_Project
             TextBox contentTextBox = new TextBox
             {
                 Font = new Font("Segoe UI Semibold", 11F),
-                ForeColor = Color.FromArgb(230, 230, 230),
-                BackColor = Color.FromArgb(43, 43, 43),
+                ForeColor = Operating_Systems.TextPrimary,
+                BackColor = contentPanel.BackColor,
                 Multiline = true,
                 BorderStyle = BorderStyle.None,
                 ScrollBars = ScrollBars.None,
@@ -309,22 +286,14 @@ namespace Operating_Systems_Project
             clearButton.Click += ClearControls.Invoke;
 
             // --- Add Controls to Holder ---
-
-            contentHolder.Controls.AddRange(new Control[]
-            {
-                HeaderLabel,
-                SubHeaderLabel,
-            labelInputPath,
-            pathPanel,
-            contentLabel,
-            contentPanel,
-            charCountLabel,
-            buttonFlow
-            });
-
-            // --- Final Assembly ---
-            centerFlowPanel.Controls.Add(contentHolder);
-            OperatingSystems.AddToMainContainer(centerFlowPanel);
+            OperatingSystems.AddToMainContainer(HeaderLabel);
+            OperatingSystems.AddToMainContainer(SubHeaderLabel);
+            OperatingSystems.AddToMainContainer(labelInputPath);
+            OperatingSystems.AddToMainContainer(pathPanel);
+            OperatingSystems.AddToMainContainer(contentLabel);
+            OperatingSystems.AddToMainContainer(contentPanel);
+            OperatingSystems.AddToMainContainer(charCountLabel);
+            OperatingSystems.AddToMainContainer(buttonFlow);
             pathTextBox.Focus();
         }
 

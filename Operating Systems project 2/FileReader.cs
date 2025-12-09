@@ -115,25 +115,6 @@ namespace Operating_Systems_Project
             const int VerticalSpacing = 16;
             int currentY = 0;
 
-            // Main Flow Panel for Centering Content (same approach as FileWriter)
-            FlowLayoutPanel centerFlowPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                Padding = new Padding(0),
-                BackColor = Operating_Systems.Background,
-                AutoScroll = false
-            };
-
-            // Main content holder (fixed width)
-            Panel contentHolder = new Panel
-            {
-                Size = new Size(PanelWidth, 500),
-                BackColor = Operating_Systems.Background,
-                Margin = new Padding(0)
-            };
-
             Label HeaderLabel = new Label
             {
                 Text = "📖 File Reader",
@@ -144,8 +125,7 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.FromArgb(230, 230, 130),
-                BackColor = Color.FromArgb(31, 31, 31),
+                ForeColor = Operating_Systems.YellowHeader,
             };
             Label SubHeaderLabel = new Label
             {
@@ -157,8 +137,7 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.FromArgb(230, 230, 230),
-                BackColor = Color.FromArgb(31, 31, 31),
+                ForeColor = Operating_Systems.TextPrimary,
             };
             currentY += 32;
 
@@ -188,7 +167,7 @@ namespace Operating_Systems_Project
                 Text = "Browse",
                 Size = new Size(90, 28),
                 Location = new Point(PanelWidth - 95, 3),
-                BackColor = Operating_Systems.AccentBlue,
+                BackColor = Operating_Systems.AccentGreen,
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 9F),
@@ -201,7 +180,7 @@ namespace Operating_Systems_Project
                 Name = "pathTextBox",
                 Font = new Font("Segoe UI", 10F),
                 ForeColor = Operating_Systems.TextPrimary,
-                BackColor = Operating_Systems.PanelColor,
+                BackColor = pathPanel.BackColor,
                 BorderStyle = BorderStyle.None,
                 Location = new Point(8, 8),
                 Size = new Size(PanelWidth - browseButton.Width - 14, 25),
@@ -359,22 +338,14 @@ namespace Operating_Systems_Project
                 contentTextBox.ForeColor = Operating_Systems.TextPrimary;
             };
 
-            // Add controls to holder
-            contentHolder.Controls.AddRange(new Control[]
-            {
-                HeaderLabel,
-                SubHeaderLabel,
-                labelInputPath,
-                pathPanel,
-                fileInfoPanel,
-                contentLabel,
-                contentPanel,
-                buttonFlow
-            });
-
-            centerFlowPanel.Controls.Add(contentHolder);
-            OperatingSystems.AddToMainContainer(centerFlowPanel);
-
+            OperatingSystems.AddToMainContainer(HeaderLabel);
+            OperatingSystems.AddToMainContainer(SubHeaderLabel);
+            OperatingSystems.AddToMainContainer(labelInputPath);
+            OperatingSystems.AddToMainContainer(pathPanel);
+            OperatingSystems.AddToMainContainer(fileInfoPanel);
+            OperatingSystems.AddToMainContainer(contentLabel);
+            OperatingSystems.AddToMainContainer(contentPanel);
+            OperatingSystems.AddToMainContainer(buttonFlow);
             pathTextBox.Focus();
         }
 
