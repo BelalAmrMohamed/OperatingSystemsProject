@@ -121,7 +121,7 @@
             this.About_Button.FlatAppearance.BorderSize = 0;
             this.About_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.About_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.About_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.About_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.About_Button.ForeColor = System.Drawing.Color.White;
             this.About_Button.Location = new System.Drawing.Point(3, 358);
             this.About_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -141,7 +141,7 @@
             this.PowerOptions_Button.FlatAppearance.BorderSize = 0;
             this.PowerOptions_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.PowerOptions_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.PowerOptions_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PowerOptions_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PowerOptions_Button.ForeColor = System.Drawing.Color.White;
             this.PowerOptions_Button.Location = new System.Drawing.Point(3, 305);
             this.PowerOptions_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -159,7 +159,7 @@
             this.StopwatchTimer_Button.FlatAppearance.BorderSize = 0;
             this.StopwatchTimer_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.StopwatchTimer_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.StopwatchTimer_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StopwatchTimer_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StopwatchTimer_Button.ForeColor = System.Drawing.Color.White;
             this.StopwatchTimer_Button.Location = new System.Drawing.Point(3, 199);
             this.StopwatchTimer_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -177,7 +177,7 @@
             this.FolderWatcher_Button.FlatAppearance.BorderSize = 0;
             this.FolderWatcher_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.FolderWatcher_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.FolderWatcher_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FolderWatcher_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FolderWatcher_Button.ForeColor = System.Drawing.Color.White;
             this.FolderWatcher_Button.Location = new System.Drawing.Point(3, 146);
             this.FolderWatcher_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -196,7 +196,7 @@
             this.WMI_Button.FlatAppearance.BorderSize = 0;
             this.WMI_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.WMI_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.WMI_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WMI_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WMI_Button.ForeColor = System.Drawing.Color.White;
             this.WMI_Button.Location = new System.Drawing.Point(3, 252);
             this.WMI_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -214,7 +214,7 @@
             this.FileReader_Button.FlatAppearance.BorderSize = 0;
             this.FileReader_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.FileReader_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.FileReader_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FileReader_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FileReader_Button.ForeColor = System.Drawing.Color.White;
             this.FileReader_Button.Location = new System.Drawing.Point(3, 93);
             this.FileReader_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -232,7 +232,7 @@
             this.FileWriter_Button.FlatAppearance.BorderSize = 0;
             this.FileWriter_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.FileWriter_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.FileWriter_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FileWriter_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FileWriter_Button.ForeColor = System.Drawing.Color.White;
             this.FileWriter_Button.Location = new System.Drawing.Point(3, 40);
             this.FileWriter_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -248,11 +248,11 @@
             // 
             this.OperatingSystemsHeader.AutoSize = true;
             this.OperatingSystemsHeader.BackColor = System.Drawing.Color.Transparent;
-            this.OperatingSystemsHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OperatingSystemsHeader.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OperatingSystemsHeader.ForeColor = System.Drawing.Color.White;
-            this.OperatingSystemsHeader.Location = new System.Drawing.Point(58, 509);
+            this.OperatingSystemsHeader.Location = new System.Drawing.Point(73, 509);
             this.OperatingSystemsHeader.Name = "OperatingSystemsHeader";
-            this.OperatingSystemsHeader.Size = new System.Drawing.Size(234, 29);
+            this.OperatingSystemsHeader.Size = new System.Drawing.Size(172, 25);
             this.OperatingSystemsHeader.TabIndex = 4;
             this.OperatingSystemsHeader.Text = "Operating Systems";
             // 

@@ -544,7 +544,8 @@ namespace Operating_Systems_Project
             Label HeaderLabel = new Label
             {
                 Text = "💻 WMI",
-                Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
+                Font = Operating_Systems.MainFont, // new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
+                
                 MinimumSize = new Size(200, 30),
                 Location = new Point(457, 8),
                 Size = new Size(200, 30),

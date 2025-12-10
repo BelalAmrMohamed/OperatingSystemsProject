@@ -26,6 +26,9 @@ namespace Operating_Systems_Project
         public static readonly Color HighlightedButton = Color.FromArgb(230, 230, 130);
         public static readonly Color YellowHeader = Color.FromArgb(230, 230, 130);
 
+        // Main Font
+        public static readonly Font MainFont = new Font("Segoe UI Semibold", 13F, FontStyle.Bold);
+
         // Dimensions
         public static readonly Size ContentSize = new Size(1152, 592);
         public static readonly int ContentWidth = 1110;
@@ -80,7 +83,7 @@ namespace Operating_Systems_Project
             }
         }
         #endregion
-        
+
         private void Operating_Systems_Load(object sender, EventArgs e)
         {
             Splash.ShowSplash();
@@ -158,14 +161,6 @@ namespace Operating_Systems_Project
         }
 
         public void ClearContent()
-        {
-            if (MainContainer == null) return;
-
-            for (int i = MainContainer.Controls.Count - 1; i >= 0; i--)
-            {
-                Control ctrl = MainContainer.Controls[i];
-                if (ctrl != Menu_Button) MainContainer.Controls.RemoveAt(i);
-            }
-        }
+        { MainContainer.Controls.Clear(); }
     }
 }
