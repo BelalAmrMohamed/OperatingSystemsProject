@@ -9,7 +9,7 @@ namespace Operating_Systems_Project
     {
         // ---- Constants ----
         // Use a shortened version of app version format. "1.0" instead of "1.0.0", which stand for "MAJOR.MINOR.PATCH"
-        private const string APP_VERSION = "4.2.1";
+        private static string _APP_VERSION = Operating_Systems.APP_VERSION;
         private const string PRIMARY_ACCENT_COLOR = "#4A9EFF";
 
         private static readonly (string Name, string Email)[] DEVELOPERS =
@@ -72,7 +72,7 @@ namespace Operating_Systems_Project
             // Version
             Label versionLabel = new Label
             {
-                Text = $"Version {APP_VERSION}",
+                Text = $"Version {_APP_VERSION}",
                 Font = new Font("Segoe UI", 10F),
                 ForeColor = Operating_Systems.TextSecondary,
                 AutoSize = true,
@@ -88,7 +88,7 @@ namespace Operating_Systems_Project
             btnCopyVer.Size = new Size(100, 30);
 
             // Events
-            btnCopyVer.Click += (s, e) => { Clipboard.SetText(APP_VERSION); MessageBox.Show("Version copied."); };
+            btnCopyVer.Click += (s, e) => { Clipboard.SetText(_APP_VERSION); MessageBox.Show("Version copied."); };
             btnUpdate.Click += (s, e) => MessageBox.Show("You are on the latest version.");
 
             OperatingSystems.AddToMainContainer(btnUpdate);

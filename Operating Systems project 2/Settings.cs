@@ -24,7 +24,7 @@ namespace Operating_Systems_Project
             // 1. Header Title
             headerLabel = new Label
             {
-                Text = "Settings",
+                Text = "Settings (Experimental)",
                 Font = new Font("Segoe UI", 20F, FontStyle.Bold),
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
