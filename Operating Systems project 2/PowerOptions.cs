@@ -105,7 +105,7 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Operating_Systems.YellowHeader,
+                ForeColor = Operating_Systems.HeaderColor,
             };
             OperatingSystems.AddToMainContainer(HeaderLabel);
 
@@ -119,7 +119,7 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.FromArgb(230, 230, 230),
+                ForeColor = Operating_Systems.TextPrimary,
             };
             OperatingSystems.AddToMainContainer(SubHeaderLabel);
 

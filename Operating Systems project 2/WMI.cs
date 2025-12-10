@@ -552,7 +552,7 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Operating_Systems.YellowHeader,
+                ForeColor = Operating_Systems.HeaderColor,
             };
             Label SubHeaderLabel = new Label
             {
@@ -684,8 +684,8 @@ namespace Operating_Systems_Project
                 var resultsTextBox = new TextBox
                 {
                     Font = new Font("Segoe UI Semibold", 11F),
-                    ForeColor = Color.White, // Color.FromArgb(0, 0, 0), 
-                    BackColor = Color.FromArgb(0, 30, 50), // 1- 59, 60, 109 // 2- AccentBlue // 3- White and black // 4- 108, 250, 125 // 5- 0, 30, 50
+                    ForeColor = Operating_Systems.TextPrimary,
+                    BackColor = Operating_Systems.WMISmallPanelColor, // 1- 59, 60, 109 // 2- AccentBlue // 3- White and black // 4- 108, 250, 125 // 5- 0, 30, 50
                     Multiline = true,
                     BorderStyle = BorderStyle.FixedSingle,
                     ReadOnly = true,

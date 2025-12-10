@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
@@ -14,17 +16,47 @@ namespace Operating_Systems_Project
         /// </summary>
 
         // ====== Dark Theme Colors ======
-        public static readonly Color Background = Color.FromArgb(32, 32, 32);
-        public static readonly Color PanelColor = Color.FromArgb(43, 43, 43);
-        public static readonly Color TextPrimary = Color.FromArgb(255, 255, 255);
-        public static readonly Color TextSecondary = Color.FromArgb(160, 160, 160);
-        public static readonly Color AccentGreen = Color.FromArgb(40, 167, 69);
-        public static readonly Color AccentBlue = Color.FromArgb(0, 122, 204);
-        public static readonly Color SuccessColor = Color.FromArgb(40, 200, 90);
-        public static readonly Color ErrorColor = Color.FromArgb(220, 53, 69);
-        public static readonly Color NeutralColor = Color.FromArgb(108, 117, 125);
-        public static readonly Color HighlightedButton = Color.FromArgb(230, 230, 130);
-        public static readonly Color YellowHeader = Color.FromArgb(230, 230, 130);
+        public static Color Background = Color.FromArgb(32, 32, 32);
+        public static Color ButtonsPanelBackground = Color.FromArgb(25,25,25);
+        public static Color PanelColor = Color.FromArgb(43, 43, 43);
+        public static Color WMISmallPanelColor = Color.FromArgb(0, 30, 50);
+        public static Color TextPrimary = Color.FromArgb(255, 255, 255);
+        public static Color TextSecondary = Color.FromArgb(160, 160, 160);
+        public static Color AccentGreen = Color.FromArgb(40, 167, 69);
+        public static Color AccentBlue = Color.FromArgb(0, 122, 204);
+        public static Color SuccessColor = Color.FromArgb(40, 200, 90);
+        public static Color ErrorColor = Color.FromArgb(220, 53, 69);
+        public static Color NeutralColor = Color.FromArgb(108, 117, 125);
+        public static Color HighlightedButton = Color.FromArgb(230, 230, 130);
+        public static Color HeaderColor = Color.FromArgb(230, 230, 130);
+        public static Color DarkButton = Color.FromArgb(30, 32, 34);
+
+        public static void RefreshBackgroundColor(Operating_Systems os)
+        { 
+            os.BackColor = Background;
+            os.ButtonsPanel.BackColor = ButtonsPanelBackground;
+
+            os.FileWriter_Button.ForeColor = TextPrimary;
+            os.FileReader_Button.ForeColor = TextPrimary;
+            os.FolderWatcher_Button.ForeColor = TextPrimary;
+            os.StopwatchTimer_Button.ForeColor = TextPrimary;
+            os.WMI_Button.ForeColor = TextPrimary;
+            os.PowerOptions_Button.ForeColor = TextPrimary;
+            os.About_Button.ForeColor = TextPrimary;
+        }
+
+        public void ToggleBackgroundImage(bool EnableImage = false)
+        {
+            if (!EnableImage) this.BackgroundImage = null;
+            else this.BackgroundImage = global::Operating_Systems_project_2.Properties.Resources.red_background2;
+        }
+
+        public bool IsBackgroundImageEnabled()
+        {
+            if (this.BackgroundImage == null)
+                return false;
+            else return true;
+        }
 
         // Main Font
         public static readonly Font MainFont = new Font("Segoe UI Semibold", 13F, FontStyle.Bold);
@@ -87,13 +119,9 @@ namespace Operating_Systems_Project
         private void Operating_Systems_Load(object sender, EventArgs e)
         {
             Splash.ShowSplash();
-
-            WMI.ShowWMI(this);
-        }
-
-        private void Hacker_Box_Click(object sender, EventArgs e)
-        {
-            Splash.ShowSplash();
+            //WMI.ShowWMI(this);
+            About.ShowAbout(this);
+            ToggleBackgroundImage();
         }
 
         private void Menu_Button_Click(object sender, EventArgs e)
@@ -147,6 +175,14 @@ namespace Operating_Systems_Project
             ButtonsPanel.Visible = false;
             PowerOptions.ShowPowerOption(this);
         }
+        private void Hacker_Box_Click(object sender, EventArgs e)
+        {
+            Splash.ShowSplash();
+
+            ClearContent();
+            ButtonsPanel.Visible = false;
+            Settings.ShowSettings(this);
+        }
 
         private void About_Button_Click(object sender, EventArgs e)
         {
@@ -155,6 +191,7 @@ namespace Operating_Systems_Project
             About.ShowAbout(this);
         }
 
+        // Helper methods
         public void AddToMainContainer(Control c)
         {
             MainContainer.Controls.Add(c);

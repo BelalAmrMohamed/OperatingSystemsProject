@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Drawing;
-using System.Reflection;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -11,7 +9,7 @@ namespace Operating_Systems_Project
     {
         // ---- Constants ----
         // Use a shortened version of app version format. "1.0" instead of "1.0.0", which stand for "MAJOR.MINOR.PATCH"
-        private const string APP_VERSION = "2.4";
+        private const string APP_VERSION = "4.2.1";
         private const string PRIMARY_ACCENT_COLOR = "#4A9EFF";
 
         private static readonly (string Name, string Email)[] DEVELOPERS =
@@ -52,7 +50,7 @@ namespace Operating_Systems_Project
             {
                 Text = "OS",
                 Font = new Font("Segoe UI Semibold", 18F),
-                ForeColor = Color.White,
+                ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = false,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Dock = DockStyle.Fill
@@ -65,7 +63,7 @@ namespace Operating_Systems_Project
             {
                 Text = "Operating Systems App",
                 Font = new Font("Segoe UI", 16F, FontStyle.Bold),
-                ForeColor = Color.White,
+                ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
                 Location = new Point(90, currentY)
             };
@@ -103,7 +101,7 @@ namespace Operating_Systems_Project
             {
                 Text = "A robust utility for File I/O operations, Real-time Folder Monitoring, Precision Stopwatch, WMI System Queries, and advanced Power Management control.",
                 Font = new Font("Segoe UI", 11F), // Slightly larger font
-                ForeColor = Color.FromArgb(200, 200, 200),
+                ForeColor = Operating_Systems.TextSecondary,
                 MaximumSize = new Size(contentWidth - 40, 0),
                 AutoSize = true,
                 Location = new Point(20, currentY)
@@ -134,7 +132,7 @@ namespace Operating_Systems_Project
                 {
                     Text = dev.Name,
                     Font = new Font("Segoe UI", 10F, FontStyle.Bold),
-                    ForeColor = Color.White,
+                    ForeColor = Operating_Systems.TextPrimary,
                     Location = new Point(0, 15), // Vertically centered roughly
                     AutoSize = true
                 };
@@ -183,10 +181,6 @@ namespace Operating_Systems_Project
                 row.Controls.Add(btnContact);
                 row.Controls.Add(btnCopy);
 
-                // Add nice hover effect for the row
-                row.MouseEnter += (s, e) => row.BackColor = Color.FromArgb(35, 35, 35);
-                row.MouseLeave += (s, e) => row.BackColor = Color.Transparent;
-
                 OperatingSystems.AddToMainContainer(row);
                 currentY += rowHeight;
             }
@@ -212,7 +206,7 @@ namespace Operating_Systems_Project
                 Text = text,
                 FlatStyle = FlatStyle.Flat,
                 FlatAppearance = { BorderSize = 0, MouseOverBackColor = Color.FromArgb(40, 40, 40) },
-                BackColor = Color.FromArgb(30, 32, 34), // Slight background to make them pop
+                BackColor = Operating_Systems.DarkButton, // Slight background to make them pop
                 ForeColor = ColorTranslator.FromHtml(PRIMARY_ACCENT_COLOR),
                 Font = new Font("Segoe UI", 9F),
                 Location = loc,

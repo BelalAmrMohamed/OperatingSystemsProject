@@ -118,22 +118,43 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Hamburger menu white lines" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Hamburger menu white lines.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Settings_Icon_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Settings_Icon_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Hamburger menu blue circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Hamburger menu blue circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Settings_Icon_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Settings_Icon_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hamburger menu white lines1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Hamburger menu white lines1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="hacker (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hacker (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-blue-screen-of-death-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-blue-screen-of-death-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Settings_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Settings_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hamburger menu white lines" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Hamburger menu white lines.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="red background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\red background.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AppImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AppImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Hamburger menu white lines1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Hamburger menu white lines1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-blue-screen-of-death-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-blue-screen-of-death-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="red background2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\red background2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Settings_Icon_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Settings_Icon_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hamburger menu blue circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Hamburger menu blue circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="v617batch2-kul-05-technology" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\v617batch2-kul-05-technology.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

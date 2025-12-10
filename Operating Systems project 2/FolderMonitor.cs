@@ -93,7 +93,7 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
                 Location = new Point(457, 8),
                 AutoSize = true,
-                ForeColor = Operating_Systems.YellowHeader,
+                ForeColor = Operating_Systems.HeaderColor,
             };
 
             Label SubHeaderLabel = new Label
@@ -160,7 +160,6 @@ namespace Operating_Systems_Project
                 Size = new Size(PanelWidth, 30),
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
-                BackColor = Operating_Systems.Background,
                 Padding = new Padding(0, 4, 0, 0) // ✅ vertical alignment fix
             };
 
@@ -231,7 +230,6 @@ namespace Operating_Systems_Project
                 Size = new Size(PanelWidth, buttonsRowHeight), // 
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
-                BackColor = Operating_Systems.Background
             };
 
             Button startButton = new Button

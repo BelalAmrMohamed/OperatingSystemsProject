@@ -84,7 +84,7 @@ namespace Operating_Systems_Project
 
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Operating_Systems.YellowHeader,
+                ForeColor = Operating_Systems.HeaderColor,
             };
             Label SubHeaderLabel = new Label
             {
@@ -220,7 +220,6 @@ namespace Operating_Systems_Project
                 Size = new Size(PanelWidth, 42),
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
-                BackColor = Operating_Systems.Background
             };
 
             // Write Button
