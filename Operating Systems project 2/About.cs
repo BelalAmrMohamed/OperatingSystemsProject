@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
@@ -22,7 +22,7 @@ namespace Operating_Systems_Project
             ("Abdulra'of Mohamed Abdulra'of", "AbdulraofMohamed@gmail.com"),
         };
 
-        public static void ShowAbout(Operating_Systems OperatingSystems)
+        public static void ShowAbout(Operating_Systems OS)
         {
             // Define Layout Constants
             int contentWidth = (int)(Operating_Systems.formWidth * 0.95);
@@ -46,17 +46,31 @@ namespace Operating_Systems_Project
                 SizeMode = PictureBoxSizeMode.Zoom
             };
 
-            Label initials = new Label
+            try
             {
-                Text = "OS",
-                Font = new Font("Segoe UI Semibold", 18F),
-                ForeColor = Operating_Systems.TextPrimary,
-                AutoSize = false,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Fill
-            };
-            logoBox.Controls.Add(initials);
-            OperatingSystems.AddToMainContainer(logoBox);
+                pb.Image = global::Operating_Systems_project_2.Properties.Resources.hacker__1_;
+            }
+            catch { /* Ignore */ }
+
+            // Assign or fallback to initials
+            if (pb.Image != null)
+            {
+                logoBox.Controls.Add(pb);
+            }
+            else
+            {
+                var initials = new Label
+                {
+                    Text = "OS",
+                    Font = new Font("Segoe UI Semibold", 18F),
+                    ForeColor = Operating_Systems.TextPrimary,
+                    AutoSize = false,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Dock = DockStyle.Fill
+                };
+                logoBox.Controls.Add(initials);
+            }
+            OS.AddToMainContainer(logoBox);
 
             // Title
             Label appName = new Label
@@ -67,7 +81,7 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 Location = new Point(90, currentY)
             };
-            OperatingSystems.AddToMainContainer(appName);
+            OS.AddToMainContainer(appName);
 
             // Version
             Label versionLabel = new Label
@@ -78,7 +92,7 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 Location = new Point(92, currentY + 32)
             };
-            OperatingSystems.AddToMainContainer(versionLabel);
+            OS.AddToMainContainer(versionLabel);
 
             // Top Right Buttons (Fixed Widths to prevent "Check..." cutoff)
             Button btnUpdate = CreateLinkButton("Check Updates", new Point(contentWidth - 140, currentY + 10));
@@ -91,8 +105,8 @@ namespace Operating_Systems_Project
             btnCopyVer.Click += (s, e) => { Clipboard.SetText(_APP_VERSION); MessageBox.Show("Version copied."); };
             btnUpdate.Click += (s, e) => MessageBox.Show("You are on the latest version.");
 
-            OperatingSystems.AddToMainContainer(btnUpdate);
-            OperatingSystems.AddToMainContainer(btnCopyVer);
+            OS.AddToMainContainer(btnUpdate);
+            OS.AddToMainContainer(btnCopyVer);
 
             currentY += 80; // Move down past header
 
@@ -106,12 +120,12 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 Location = new Point(20, currentY)
             };
-            OperatingSystems.AddToMainContainer(infoLabel);
+            OS.AddToMainContainer(infoLabel);
             currentY += infoLabel.Height + 20;
 
             // Divider Line
             Panel divider = new Panel { Height = 1, Width = contentWidth - 40, BackColor = Color.FromArgb(60, 60, 60), Location = new Point(20, currentY) };
-            OperatingSystems.AddToMainContainer(divider);
+            OS.AddToMainContainer(divider);
             currentY += 20;
 
             currentY -= 7;
@@ -181,7 +195,7 @@ namespace Operating_Systems_Project
                 row.Controls.Add(btnContact);
                 row.Controls.Add(btnCopy);
 
-                OperatingSystems.AddToMainContainer(row);
+                OS.AddToMainContainer(row);
                 currentY += rowHeight;
             }
 
@@ -195,7 +209,7 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 Location = new Point(20, currentY)
             };
-            OperatingSystems.AddToMainContainer(footer);
+            OS.AddToMainContainer(footer);
         }
 
 

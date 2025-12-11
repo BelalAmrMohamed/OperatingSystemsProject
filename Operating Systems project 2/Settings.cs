@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
@@ -153,7 +152,7 @@ namespace Operating_Systems_Project
                 }
                 else
                 {
-                    OS.ToggleBackgroundImage(true);
+                    OS.ToggleBackgroundImage();
                     btnToggleBackgroundImage.Text = "Remove background";
                 }
             };
@@ -189,6 +188,7 @@ namespace Operating_Systems_Project
             Settings.headerLabel.ForeColor = Operating_Systems.TextPrimary;
             Settings.sectionLabel.ForeColor = Operating_Systems.AccentBlue;
             Settings.lblTheme.ForeColor = Operating_Systems.TextPrimary;
+            Settings.lblBackgroundImage.ForeColor = Operating_Systems.TextPrimary;
             Settings.btnToggleTheme.BackColor = Settings.IsDarkMode() ? Color.FromArgb(60, 60, 60) : Color.FromArgb(220, 220, 220);
             Settings.btnToggleTheme.ForeColor = Settings.IsDarkMode() ? Color.White : Color.Black;
             Settings.btnToggleBackgroundImage.BackColor = Settings.btnToggleTheme.BackColor;
