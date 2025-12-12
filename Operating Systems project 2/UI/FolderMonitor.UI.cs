@@ -5,82 +5,11 @@ using System.Windows.Forms;
 
 namespace Operating_Systems_Project
 {
-    internal class FolderMonitor
+    internal partial class FolderMonitor
     {
         private static TextBox _reportTextBox;
         private static Label _statusLabel;
-
-        #region Watcher Methods
-        private static FileSystemWatcher _watcher;
         private static int _eventCount = 0;
-
-        private static void StartMonitoring(string path, bool includeSubdirectories)
-        {
-            StopMonitoring();            
-
-            _watcher = new FileSystemWatcher(path);
-            _watcher.IncludeSubdirectories = includeSubdirectories;
-
-            _watcher.Changed += OnChanged;
-            _watcher.Created += OnCreated;
-            _watcher.Deleted += OnDeleted;
-            _watcher.Renamed += OnRenamed;
-
-            _watcher.EnableRaisingEvents = true;
-        }
-
-        private static void StopMonitoring()
-        {
-            if (_watcher != null)
-            {
-                _watcher.EnableRaisingEvents = false;
-                _watcher.Dispose();
-                _watcher = null;
-            }
-        }
-
-        private static void OnChanged(object sender, FileSystemEventArgs e) =>
-            AddEvent($"Modified: {e.Name}");
-
-        private static void OnDeleted(object sender, FileSystemEventArgs e) =>
-            AddEvent($"Deleted: {e.Name}");
-
-        private static void OnRenamed(object sender, RenamedEventArgs e) =>
-            AddEvent($"Renamed: {e.OldName} → {e.Name}");
-
-        private static void OnCreated(object sender, FileSystemEventArgs e)
-        {
-            string type = Directory.Exists(e.FullPath) ? "Folder" : "File";
-            AddEvent($"Created: {e.Name} ({type})");
-        }
-        #endregion
-
-        private static void AddEvent(string message)
-        {
-            if (_reportTextBox == null || _reportTextBox.IsDisposed) return;
-
-            if (_reportTextBox.InvokeRequired)
-            {
-                _reportTextBox.Invoke(new Action(() => AddEvent(message)));
-                return;
-            }
-
-            _eventCount++;
-            string timestamp = DateTime.Now.ToString("hh:mm tt");
-
-
-            _reportTextBox.AppendText($"[{timestamp}] {message}\r\n");
-            _reportTextBox.SelectionStart = _reportTextBox.Text.Length;
-            _reportTextBox.ScrollToCaret();
-
-            Control parentHolder = _reportTextBox.Parent?.Parent;
-            if (parentHolder != null)
-            {
-                var found = parentHolder.Controls.Find("eventCountLabel", true);
-                if (found.Length > 0 && found[0] is Label eventLabel)
-                    eventLabel.Text = $"Events: {_eventCount}";
-            }
-        }
         public static void ShowFolderMonitor(Operating_Systems OperatingSystems)
         {
             const int PanelWidth = 1104;
@@ -331,15 +260,6 @@ namespace Operating_Systems_Project
             OperatingSystems.AddToMainContainer(contentPanel);
             OperatingSystems.AddToMainContainer(buttonFlow);
             pathTextBox.Focus();
-        }
-
-        private static void BrowseForFolder(TextBox pathTextBox)
-        {
-            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
-            {
-                if (folderDialog.ShowDialog() == DialogResult.OK)
-                    pathTextBox.Text = folderDialog.SelectedPath;
-            }
         }
     }
 }

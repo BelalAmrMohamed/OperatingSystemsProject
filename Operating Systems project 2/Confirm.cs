@@ -4,44 +4,30 @@ using System.Windows.Forms;
 
 namespace Operating_Systems_Project
 {
-    public partial class AreYouSure : Form
+    public partial class Confirm : Form
     {
         private static string _header;
         private static Action _activateFunction;
 
-        /// <summary>
-        /// Displays a confirmation dialog with the specified message and action
-        /// </summary>
-        /// <param name="text">The action description (e.g., "delete this file")</param>
-        /// <param name="function">The function to execute if user confirms</param>
-        public static void Run(string text, Action function)
-        {
-            _header = text ?? string.Empty;
-            _activateFunction = function;
-
-            using (AreYouSure dialog = new AreYouSure())
-            {
-                dialog.ShowDialog();
-            }
-        }
-
-        public AreYouSure()
+        public Confirm()
         {
             InitializeComponent();
             SetupForm();
         }
 
-        private void SetupForm()
+        public static void Run(string text, Action function)
         {
-            // Form properties
-            this.Text = "Confirmation";
-            this.ClientSize = new Size(450, 160);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.StartPosition = FormStartPosition.CenterParent;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.BackColor = Color.White;
+            _header = text ?? string.Empty;
+            _activateFunction = function;
 
+            using (Confirm dialog = new Confirm())
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void SetupForm()
+        {            
             // Icon (warning icon)
             PictureBox iconBox = new PictureBox
             {

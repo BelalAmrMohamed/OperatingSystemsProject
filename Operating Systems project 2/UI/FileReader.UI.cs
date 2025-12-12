@@ -1,114 +1,11 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Text;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
 {
-    internal class FileReader
+    internal partial class FileReader
     {
-        #region 2 Reading Methods, for Text and Binary
-        private static string ReadTextFile(string path)
-        {
-            using (FileStream fileS = new FileStream(path, FileMode.Open, FileAccess.Read))
-            using (BufferedStream buffer = new BufferedStream(fileS))
-            using (StreamReader reader = new StreamReader(buffer, Encoding.UTF8, true))
-                return reader.ReadToEnd();
-        }
-
-        private static string ReadBinaryFile(string path) // Returns text
-        {
-            byte[] bytes;
-
-            using (BinaryReader reader = new BinaryReader(File.Open(path, FileMode.Open)))            
-               bytes = reader.ReadBytes((int)reader.BaseStream.Length);            
-
-            return Encoding.UTF8.GetString(bytes);
-        }
-
-        private static string ReadBinaryFileAsHexadecimal(string path) // Returns Hexadecimal
-        {
-            byte[] bytes = File.ReadAllBytes(path);
-
-            StringBuilder hex = new StringBuilder(bytes.Length * 3);
-            foreach (byte b in bytes)
-                hex.AppendFormat("{0:X2} ", b);
-
-            return hex.ToString().Trim(); // Remove last space
-        }
-
-
-        #endregion
-
-        private static void ReadFile(TextBox pathTextBox, TextBox contentTextBox, Label messageLabel, Label fileInfoLabel, Panel fileInfoPanel, Button copyButton)
-        {
-            string path = pathTextBox.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                ShowMessage(messageLabel, "⚠ Please enter a file path.", Operating_Systems.ErrorColor);
-                return;
-            }
-
-            if (!File.Exists(path))
-            {
-                ShowMessage(messageLabel, "⚠ File does not exist.", Operating_Systems.ErrorColor);
-                contentTextBox.Text = "File not found.";
-                fileInfoPanel.Visible = false;
-                return;
-            }
-
-            try
-            {
-                string extension = Path.GetExtension(path).ToLower();                
-                StringBuilder content = new StringBuilder();
-
-                if (extension == ".bin") 
-                {
-                    content.AppendLine("Binary File Content (Hexadecimal):");
-                    content.AppendLine(ReadBinaryFileAsHexadecimal(path));
-                    content.AppendLine(new string('=', 109));
-                    content.AppendLine();
-                    content.AppendLine("Binary File Content (Text):");
-                    content.Append(ReadBinaryFile(path));
-                }
-                else content.Append(ReadTextFile(path));
-                
-                contentTextBox.Text = content.ToString();
-
-                FileInfo fileInfo = new FileInfo(path);
-                fileInfoLabel.Text = $"📄 {Path.GetFileName(path)} | Size: {FormatFileSize(fileInfo.Length)} | Modified: {fileInfo.LastWriteTime:yyyy-MM-dd HH:mm:ss}";
-                fileInfoPanel.Visible = true;
-
-                copyButton.Enabled = true;
-
-                ShowMessage(messageLabel, $"✓ Successfully read file ({content.Length} characters)", Operating_Systems.SuccessColor);
-            }
-            catch (Exception ex)
-            {
-                ShowMessage(messageLabel, $"✗ Error: {ex.Message}", Operating_Systems.ErrorColor);
-                contentTextBox.Text = $"Error reading file:\n{ex.Message}";
-                fileInfoPanel.Visible = false;
-            }
-        }
-
-        private static string FormatFileSize(long bytes)
-        {
-            string[] sizes = { "B", "KB", "MB", "GB" };
-            double len = bytes;
-            int order = 0;
-
-            while (len >= 1024 && order < sizes.Length - 1)
-            {
-                order++;
-                len = len / 1024;
-            }
-
-            return $"{len:0.##} {sizes[order]}";
-        }
-
-        public static void ShowFileReader(Operating_Systems OperatingSystems)
+        public static void ShowFileReader(Operating_Systems OS)
         {
             // Layout constants (match FileWriter)
             const int PanelWidth = 1104;
@@ -337,45 +234,15 @@ namespace Operating_Systems_Project
                 contentTextBox.ForeColor = Operating_Systems.TextPrimary;
             };
 
-            OperatingSystems.AddToMainContainer(HeaderLabel);
-            OperatingSystems.AddToMainContainer(SubHeaderLabel);
-            OperatingSystems.AddToMainContainer(labelInputPath);
-            OperatingSystems.AddToMainContainer(pathPanel);
-            OperatingSystems.AddToMainContainer(fileInfoPanel);
-            OperatingSystems.AddToMainContainer(contentLabel);
-            OperatingSystems.AddToMainContainer(contentPanel);
-            OperatingSystems.AddToMainContainer(buttonFlow);
+            OS.AddToMainContainer(HeaderLabel);
+            OS.AddToMainContainer(SubHeaderLabel);
+            OS.AddToMainContainer(labelInputPath);
+            OS.AddToMainContainer(pathPanel);
+            OS.AddToMainContainer(fileInfoPanel);
+            OS.AddToMainContainer(contentLabel);
+            OS.AddToMainContainer(contentPanel);
+            OS.AddToMainContainer(buttonFlow);
             pathTextBox.Focus();
-        }
-
-        private static void BrowseForFile(TextBox pathTextBox)
-        {
-            using (OpenFileDialog openDialog = new OpenFileDialog())
-            {
-                openDialog.Filter = "Text Files (*.txt)|*.txt|Binary Files (*.bin)|*.bin|All Files (*.*)|*.*";
-                openDialog.Title = "Select File to Read";
-
-                if (!string.IsNullOrEmpty(pathTextBox.Text))
-                {
-                    try
-                    {
-                        openDialog.InitialDirectory = Path.GetDirectoryName(pathTextBox.Text);
-                        openDialog.FileName = Path.GetFileName(pathTextBox.Text);
-                    }
-                    catch { }
-                }
-
-                if (openDialog.ShowDialog() == DialogResult.OK)
-                {
-                    pathTextBox.Text = openDialog.FileName;
-                }
-            }
-        }
-
-        private static void ShowMessage(Label label, string message, Color color)
-        {
-            label.Text = message;
-            label.ForeColor = color;
         }
     }
 }

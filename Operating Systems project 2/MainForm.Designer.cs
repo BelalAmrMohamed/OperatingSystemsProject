@@ -33,7 +33,7 @@
             this.ButtonsPanel = new System.Windows.Forms.Panel();
             this.Menu_Button2 = new System.Windows.Forms.PictureBox();
             this.Hacker_Box = new System.Windows.Forms.PictureBox();
-            this.About_Button = new System.Windows.Forms.Button();
+            this.Settings_Button = new System.Windows.Forms.Button();
             this.PowerOptions_Button = new System.Windows.Forms.Button();
             this.StopwatchTimer_Button = new System.Windows.Forms.Button();
             this.FolderWatcher_Button = new System.Windows.Forms.Button();
@@ -41,6 +41,7 @@
             this.FileReader_Button = new System.Windows.Forms.Button();
             this.FileWriter_Button = new System.Windows.Forms.Button();
             this.Menu_Button = new System.Windows.Forms.PictureBox();
+            this.General_IO_Button = new System.Windows.Forms.Button();
             this.ButtonsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Menu_Button2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Hacker_Box)).BeginInit();
@@ -60,9 +61,10 @@
             // 
             this.ButtonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ButtonsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ButtonsPanel.Controls.Add(this.General_IO_Button);
             this.ButtonsPanel.Controls.Add(this.Menu_Button2);
             this.ButtonsPanel.Controls.Add(this.Hacker_Box);
-            this.ButtonsPanel.Controls.Add(this.About_Button);
+            this.ButtonsPanel.Controls.Add(this.Settings_Button);
             this.ButtonsPanel.Controls.Add(this.PowerOptions_Button);
             this.ButtonsPanel.Controls.Add(this.StopwatchTimer_Button);
             this.ButtonsPanel.Controls.Add(this.FolderWatcher_Button);
@@ -79,7 +81,7 @@
             // 
             this.Menu_Button2.BackColor = System.Drawing.Color.Transparent;
             this.Menu_Button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Menu_Button2.Image = global::Operating_Systems_project_2.Properties.Resources.Hamburger_menu_white_lines1;
+            this.Menu_Button2.Image = global::Operating_Systems_Project.Properties.Resources.Hamburger_menu_white_lines1;
             this.Menu_Button2.Location = new System.Drawing.Point(2, 2);
             this.Menu_Button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Menu_Button2.Name = "Menu_Button2";
@@ -91,34 +93,34 @@
             // 
             // Hacker_Box
             // 
-            this.Hacker_Box.Image = global::Operating_Systems_project_2.Properties.Resources.hacker__1_;
-            this.Hacker_Box.Location = new System.Drawing.Point(0, 410);
+            this.Hacker_Box.Image = global::Operating_Systems_Project.Properties.Resources.hacker__1_;
+            this.Hacker_Box.Location = new System.Drawing.Point(0, 426);
             this.Hacker_Box.Name = "Hacker_Box";
-            this.Hacker_Box.Size = new System.Drawing.Size(280, 134);
+            this.Hacker_Box.Size = new System.Drawing.Size(280, 118);
             this.Hacker_Box.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Hacker_Box.TabIndex = 23;
             this.Hacker_Box.TabStop = false;
             this.Hacker_Box.Click += new System.EventHandler(this.Hacker_Box_Click);
             // 
-            // About_Button
+            // Settings_Button
             // 
-            this.About_Button.BackColor = System.Drawing.Color.Transparent;
-            this.About_Button.FlatAppearance.BorderSize = 0;
-            this.About_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.About_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.About_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.About_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.About_Button.ForeColor = System.Drawing.Color.White;
-            this.About_Button.Location = new System.Drawing.Point(0, 340);
-            this.About_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.About_Button.Name = "About_Button";
-            this.About_Button.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.About_Button.Size = new System.Drawing.Size(280, 50);
-            this.About_Button.TabIndex = 22;
-            this.About_Button.Text = "     ℹ️ About";
-            this.About_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.About_Button.UseVisualStyleBackColor = false;
-            this.About_Button.Click += new System.EventHandler(this.About_Button_Click);
+            this.Settings_Button.BackColor = System.Drawing.Color.Transparent;
+            this.Settings_Button.FlatAppearance.BorderSize = 0;
+            this.Settings_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.Settings_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.Settings_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Settings_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Settings_Button.ForeColor = System.Drawing.Color.White;
+            this.Settings_Button.Location = new System.Drawing.Point(0, 380);
+            this.Settings_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Settings_Button.Name = "Settings_Button";
+            this.Settings_Button.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.Settings_Button.Size = new System.Drawing.Size(280, 45);
+            this.Settings_Button.TabIndex = 22;
+            this.Settings_Button.Text = "     ⚙️ Settings";
+            this.Settings_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Settings_Button.UseVisualStyleBackColor = false;
+            this.Settings_Button.Click += new System.EventHandler(this.Settings_Button_Click);
             // 
             // PowerOptions_Button
             // 
@@ -130,10 +132,10 @@
             this.PowerOptions_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PowerOptions_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PowerOptions_Button.ForeColor = System.Drawing.Color.White;
-            this.PowerOptions_Button.Location = new System.Drawing.Point(0, 290);
+            this.PowerOptions_Button.Location = new System.Drawing.Point(0, 330);
             this.PowerOptions_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.PowerOptions_Button.Name = "PowerOptions_Button";
-            this.PowerOptions_Button.Size = new System.Drawing.Size(280, 50);
+            this.PowerOptions_Button.Size = new System.Drawing.Size(280, 45);
             this.PowerOptions_Button.TabIndex = 21;
             this.PowerOptions_Button.Text = "     🔋 Power Options";
             this.PowerOptions_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -149,10 +151,10 @@
             this.StopwatchTimer_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.StopwatchTimer_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StopwatchTimer_Button.ForeColor = System.Drawing.Color.White;
-            this.StopwatchTimer_Button.Location = new System.Drawing.Point(0, 190);
+            this.StopwatchTimer_Button.Location = new System.Drawing.Point(0, 230);
             this.StopwatchTimer_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.StopwatchTimer_Button.Name = "StopwatchTimer_Button";
-            this.StopwatchTimer_Button.Size = new System.Drawing.Size(280, 50);
+            this.StopwatchTimer_Button.Size = new System.Drawing.Size(280, 45);
             this.StopwatchTimer_Button.TabIndex = 20;
             this.StopwatchTimer_Button.Text = "     ⏱ Stopwatch Timer";
             this.StopwatchTimer_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -168,10 +170,10 @@
             this.FolderWatcher_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FolderWatcher_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FolderWatcher_Button.ForeColor = System.Drawing.Color.White;
-            this.FolderWatcher_Button.Location = new System.Drawing.Point(0, 140);
+            this.FolderWatcher_Button.Location = new System.Drawing.Point(0, 180);
             this.FolderWatcher_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.FolderWatcher_Button.Name = "FolderWatcher_Button";
-            this.FolderWatcher_Button.Size = new System.Drawing.Size(280, 50);
+            this.FolderWatcher_Button.Size = new System.Drawing.Size(280, 45);
             this.FolderWatcher_Button.TabIndex = 19;
             this.FolderWatcher_Button.Text = "     📁 Folder Watcher";
             this.FolderWatcher_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -188,10 +190,10 @@
             this.WMI_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WMI_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WMI_Button.ForeColor = System.Drawing.Color.White;
-            this.WMI_Button.Location = new System.Drawing.Point(0, 240);
+            this.WMI_Button.Location = new System.Drawing.Point(0, 280);
             this.WMI_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.WMI_Button.Name = "WMI_Button";
-            this.WMI_Button.Size = new System.Drawing.Size(280, 50);
+            this.WMI_Button.Size = new System.Drawing.Size(280, 45);
             this.WMI_Button.TabIndex = 18;
             this.WMI_Button.Text = "     ⚙️ WMI";
             this.WMI_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -207,10 +209,10 @@
             this.FileReader_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FileReader_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FileReader_Button.ForeColor = System.Drawing.Color.White;
-            this.FileReader_Button.Location = new System.Drawing.Point(0, 90);
+            this.FileReader_Button.Location = new System.Drawing.Point(0, 130);
             this.FileReader_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.FileReader_Button.Name = "FileReader_Button";
-            this.FileReader_Button.Size = new System.Drawing.Size(280, 50);
+            this.FileReader_Button.Size = new System.Drawing.Size(280, 45);
             this.FileReader_Button.TabIndex = 17;
             this.FileReader_Button.Text = "     📄 File Reader";
             this.FileReader_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -226,10 +228,10 @@
             this.FileWriter_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FileWriter_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FileWriter_Button.ForeColor = System.Drawing.Color.White;
-            this.FileWriter_Button.Location = new System.Drawing.Point(0, 40);
+            this.FileWriter_Button.Location = new System.Drawing.Point(0, 80);
             this.FileWriter_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.FileWriter_Button.Name = "FileWriter_Button";
-            this.FileWriter_Button.Size = new System.Drawing.Size(280, 50);
+            this.FileWriter_Button.Size = new System.Drawing.Size(280, 45);
             this.FileWriter_Button.TabIndex = 16;
             this.FileWriter_Button.Text = "     📝 File Writer";
             this.FileWriter_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -240,7 +242,7 @@
             // 
             this.Menu_Button.BackColor = System.Drawing.Color.Transparent;
             this.Menu_Button.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Menu_Button.Image = global::Operating_Systems_project_2.Properties.Resources.Hamburger_menu_white_lines1;
+            this.Menu_Button.Image = global::Operating_Systems_Project.Properties.Resources.Hamburger_menu_white_lines1;
             this.Menu_Button.Location = new System.Drawing.Point(2, 2);
             this.Menu_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Menu_Button.Name = "Menu_Button";
@@ -249,6 +251,25 @@
             this.Menu_Button.TabIndex = 25;
             this.Menu_Button.TabStop = false;
             this.Menu_Button.Click += new System.EventHandler(this.Menu_Button_Click);
+            // 
+            // General_IO_Button
+            // 
+            this.General_IO_Button.BackColor = System.Drawing.Color.Transparent;
+            this.General_IO_Button.FlatAppearance.BorderSize = 0;
+            this.General_IO_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.General_IO_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.General_IO_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.General_IO_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.General_IO_Button.ForeColor = System.Drawing.Color.White;
+            this.General_IO_Button.Location = new System.Drawing.Point(0, 30);
+            this.General_IO_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.General_IO_Button.Name = "General_IO_Button";
+            this.General_IO_Button.Size = new System.Drawing.Size(280, 45);
+            this.General_IO_Button.TabIndex = 27;
+            this.General_IO_Button.Text = "     🔁 General IO";
+            this.General_IO_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.General_IO_Button.UseVisualStyleBackColor = false;
+            this.General_IO_Button.Click += new System.EventHandler(this.General_IO_Button_Click);
             // 
             // Operating_Systems
             // 
@@ -278,7 +299,7 @@
 
         #endregion
         private System.Windows.Forms.Panel ButtonsPanel;
-        private System.Windows.Forms.Button About_Button;
+        private System.Windows.Forms.Button Settings_Button;
         private System.Windows.Forms.Button PowerOptions_Button;
         private System.Windows.Forms.Button StopwatchTimer_Button;
         private System.Windows.Forms.Button FolderWatcher_Button;
@@ -289,6 +310,7 @@
         public System.Windows.Forms.Panel MainContainer;
         private System.Windows.Forms.PictureBox Menu_Button;
         private System.Windows.Forms.PictureBox Menu_Button2;
+        private System.Windows.Forms.Button General_IO_Button;
     }
 }
 

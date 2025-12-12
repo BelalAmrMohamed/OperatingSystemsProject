@@ -1,6 +1,9 @@
-﻿namespace Operating_Systems_Project
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace Operating_Systems_Project
 {
-    partial class AreYouSure
+    partial class Confirm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,16 +33,22 @@
         {
             this.SuspendLayout();
             // 
-            // AreYouSure
+            // Confirm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "AreYouSure";
-            this.Text = "AreYouSure";
-            //this.Load += new System.EventHandler(this.AreYouSure_Load);
+            this.ClientSize = new System.Drawing.Size(450, 160);
+            this.Name = "Confirm";
+            this.Text = "Confirmation";
+            //this.Load += new System.EventHandler(this.Confirm_Load);
             this.ResumeLayout(false);
 
+            // Custom
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.BackColor = Color.White;
         }
 
         #endregion

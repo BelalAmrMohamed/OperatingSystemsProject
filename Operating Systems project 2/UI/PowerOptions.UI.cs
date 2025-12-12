@@ -1,97 +1,13 @@
 ﻿using System;
 using System.Drawing;
-using System.Management;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
 {
-    internal class PowerOptions
+    internal partial class PowerOptions
     {
-
-        #region 4 PowerOptions Methods
-
-        [DllImport("PowrProf.dll", SetLastError = true)]
-        private static extern bool SetSuspendState(bool hibernate, bool forceCritical, bool disableWakeEvent);
-        private static void Restart() // Low level Restart using WMI.
-        {
-            ManagementBaseObject RestartParameters = null;
-            ManagementClass os = new ManagementClass("Win32_OperatingSystem");
-
-            os.Scope.Options.EnablePrivileges = true;
-
-            foreach (ManagementObject obj in os.GetInstances())
-            {
-                RestartParameters = obj.GetMethodParameters("Win32Shutdown");
-                // Flags = 6 (Shutdown + Reboot)
-                RestartParameters["Flags"] = 6;
-
-                obj.InvokeMethod("Win32Shutdown", RestartParameters, null);
-            }
-        }
-        private static void ShutDown() // Low level ShutDown using WMI.
-        {
-            ManagementBaseObject ShutdownParameters = null;
-            ManagementClass os = new ManagementClass("Win32_OperatingSystem");
-
-            os.Scope.Options.EnablePrivileges = true;
-
-            foreach (ManagementObject obj in os.GetInstances())
-            {
-                ShutdownParameters = obj.GetMethodParameters("Win32Shutdown");
-                // Flags = 2 (Shutdown)
-                ShutdownParameters["Flags"] = 2;
-
-                obj.InvokeMethod("Win32Shutdown", ShutdownParameters, null);
-            }
-        }
-        private static void Sleep() // Low level Sleep using WMI.
-        {
-            ManagementBaseObject SleepParameters = null;
-            ManagementClass os = new ManagementClass("Win32_OperatingSystem");
-
-            os.Scope.Options.EnablePrivileges = true;
-
-            foreach (ManagementObject obj in os.GetInstances())
-            {
-                SleepParameters = obj.GetMethodParameters("Win32Shutdown");
-                // Flags = 4 (Suspend/Sleep)
-                SleepParameters["Flags"] = 4;
-
-                obj.InvokeMethod("Win32Shutdown", SleepParameters, null);
-            }
-        }
-        public static void Hibernate() // Custom Method for hibernation
-        {
-            var psi = new System.Diagnostics.ProcessStartInfo()
-            {
-                FileName = "powercfg",
-                Arguments = "/a",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            var output = "";
-            using (var p = System.Diagnostics.Process.Start(psi))
-            {
-                output = p.StandardOutput.ReadToEnd();
-                p.WaitForExit();
-            }
-
-            if (output.Contains("Hibernate"))
-            {
-                SetSuspendState(true, false, false);
-            }
-            else
-            {
-                throw new NotSupportedException("Hibernation is disabled or unsupported.");
-            }
-        }
-        #endregion
-
         public static void ShowPowerOption(Operating_Systems OperatingSystems)
-        {   
+        {
             const int PanelWidth = 1110;
             int currentY = 62;
 
@@ -124,7 +40,7 @@ namespace Operating_Systems_Project
             OperatingSystems.AddToMainContainer(SubHeaderLabel);
 
             Label WarningLabel = new Label
-            {             
+            {
                 Text = "⚠ Warning: These actions will affect your computer immediately. Make sure to save your work before proceeding.",
                 Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
                 MinimumSize = new Size(300, 20),
@@ -162,7 +78,7 @@ namespace Operating_Systems_Project
             OperatingSystems.AddToMainContainer(buttonFlow);
         }
 
-        public static Button CreateStyledButton(string text, Size size, Color backgroundColor, Action action)
+        private static Button CreateStyledButton(string text, Size size, Color backgroundColor, Action action)
         {
             Color hoverColor = ControlPaint.Dark(backgroundColor, 0.15f);
 
@@ -179,7 +95,7 @@ namespace Operating_Systems_Project
 
             button.FlatAppearance.BorderSize = 0;
 
-            button.Click += (s, e) => { AreYouSure.Run(text, action); };
+            button.Click += (s, e) => { Confirm.Run(text, action); };
 
             // --- Hover effect ---
             button.MouseEnter += (s, e) => button.BackColor = hoverColor;

@@ -7,19 +7,37 @@ and this project follows **Semantic Versioning**.
 
 ---
 
-## [Unreleased]
+## [Pending]
+
+### Additions
+
+- Document the project in Arabic
+- Add a main general View instead of defaulting to one of the Section
+- The dark/light mode switch from the Experimental Settings.
+- The Background image switch from the Experimental Settings.
+
+---
+
+## [4.2.4] 2025-12-12
 
 ### Added
 
-- (All of the feutures in the hidden settings)
+- Introduced the General IO section.
+- Replaced Splash.cs with the improved Loading.cs
+- The missing methods from FileWriter and FileReader
+- Improved and cleaned the WMI query logic in WMI.cs after adding them to their own class WMI.Logic.cs
+
+---
 
 ### Changed
 
-- (===)
+- Reconstructed the project's Folder structure
+
+---
 
 ### Fixed
 
-- (===)
+- Namespace mismatch
 
 ---
 

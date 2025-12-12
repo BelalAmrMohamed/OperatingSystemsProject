@@ -17,7 +17,7 @@ namespace Operating_Systems_Project
         public static readonly string APP_VERSION;
 
         // ====== Dark Theme Colors ======
-        public static Color Background = Color.FromArgb(32, 32, 32);
+        public static Color Background = Color.FromArgb(32, 32, 32); // 13, 17, 23 // 32,32,32
         public static Color ButtonsPanelBackground = Color.FromArgb(25, 25, 25);
         public static Color PanelColor = Color.FromArgb(43, 43, 43);
         public static Color WMISmallPanelColor = Color.FromArgb(0, 30, 50);
@@ -150,12 +150,12 @@ namespace Operating_Systems_Project
             os.StopwatchTimer_Button.ForeColor = TextPrimary;
             os.WMI_Button.ForeColor = TextPrimary;
             os.PowerOptions_Button.ForeColor = TextPrimary;
-            os.About_Button.ForeColor = TextPrimary;
+            os.Settings_Button.ForeColor = TextPrimary;
         }
         public void ToggleBackgroundImage()
         {
             if (this.BackgroundImage == null) // If there's no image show image, else disable image
-                this.BackgroundImage = global::Operating_Systems_project_2.Properties.Resources.red_background2;
+                this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.red_background2;
             else this.BackgroundImage = null;
         }
         public bool IsBackgroundImageEnabled()
@@ -183,7 +183,8 @@ namespace Operating_Systems_Project
             {
                 Loading.StartLoading(this);
                 await Task.Delay(1000);
-                About.ShowAbout(this);
+                //Settings.ShowSettings(this);
+                General_IO.ShowGeneral_IO(this);
                 Loading.StopLoading();
             }));
         }
@@ -196,6 +197,13 @@ namespace Operating_Systems_Project
         private void Menu_Button2_Click(object sender, EventArgs e)
         {
             ButtonsPanel.Visible = false;
+        }
+
+        private void General_IO_Button_Click(object sender, EventArgs e)
+        {
+            ClearContent();
+            ButtonsPanel.Visible = false;
+            General_IO.ShowGeneral_IO(this);
         }
 
         private void FileWriter_Button_Click(object sender, EventArgs e)
@@ -223,7 +231,7 @@ namespace Operating_Systems_Project
         {
             ClearContent();
             ButtonsPanel.Visible = false;
-            Timer.ShowTimer(this);
+            TimersAccuracy.ShowTimer(this);
         }
 
         private void WMI_Button_Click(object sender, EventArgs e)
@@ -245,17 +253,17 @@ namespace Operating_Systems_Project
 
             ClearContent();
             ButtonsPanel.Visible = false;
-            Settings.ShowSettings(this);
+            Experimental.ShowSettings(this);
 
             Thread.Sleep(300);
             Loading.StopLoading();
         }
 
-        private void About_Button_Click(object sender, EventArgs e)
+        private void Settings_Button_Click(object sender, EventArgs e)
         {
             ClearContent();
             ButtonsPanel.Visible = false;
-            About.ShowAbout(this);
+            Settings.ShowSettings(this);
         }
 
         // Helper methods

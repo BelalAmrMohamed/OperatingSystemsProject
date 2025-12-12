@@ -5,24 +5,11 @@ using System.Windows.Forms;
 
 namespace Operating_Systems_Project
 {
-    internal class About
+    internal partial class Settings
     {
-        // ---- Constants ----
-        // Use a shortened version of app version format. "1.0" instead of "1.0.0", which stand for "MAJOR.MINOR.PATCH"
-        private static string _APP_VERSION = Operating_Systems.APP_VERSION;
         private const string PRIMARY_ACCENT_COLOR = "#4A9EFF";
 
-        private static readonly (string Name, string Email)[] DEVELOPERS =
-        {
-            ("Belal Amr Mohamed", "belalamrofficial@gmail.com"),
-            ("Mohamed Ahmed Tawfeeq", "mohamedahmed@gmail.com"),
-            ("Ahmed Mohamed Husaini", "ahmedmohamed@gmail.com"),
-            ("Mahmoud Gad Alkareem", "MahmoudGad@gmail.com"),
-            ("Ahmed Khairy Ahmed", "AhmedKhairy@gmail.com"),
-            ("Abdulra'of Mohamed Abdulra'of", "AbdulraofMohamed@gmail.com"),
-        };
-
-        public static void ShowAbout(Operating_Systems OS)
+        public static void ShowSettings(Operating_Systems OS)
         {
             // Define Layout Constants
             int contentWidth = (int)(Operating_Systems.formWidth * 0.95);
@@ -48,7 +35,7 @@ namespace Operating_Systems_Project
 
             try
             {
-                pb.Image = global::Operating_Systems_project_2.Properties.Resources.hacker__1_;
+                pb.Image = global::Operating_Systems_Project.Properties.Resources.hacker__1_;
             }
             catch { /* Ignore */ }
 
@@ -211,7 +198,6 @@ namespace Operating_Systems_Project
             };
             OS.AddToMainContainer(footer);
         }
-
 
         private static Button CreateLinkButton(string text, Point loc)
         {

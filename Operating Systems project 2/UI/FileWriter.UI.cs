@@ -5,70 +5,9 @@ using System.Windows.Forms;
 
 namespace Operating_Systems_Project
 {
-    internal class FileWriter
+    internal partial class FileWriter
     {
-
-        #region 2 Writing Methods, for Text and Binary
-        private static void WriteToTextFile(string path, string content)
-        {
-            using (FileStream fileS = new FileStream(path, FileMode.Append))
-            using (BufferedStream buffer = new BufferedStream(fileS))
-            using (StreamWriter writer = new StreamWriter(buffer))
-                writer.WriteLine(content);
-        }
-
-        private static void WriteToBinaryFile(string path, string content)
-        {
-            using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Append)))
-                writer.Write(content);
-        }
-        #endregion
-
-        private static void WriteFile(TextBox pathTextBox, TextBox contentTextBox, Label messageLabel)
-        {
-            string path = pathTextBox.Text.Trim();
-            string content = contentTextBox.Text;
-
-            if (string.IsNullOrWhiteSpace(path) || string.IsNullOrEmpty(content))
-            {
-                ShowMessage(messageLabel, "⚠ Please path and content.", Operating_Systems.ErrorColor);
-                return;
-            }
-
-            // If directory doesn't exist, create it
-            string dir = Path.GetDirectoryName(path);
-            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-                ShowMessage(messageLabel, "✓ Created the directory.", Operating_Systems.ErrorColor);
-            }
-
-            try
-            {
-                string filetype = Path.GetExtension(path).ToLower();
-
-                if (filetype == ".bin")
-                    WriteToBinaryFile(path, content);
-
-                else WriteToTextFile(path, content);
-
-
-                long size = new FileInfo(path).Length;
-
-                ShowMessage(messageLabel,
-                    $"✓ Successfully wrote to '{Path.GetFileName(path)}'  ({size} bytes)",
-                    Operating_Systems.SuccessColor);
-            }
-            catch (Exception ex)
-            {
-                ShowMessage(messageLabel, $"✗ Error: {ex.Message}", Operating_Systems.ErrorColor);
-            }
-        }
-
-        // ===============================
-        // UI
-        // ===============================
-        public static void ShowFileWriter(Operating_Systems OperatingSystems)
+        public static void ShowFileWriter(Operating_Systems OS)
         {
             const int PanelWidth = 1104;
             const int VerticalSpacing = 16;
@@ -283,16 +222,16 @@ namespace Operating_Systems_Project
             browseButton.Click += (s, e) => BrowseForFile(pathTextBox);
             writeButton.Click += (s, e) => WriteFile(pathTextBox, contentTextBox, messageLabel);
             clearButton.Click += ClearControls.Invoke;
-
+            
             // --- Add Controls to Holder ---
-            OperatingSystems.AddToMainContainer(HeaderLabel);
-            OperatingSystems.AddToMainContainer(SubHeaderLabel);
-            OperatingSystems.AddToMainContainer(labelInputPath);
-            OperatingSystems.AddToMainContainer(pathPanel);
-            OperatingSystems.AddToMainContainer(contentLabel);
-            OperatingSystems.AddToMainContainer(contentPanel);
-            OperatingSystems.AddToMainContainer(charCountLabel);
-            OperatingSystems.AddToMainContainer(buttonFlow);
+            OS.AddToMainContainer(HeaderLabel);
+            OS.AddToMainContainer(SubHeaderLabel);
+            OS.AddToMainContainer(labelInputPath);
+            OS.AddToMainContainer(pathPanel);
+            OS.AddToMainContainer(contentLabel);
+            OS.AddToMainContainer(contentPanel);
+            OS.AddToMainContainer(charCountLabel);
+            OS.AddToMainContainer(buttonFlow);
             pathTextBox.Focus();
         }
 
