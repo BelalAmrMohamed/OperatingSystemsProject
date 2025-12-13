@@ -26,7 +26,7 @@ namespace Operating_Systems_Project
 
             Operating_Systems.Background = Color.FromArgb(32, 32, 32);
             Operating_Systems.PanelColor = Color.FromArgb(43, 43, 43);
-            Operating_Systems.WMISmallPanelColor = Color.FromArgb(230, 230, 130);
+            WMI.SmallPanelColor = Color.FromArgb(0, 30, 50);
             Operating_Systems.TextPrimary = Color.FromArgb(255, 255, 255);
             Operating_Systems.TextSecondary = Color.FromArgb(160, 160, 160);
             Operating_Systems.NeutralColor = Color.FromArgb(108, 117, 125);
@@ -48,7 +48,7 @@ namespace Operating_Systems_Project
             // Define your Light Mode Palette here
             Operating_Systems.Background = Color.FromArgb(245, 245, 245);       // Light Gray/White
             Operating_Systems.PanelColor = Color.FromArgb(255, 255, 255);       // Pure White panels
-            Operating_Systems.WMISmallPanelColor = Color.FromArgb(0, 30, 50);
+            WMI.SmallPanelColor = Color.FromArgb(240, 240, 240);
             Operating_Systems.TextPrimary = Color.FromArgb(30, 30, 30);         // Dark Text
             Operating_Systems.TextSecondary = Color.FromArgb(90, 90, 90);       // Gray Text
             Operating_Systems.NeutralColor = Color.FromArgb(200, 200, 200);     // Light Borders/Neutrals

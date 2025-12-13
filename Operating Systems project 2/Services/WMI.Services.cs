@@ -7,6 +7,7 @@ namespace Operating_Systems_Project
 {
     internal partial class WMI
     {
+        public static Color SmallPanelColor = Color.FromArgb(0, 30, 50);
         private static void ShowQuery_MultiTextBoxes(Operating_Systems OS, Func<object> action)
         {
             object result = action();
@@ -34,7 +35,7 @@ namespace Operating_Systems_Project
                 {
                     Font = new Font("Segoe UI Semibold", 11F),
                     ForeColor = Operating_Systems.TextPrimary,
-                    BackColor = Operating_Systems.WMISmallPanelColor, // 1- 59, 60, 109 // 2- AccentBlue // 3- White and black // 4- 108, 250, 125 // 5- 0, 30, 50
+                    BackColor = SmallPanelColor, // 1- 59, 60, 109 // 2- AccentBlue // 3- White and black // 4- 108, 250, 125 // 5- 0, 30, 50
                     Multiline = true,
                     BorderStyle = BorderStyle.FixedSingle,
                     ReadOnly = true,

@@ -21,7 +21,6 @@ namespace Operating_Systems_Project
         public static Color Background = Color.FromArgb(32, 32, 32); // 32, 32, 32  // 13, 17, 23 
         public static Color ButtonsPanelBackground = Color.FromArgb(25, 25, 25);
         public static Color PanelColor = Color.FromArgb(43, 43, 43); // 43, 43, 43     // 21, 27, 35
-        public static Color WMISmallPanelColor = Color.FromArgb(0, 30, 50);
         public static Color TextPrimary = Color.FromArgb(255, 255, 255);
         public static Color TextSecondary = Color.FromArgb(160, 160, 160);
         public static Color AccentGreen = Color.FromArgb(40, 167, 69);
@@ -250,12 +249,12 @@ namespace Operating_Systems_Project
 
         private async void Hacker_Box_Click(object sender, EventArgs e)
         {
+            ButtonsPanel.Visible = false;
             Loading.StartLoading();
 
-            await Task.Delay(1000);
+            await Task.Delay(300);
 
             ClearContent();
-            ButtonsPanel.Visible = false;
             Experimental.ShowExperimental(this);
 
             Loading.StopLoading();
@@ -289,6 +288,7 @@ namespace Operating_Systems_Project
 
             OS.BackColor = Background;
             if (OS.ButtonsPanel != null) OS.ButtonsPanel.BackColor = ButtonsPanelBackground;
+            //WMI.SmallPanelColor 
 
             RefreshButton(OS.General_IO_Button);
             RefreshButton(OS.FileWriter_Button);
