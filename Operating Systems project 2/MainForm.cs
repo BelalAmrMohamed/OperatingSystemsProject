@@ -248,20 +248,6 @@ namespace Operating_Systems_Project
             ShowView(os => Settings.ShowSettings(os));
         }
 
-        //private async Task Hacker_Box_Click(object sender, EventArgs e)
-        //{
-        //    this.BeginInvoke(new Action(async () =>
-        //    {
-        //        Loading.StartLoading();
-        //        await Task.Delay(1000);
-
-        //        ClearContent();
-        //        ButtonsPanel.Visible = false;
-        //        Experimental.ShowExperimental(this);
-
-        //        Loading.StopLoading();
-        //    }));            
-        //}
         private async void Hacker_Box_Click(object sender, EventArgs e)
         {
             Loading.StartLoading();
@@ -273,7 +259,6 @@ namespace Operating_Systems_Project
             Experimental.ShowExperimental(this);
 
             Loading.StopLoading();
-            ToggleBackgroundImage();
         }
 
 
@@ -293,9 +278,7 @@ namespace Operating_Systems_Project
 
         public void ClearContent()
         {
-
             MainContainer.Controls.Clear();
-
         }
 
         // ===== Theme helpers =====
@@ -325,23 +308,6 @@ namespace Operating_Systems_Project
             b.FlatAppearance.MouseOverBackColor = IsDarkMode() ? Color.FromArgb(15, 15, 15) : Color.FromArgb(240, 240, 240);
             b.FlatAppearance.MouseDownBackColor = IsDarkMode() ? Color.Black : Color.White;
         }
-
-        //public void ToggleBackgroundImage()
-        //{
-        //    if (this.BackgroundImage == null && IsDarkMode()) // If there's no image show image, else disable image
-        //    {
-        //        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.red_background;
-        //    }
-        //    else if (this.BackgroundImage == null && !IsDarkMode())
-        //    {
-        //        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.LightThemeBackground;
-        //        //this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.AlAqsa;
-        //    }
-        //    else
-        //    {
-        //        this.BackgroundImage = null;
-        //    }
-        //}
 
         private int count = 0;
         public void ToggleBackgroundImage()

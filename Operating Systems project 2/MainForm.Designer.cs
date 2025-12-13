@@ -71,6 +71,7 @@
             this.ButtonsPanel.Controls.Add(this.WMI_Button);
             this.ButtonsPanel.Controls.Add(this.FileReader_Button);
             this.ButtonsPanel.Controls.Add(this.FileWriter_Button);
+            this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.ButtonsPanel.Location = new System.Drawing.Point(0, 0);
             this.ButtonsPanel.Name = "ButtonsPanel";
             this.ButtonsPanel.Size = new System.Drawing.Size(280, 545);
@@ -112,10 +113,11 @@
             // 
             // Hacker_Box
             // 
+            this.Hacker_Box.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Hacker_Box.Image = global::Operating_Systems_Project.Properties.Resources.AppImage;
-            this.Hacker_Box.Location = new System.Drawing.Point(0, 426);
+            this.Hacker_Box.Location = new System.Drawing.Point(0, 425);
             this.Hacker_Box.Name = "Hacker_Box";
-            this.Hacker_Box.Size = new System.Drawing.Size(280, 118);
+            this.Hacker_Box.Size = new System.Drawing.Size(278, 118);
             this.Hacker_Box.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Hacker_Box.TabIndex = 23;
             this.Hacker_Box.TabStop = false;
