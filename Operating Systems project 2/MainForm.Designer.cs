@@ -1,4 +1,4 @@
-﻿namespace Operating_Systems_Project
+﻿namespace Operating_Systems_Project // red background
 {
     partial class Operating_Systems
     {
@@ -81,7 +81,7 @@
             // 
             this.Menu_Button2.BackColor = System.Drawing.Color.Transparent;
             this.Menu_Button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Menu_Button2.Image = global::Operating_Systems_Project.Properties.Resources.Hamburger_menu_white_lines1;
+            this.Menu_Button2.Image = global::Operating_Systems_Project.Properties.Resources.Hamburger_menu_white_lines;
             this.Menu_Button2.Location = new System.Drawing.Point(2, 2);
             this.Menu_Button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Menu_Button2.Name = "Menu_Button2";
@@ -93,7 +93,7 @@
             // 
             // Hacker_Box
             // 
-            this.Hacker_Box.Image = global::Operating_Systems_Project.Properties.Resources.hacker__1_;
+            this.Hacker_Box.Image = global::Operating_Systems_Project.Properties.Resources.AppImage;
             this.Hacker_Box.Location = new System.Drawing.Point(0, 426);
             this.Hacker_Box.Name = "Hacker_Box";
             this.Hacker_Box.Size = new System.Drawing.Size(280, 118);
@@ -242,7 +242,7 @@
             // 
             this.Menu_Button.BackColor = System.Drawing.Color.Transparent;
             this.Menu_Button.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Menu_Button.Image = global::Operating_Systems_Project.Properties.Resources.Hamburger_menu_white_lines1;
+            this.Menu_Button.Image = global::Operating_Systems_Project.Properties.Resources.Hamburger_menu_white_lines;
             this.Menu_Button.Location = new System.Drawing.Point(2, 2);
             this.Menu_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Menu_Button.Name = "Menu_Button";

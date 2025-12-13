@@ -35,7 +35,7 @@ namespace Operating_Systems_Project
 
             try
             {
-                pb.Image = global::Operating_Systems_Project.Properties.Resources.hacker__1_;
+                pb.Image = global::Operating_Systems_Project.Properties.Resources.AppImage;
             }
             catch { /* Ignore */ }
 

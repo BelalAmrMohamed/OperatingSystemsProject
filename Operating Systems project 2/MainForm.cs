@@ -326,7 +326,7 @@ namespace Operating_Systems_Project
         public void ToggleBackgroundImage()
         {
             if (this.BackgroundImage == null) // If there's no image show image, else disable image
-                this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.red_background2;
+                this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.red_background;
             else
                 this.BackgroundImage = null;
         }

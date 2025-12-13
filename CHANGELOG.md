@@ -31,6 +31,8 @@ and this project follows **Semantic Versioning**.
 
 - The Title bar now turns white when Light mode is enabled.
 - The butons' hover effect and click effect in the side panel now matches the theme.
+- The conflict between MainForm.cs and MainForm.UI.cs: VS Studio 2022 thought MainForm.UI.cs was an independent form so I merged it into MainForm.cs
+- Removed useless Resources
 
 ---
 
