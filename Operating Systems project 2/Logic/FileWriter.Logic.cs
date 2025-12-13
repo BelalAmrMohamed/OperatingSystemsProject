@@ -42,7 +42,7 @@ namespace Operating_Systems_Project
         }
 
         // =====================
-        // This Method is extra ( We didn't take it in the section)
+        // This Method is extra ( We didn't take it in the section )
         // =====================
         private static void WriteToBinaryFile(string path, string content)
         {
