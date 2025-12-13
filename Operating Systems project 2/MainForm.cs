@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -16,9 +17,10 @@ namespace Operating_Systems_Project
         public static readonly string APP_VERSION;
 
         // ====== Dark Theme Colors ======
-        public static Color Background = Color.FromArgb(32, 32, 32);
+        // Change the IsDarkMode() Method at the bottom of the file if you'll change this value
+        public static Color Background = Color.FromArgb(32, 32, 32); // 32, 32, 32  // 13, 17, 23 
         public static Color ButtonsPanelBackground = Color.FromArgb(25, 25, 25);
-        public static Color PanelColor = Color.FromArgb(43, 43, 43);
+        public static Color PanelColor = Color.FromArgb(43, 43, 43); // 43, 43, 43     // 21, 27, 35
         public static Color WMISmallPanelColor = Color.FromArgb(0, 30, 50);
         public static Color TextPrimary = Color.FromArgb(255, 255, 255);
         public static Color TextSecondary = Color.FromArgb(160, 160, 160);
@@ -189,7 +191,7 @@ namespace Operating_Systems_Project
             this.BeginInvoke(new Action(async () =>
             {
                 Loading.StartLoading(this);
-                await Task.Delay(1000); // allow overlay to render briefly
+                await Task.Delay(300); // allow overlay to render briefly
                 General_IO.ShowGeneral_IO(this);
                 Loading.StopLoading();
             }));
@@ -246,20 +248,34 @@ namespace Operating_Systems_Project
             ShowView(os => Settings.ShowSettings(os));
         }
 
-        private void Hacker_Box_Click(object sender, EventArgs e)
+        //private async Task Hacker_Box_Click(object sender, EventArgs e)
+        //{
+        //    this.BeginInvoke(new Action(async () =>
+        //    {
+        //        Loading.StartLoading();
+        //        await Task.Delay(1000);
+
+        //        ClearContent();
+        //        ButtonsPanel.Visible = false;
+        //        Experimental.ShowExperimental(this);
+
+        //        Loading.StopLoading();
+        //    }));            
+        //}
+        private async void Hacker_Box_Click(object sender, EventArgs e)
         {
-            this.BeginInvoke(new Action(async () =>
-            {
-                Loading.StartLoading();
-                await Task.Delay(1000);
+            Loading.StartLoading();
 
-                ClearContent();
-                ButtonsPanel.Visible = false;
-                Experimental.ShowSettings(this);
+            await Task.Delay(1000);
 
-                Loading.StopLoading();
-            }));
+            ClearContent();
+            ButtonsPanel.Visible = false;
+            Experimental.ShowExperimental(this);
+
+            Loading.StopLoading();
+            ToggleBackgroundImage();
         }
+
 
         // ========== Helper methods ==========
 
@@ -303,37 +319,85 @@ namespace Operating_Systems_Project
 
         private static void RefreshButton(Button b)
         {
-            if (b == null) return;
-
-            b.FlatStyle = FlatStyle.Flat;
             b.ForeColor = TextPrimary;
-            // Choose hover/down colors based on Experimental.IsDarkMode() if available; otherwise use sensible defaults
-            bool dark = true;
-            try
-            {
-                dark = Experimental.IsDarkMode();
-            }
-            catch
-            {
-                dark = true;
-            }
 
             b.FlatAppearance.BorderSize = 0;
-            b.FlatAppearance.MouseOverBackColor = dark ? Color.FromArgb(15, 15, 15) : Color.FromArgb(240, 240, 240);
-            b.FlatAppearance.MouseDownBackColor = dark ? Color.Black : Color.White;
+            b.FlatAppearance.MouseOverBackColor = IsDarkMode() ? Color.FromArgb(15, 15, 15) : Color.FromArgb(240, 240, 240);
+            b.FlatAppearance.MouseDownBackColor = IsDarkMode() ? Color.Black : Color.White;
         }
 
+        //public void ToggleBackgroundImage()
+        //{
+        //    if (this.BackgroundImage == null && IsDarkMode()) // If there's no image show image, else disable image
+        //    {
+        //        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.red_background;
+        //    }
+        //    else if (this.BackgroundImage == null && !IsDarkMode())
+        //    {
+        //        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.LightThemeBackground;
+        //        //this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.AlAqsa;
+        //    }
+        //    else
+        //    {
+        //        this.BackgroundImage = null;
+        //    }
+        //}
+
+        private int count = 0;
         public void ToggleBackgroundImage()
         {
             if (this.BackgroundImage == null) // If there's no image show image, else disable image
-                this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.red_background;
+            {
+                Experimental.ApplyDarkMode(this);
+                switch (count)
+                {
+                    case 0:
+                        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.IslamicWallpaper_2;
+
+                        break;
+
+                    case 1:
+                        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.AlAqsa;
+                        break;
+
+                    case 2:
+                        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.LightThemeBackground;
+                        break;
+
+                    case 3:
+                        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.red_background;
+                        break;
+
+                    case 4:
+                        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.CoffeAndCodeBackground;
+                        break;
+
+                    case 5:
+                        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.IslamicCats;
+                        break;
+
+                    case 6:
+                        this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.IslamicWallpaper;
+                        break;
+                    default:
+                        break;
+                }
+                count = (count + 1) % 7;
+            }
             else
+            {
                 this.BackgroundImage = null;
+            }
         }
 
         public bool IsBackgroundImageEnabled()
         {
             return this.BackgroundImage != null;
+        }
+
+        public static bool IsDarkMode()
+        {
+            return Background.R == 32;
         }
     }
 }

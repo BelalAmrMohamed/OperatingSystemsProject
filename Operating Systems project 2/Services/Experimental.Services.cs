@@ -4,25 +4,19 @@ namespace Operating_Systems_Project
 {
     internal partial class Experimental
     {
-        public static bool IsDarkMode()
-        {
-            // Checks if the background is the dark color (32, 32, 32)
-            return Operating_Systems.Background.R == 32;
-        }
-
         private static void RefreshSettingsColors()
         {
             headerLabel.ForeColor = Operating_Systems.TextPrimary;
             sectionLabel.ForeColor = Operating_Systems.AccentBlue;
             lblTheme.ForeColor = Operating_Systems.TextPrimary;
             lblBackgroundImage.ForeColor = Operating_Systems.TextPrimary;
-            btnToggleTheme.BackColor = IsDarkMode() ? Color.FromArgb(60, 60, 60) : Color.FromArgb(220, 220, 220);
-            btnToggleTheme.ForeColor = IsDarkMode() ? Color.White : Color.Black;
+            btnToggleTheme.BackColor = Operating_Systems.IsDarkMode() ? Color.FromArgb(60, 60, 60) : Color.FromArgb(220, 220, 220);
+            btnToggleTheme.ForeColor = Operating_Systems.IsDarkMode() ? Color.White : Color.Black;
             btnToggleBackgroundImage.BackColor = btnToggleTheme.BackColor;
             btnToggleBackgroundImage.ForeColor = btnToggleTheme.ForeColor;
         }
 
-        private static void ApplyDarkMode(Operating_Systems OS)
+        public static void ApplyDarkMode(Operating_Systems OS)
         {
             btnToggleTheme.Text = "Switch to Light Mode ☀";
             btnToggleTheme.BackColor = Color.FromArgb(60, 60, 60);
@@ -38,10 +32,12 @@ namespace Operating_Systems_Project
             Operating_Systems.NeutralColor = Color.FromArgb(108, 117, 125);
             Operating_Systems.DarkButton = Color.FromArgb(30, 32, 34);
             Operating_Systems.ButtonsPanelBackground = Color.FromArgb(25, 25, 25);
-            // Accents usually stay the same, but you can adjust if needed
+
+            RefreshSettingsColors();
+            Operating_Systems.RefreshBackgroundColor(OS); 
         }
 
-        private static void ApplyLightMode(Operating_Systems OS)
+        public static void ApplyLightMode(Operating_Systems OS)
         {
             btnToggleTheme.Text = "Switch to Dark Mode 🌙";
             btnToggleTheme.BackColor = Color.FromArgb(220, 220, 220);
@@ -58,6 +54,9 @@ namespace Operating_Systems_Project
             Operating_Systems.NeutralColor = Color.FromArgb(200, 200, 200);     // Light Borders/Neutrals
             Operating_Systems.DarkButton = Color.FromArgb(225, 225, 225);     // Gray
             Operating_Systems.ButtonsPanelBackground = Color.FromArgb(255, 255, 255);
+
+            RefreshSettingsColors();
+            Operating_Systems.RefreshBackgroundColor(OS);
         }
     }
 }

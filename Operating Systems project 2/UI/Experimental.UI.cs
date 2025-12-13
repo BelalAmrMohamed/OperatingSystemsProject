@@ -5,16 +5,16 @@ namespace Operating_Systems_Project
 {
     internal partial class Experimental
     {
-        public static Label headerLabel;
-        public static Label sectionLabel;
-        public static Panel themePanel;
-        public static Label lblTheme;
-        public static Button btnToggleTheme;
+        private static Label headerLabel;
+        private static Label sectionLabel;
+        private static Panel themePanel;
+        private static Label lblTheme;
+        private static Button btnToggleTheme;
 
-        public static Panel BackgroundImagePanel;
-        public static Label lblBackgroundImage;
-        public static Button btnToggleBackgroundImage;
-        public static void ShowSettings(Operating_Systems OS)
+        private static Panel BackgroundImagePanel;
+        private static Label lblBackgroundImage;
+        private static Button btnToggleBackgroundImage;
+        public static void ShowExperimental(Operating_Systems OS)
         {
             // Define Layout Constants
             int contentWidth = (int)(Operating_Systems.formWidth * 0.95);
@@ -65,13 +65,13 @@ namespace Operating_Systems_Project
             // Button: Toggle Switch
             btnToggleTheme = new Button
             {
-                Text = IsDarkMode() ? "Switch to Light Mode ☀" : "Switch to Dark Mode 🌙",
+                Text = Operating_Systems.IsDarkMode() ? "Switch to Light Mode ☀" : "Switch to Dark Mode 🌙",
                 Font = new Font("Segoe UI Semibold", 9F),
                 Size = new Size(160, 35),
                 Location = new Point(themePanel.Width - 170, 12),
                 FlatStyle = FlatStyle.Flat,
-                BackColor = IsDarkMode() ? Color.FromArgb(60, 60, 60) : Color.FromArgb(220, 220, 220),
-                ForeColor = IsDarkMode() ? Color.White : Color.Black,
+                BackColor = Operating_Systems.IsDarkMode() ? Color.FromArgb(60, 60, 60) : Color.FromArgb(220, 220, 220),
+                ForeColor = Operating_Systems.IsDarkMode() ? Color.White : Color.Black,
                 Cursor = Cursors.Hand
             };
             btnToggleTheme.FlatAppearance.BorderSize = 0;
@@ -79,18 +79,8 @@ namespace Operating_Systems_Project
             // --- Toggle Logic ---
             btnToggleTheme.Click += (s, e) =>
             {
-                if (IsDarkMode())
-                {
-                    ApplyLightMode(OS);
-                    Operating_Systems.RefreshBackgroundColor(OS);
-                }
-                else
-                {
-                    ApplyDarkMode(OS);
-                    Operating_Systems.RefreshBackgroundColor(OS);
-                }
-
-                RefreshSettingsColors();
+                if (Operating_Systems.IsDarkMode()) ApplyLightMode(OS);
+                else ApplyDarkMode(OS);
             };
 
             themePanel.Controls.Add(lblTheme);

@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Operating_Systems));
             this.MainContainer = new System.Windows.Forms.Panel();
             this.ButtonsPanel = new System.Windows.Forms.Panel();
+            this.General_IO_Button = new System.Windows.Forms.Button();
             this.Menu_Button2 = new System.Windows.Forms.PictureBox();
             this.Hacker_Box = new System.Windows.Forms.PictureBox();
             this.Settings_Button = new System.Windows.Forms.Button();
@@ -41,7 +42,6 @@
             this.FileReader_Button = new System.Windows.Forms.Button();
             this.FileWriter_Button = new System.Windows.Forms.Button();
             this.Menu_Button = new System.Windows.Forms.PictureBox();
-            this.General_IO_Button = new System.Windows.Forms.Button();
             this.ButtonsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Menu_Button2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Hacker_Box)).BeginInit();
@@ -76,6 +76,25 @@
             this.ButtonsPanel.Size = new System.Drawing.Size(280, 545);
             this.ButtonsPanel.TabIndex = 2;
             this.ButtonsPanel.Visible = false;
+            // 
+            // General_IO_Button
+            // 
+            this.General_IO_Button.BackColor = System.Drawing.Color.Transparent;
+            this.General_IO_Button.FlatAppearance.BorderSize = 0;
+            this.General_IO_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.General_IO_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.General_IO_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.General_IO_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.General_IO_Button.ForeColor = System.Drawing.Color.White;
+            this.General_IO_Button.Location = new System.Drawing.Point(0, 30);
+            this.General_IO_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.General_IO_Button.Name = "General_IO_Button";
+            this.General_IO_Button.Size = new System.Drawing.Size(280, 45);
+            this.General_IO_Button.TabIndex = 27;
+            this.General_IO_Button.Text = "     🔁 General IO";
+            this.General_IO_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.General_IO_Button.UseVisualStyleBackColor = false;
+            this.General_IO_Button.Click += new System.EventHandler(this.General_IO_Button_Click);
             // 
             // Menu_Button2
             // 
@@ -251,25 +270,6 @@
             this.Menu_Button.TabIndex = 25;
             this.Menu_Button.TabStop = false;
             this.Menu_Button.Click += new System.EventHandler(this.Menu_Button_Click);
-            // 
-            // General_IO_Button
-            // 
-            this.General_IO_Button.BackColor = System.Drawing.Color.Transparent;
-            this.General_IO_Button.FlatAppearance.BorderSize = 0;
-            this.General_IO_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.General_IO_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.General_IO_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.General_IO_Button.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.General_IO_Button.ForeColor = System.Drawing.Color.White;
-            this.General_IO_Button.Location = new System.Drawing.Point(0, 30);
-            this.General_IO_Button.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.General_IO_Button.Name = "General_IO_Button";
-            this.General_IO_Button.Size = new System.Drawing.Size(280, 45);
-            this.General_IO_Button.TabIndex = 27;
-            this.General_IO_Button.Text = "     🔁 General IO";
-            this.General_IO_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.General_IO_Button.UseVisualStyleBackColor = false;
-            this.General_IO_Button.Click += new System.EventHandler(this.General_IO_Button_Click);
             // 
             // Operating_Systems
             // 

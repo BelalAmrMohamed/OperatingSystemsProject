@@ -139,5 +139,20 @@
   <ItemGroup>
     <None Include="Resources\LightThemeBackground.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AlAqsa.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IslamicCats.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IslamicWallpaper_2.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IslamicWallpaper.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CoffeAndCodeBackground.jpeg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

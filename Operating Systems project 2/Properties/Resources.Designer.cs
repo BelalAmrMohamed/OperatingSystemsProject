@@ -63,6 +63,16 @@ namespace Operating_Systems_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AlAqsa {
+            get {
+                object obj = ResourceManager.GetObject("AlAqsa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap AppImage {
             get {
                 object obj = ResourceManager.GetObject("AppImage", resourceCulture);
@@ -73,9 +83,59 @@ namespace Operating_Systems_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CoffeAndCodeBackground {
+            get {
+                object obj = ResourceManager.GetObject("CoffeAndCodeBackground", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Hamburger_menu_white_lines {
             get {
                 object obj = ResourceManager.GetObject("Hamburger menu white lines", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IslamicCats {
+            get {
+                object obj = ResourceManager.GetObject("IslamicCats", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IslamicWallpaper {
+            get {
+                object obj = ResourceManager.GetObject("IslamicWallpaper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IslamicWallpaper_2 {
+            get {
+                object obj = ResourceManager.GetObject("IslamicWallpaper_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LightThemeBackground {
+            get {
+                object obj = ResourceManager.GetObject("LightThemeBackground", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
