@@ -12,17 +12,22 @@ and this project follows **Semantic Versioning**.
 ### Additions
 
 - Document the project in Arabic
-- Add a main general View instead of defaulting to one of the Section
+- Add a main general View instead of defaulting to one of the Section.
 - The dark/light mode switch from the Experimental Settings.
 - The Background image switch from the Experimental Settings.
 
 ---
 
-## [Unreleased]
+## [4.4.0]
+
+### Added
+
+- Added some missing mehtods from FileWriter and FileReader.
+
+---
 
 ### Changed
 
-- Added some missing mehtods from FileWriter and FileReader.
 - The loading screen.
 
 ---
@@ -36,7 +41,7 @@ and this project follows **Semantic Versioning**.
 
 ---
 
-## [4.2.4] 2025-12-12
+## [4.3.0] 2025-12-12
 
 ### Added
 
