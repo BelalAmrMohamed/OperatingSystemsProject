@@ -18,6 +18,22 @@ and this project follows **Semantic Versioning**.
 
 ---
 
+## [Unreleased]
+
+### Changed
+
+- Added some missing mehtods from FileWriter and FileReader.
+- The loading screen.
+
+---
+
+### Fixed
+
+- The Title bar now turns white when Light mode is enabled.
+- The butons' hover effect and click effect in the side panel now matches the theme.
+
+---
+
 ## [4.2.4] 2025-12-12
 
 ### Added

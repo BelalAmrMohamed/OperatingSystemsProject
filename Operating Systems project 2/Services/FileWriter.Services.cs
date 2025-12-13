@@ -32,7 +32,7 @@ namespace Operating_Systems_Project
                 if (filetype == ".bin")
                     WriteToBinaryFile(path, content);
 
-                else WriteToTextFile(path, content);
+                else AppendToTextFile(path, content);
 
 
                 long size = new FileInfo(path).Length;

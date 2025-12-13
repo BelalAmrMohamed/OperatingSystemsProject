@@ -6,6 +6,7 @@ namespace Operating_Systems_Project
 {
     internal partial class Loading
     {
+        // Keep card centered when parent resizes
         private static void Parent_Resize(object sender, EventArgs e)
         {
             if (_card == null || !(sender is Form parent)) return;
@@ -16,48 +17,34 @@ namespace Operating_Systems_Project
 
         /// <summary>
         /// Stop and remove the loading overlay if present.
+        /// Properly disposes the spinner and unsubscribes events.
         /// </summary>
         public static void StopLoading()
         {
-            if (_overlay == null) return;
+            // nothing to do
+            if (_overlay == null && _card == null) return;
 
-            // Find parent by walking up from card if possible
+            // try to find parent
             Form parent = _card?.FindForm() ?? Application.OpenForms.Cast<Form>().FirstOrDefault(f => f.GetType().Name == "Operating_Systems");
             if (parent == null)
             {
-                // try to clean up without parent
-                _marquee?.Dispose();
-                _messageLabel?.Dispose();
-                _titleLabel?.Dispose();
-                _card?.Dispose();
-                _overlay?.Dispose();
-
-                _marquee = null;
-                _messageLabel = null;
-                _titleLabel = null;
-                _card = null;
-                _overlay = null;
+                // fallback: dispose everything safely
+                DisposeAll();
                 return;
             }
 
             void destroy()
             {
-                parent.Resize -= Parent_Resize;
+                try
+                {
+                    parent.Resize -= Parent_Resize;
+                }
+                catch { /* ignore if not subscribed */ }
 
                 if (_card != null && parent.Controls.Contains(_card)) parent.Controls.Remove(_card);
                 if (_overlay != null && parent.Controls.Contains(_overlay)) parent.Controls.Remove(_overlay);
 
-                _marquee?.Dispose();
-                _messageLabel?.Dispose();
-                _titleLabel?.Dispose();
-                _card?.Dispose();
-                _overlay?.Dispose();
-
-                _marquee = null;
-                _messageLabel = null;
-                _titleLabel = null;
-                _card = null;
-                _overlay = null;
+                DisposeAll();
             }
 
             if (parent.InvokeRequired)
@@ -66,21 +53,36 @@ namespace Operating_Systems_Project
                 destroy();
         }
 
-        /// <summary>
-        /// Update the message text if overlay already exists.
-        /// </summary>
-        private static void UpdateMessage(string message)
+        // centralized cleanup used by StopLoading
+        private static void DisposeAll()
         {
-            if (_messageLabel == null) return;
+            try
+            {
+                // Stop and dispose spinner
+                try
+                {
+                    _spinner?.Stop();
+                    _spinner?.Dispose();
+                }
+                catch { /* ignore */ }
+                _spinner = null;
 
-            var parent = _messageLabel.FindForm();
-            if (parent != null && parent.InvokeRequired)
-            {
-                parent.Invoke((Action)(() => _messageLabel.Text = message));
+                // Dispose labels and panels
+                try { _messageLabel?.Dispose(); } catch { }
+                _messageLabel = null;
+
+                try { _titleLabel?.Dispose(); } catch { }
+                _titleLabel = null;
+
+                try { _card?.Dispose(); } catch { }
+                _card = null;
+
+                try { _overlay?.Dispose(); } catch { }
+                _overlay = null;
             }
-            else
+            catch
             {
-                _messageLabel.Text = message;
+                // swallow; we do our best to clean up
             }
         }
     }

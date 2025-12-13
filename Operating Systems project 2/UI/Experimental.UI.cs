@@ -20,8 +20,6 @@ namespace Operating_Systems_Project
             int contentWidth = (int)(Operating_Systems.formWidth * 0.95);
             int currentY = 30;
 
-
-
             // 1. Header Title
             headerLabel = new Label
             {
@@ -83,12 +81,12 @@ namespace Operating_Systems_Project
             {
                 if (IsDarkMode())
                 {
-                    ApplyLightMode();
+                    ApplyLightMode(OS);
                     Operating_Systems.RefreshBackgroundColor(OS);
                 }
                 else
                 {
-                    ApplyDarkMode();
+                    ApplyDarkMode(OS);
                     Operating_Systems.RefreshBackgroundColor(OS);
                 }
 

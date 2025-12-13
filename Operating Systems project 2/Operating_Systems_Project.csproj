@@ -55,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic\General_IO.Logic.cs" />
+    <Compile Include="MainForm.UI.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Services\Experimental.Services.cs" />
     <Compile Include="Services\Loading.Services.cs" />
     <Compile Include="Services\Settings.Services.cs" />

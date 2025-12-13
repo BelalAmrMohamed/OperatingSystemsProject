@@ -22,11 +22,13 @@ namespace Operating_Systems_Project
             btnToggleBackgroundImage.ForeColor = btnToggleTheme.ForeColor;
         }
 
-        private static void ApplyDarkMode()
+        private static void ApplyDarkMode(Operating_Systems OS)
         {
             btnToggleTheme.Text = "Switch to Light Mode ☀";
             btnToggleTheme.BackColor = Color.FromArgb(60, 60, 60);
             btnToggleTheme.ForeColor = Color.White;
+
+            OS.DarkTitleBar(true);
 
             Operating_Systems.Background = Color.FromArgb(32, 32, 32);
             Operating_Systems.PanelColor = Color.FromArgb(43, 43, 43);
@@ -39,11 +41,13 @@ namespace Operating_Systems_Project
             // Accents usually stay the same, but you can adjust if needed
         }
 
-        private static void ApplyLightMode()
+        private static void ApplyLightMode(Operating_Systems OS)
         {
             btnToggleTheme.Text = "Switch to Dark Mode 🌙";
             btnToggleTheme.BackColor = Color.FromArgb(220, 220, 220);
             btnToggleTheme.ForeColor = Color.Black;
+
+            OS.DarkTitleBar(false);
 
             // Define your Light Mode Palette here
             Operating_Systems.Background = Color.FromArgb(245, 245, 245);       // Light Gray/White
