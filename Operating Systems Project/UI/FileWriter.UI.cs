@@ -75,7 +75,7 @@ namespace Operating_Systems_Project
             browseButton.FlatAppearance.BorderSize = 0;
 
             // Making a default file name
-            string defaultFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), $"Test.txt");
+            string defaultFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), $"OS Writer.txt");
 
             TextBox pathTextBox = new TextBox
             {
@@ -235,7 +235,7 @@ namespace Operating_Systems_Project
             OS.AddToMainContainer(contentPanel);
             OS.AddToMainContainer(charCountLabel);
             OS.AddToMainContainer(buttonFlow);
-            pathTextBox.Focus();
+            contentTextBox.Focus();
         }
 
         private static void BrowseForFile(TextBox pathTextBox)

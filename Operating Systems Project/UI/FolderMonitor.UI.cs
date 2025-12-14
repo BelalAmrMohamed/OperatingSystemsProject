@@ -263,7 +263,6 @@ namespace Operating_Systems_Project
             OperatingSystems.AddToMainContainer(optionsFlow);
             OperatingSystems.AddToMainContainer(contentPanel);
             OperatingSystems.AddToMainContainer(buttonFlow);
-            pathTextBox.Focus();
         }
     }
 }

@@ -213,7 +213,7 @@ namespace Operating_Systems_Project
                 try
                 {
                     string Documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    string path = Path.Combine(Documents, $"Test.txt");
+                    string path = Path.Combine(Documents, $"ReadOnly.txt");
 
                     if (File.Exists(path)) // Delete it if the program made it before
                     {
