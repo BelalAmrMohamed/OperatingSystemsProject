@@ -18,6 +18,14 @@ and this project follows **Semantic Versioning**.
 
 ---
 
+## [4.4.2]
+
+### Fixed
+
+- The MainForm.resx Error, previously the app icon was saved as binary data in MainForm.resx. Now the icon is set from the MainForm Constructor
+
+---
+
 ## [4.4.1]
 
 ### Fixed

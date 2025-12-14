@@ -170,6 +170,10 @@ namespace Operating_Systems_Project
         {
             InitializeComponent();
 
+            // This line fixed the MainForm.resx Error, previously the app icon was saved as binary data in that file
+            // Now the icon is set from this line;
+            this.Icon = Properties.Resources.AppIcon;
+
             // Enable double buffering for the main container to reduce flicker
             try
             {

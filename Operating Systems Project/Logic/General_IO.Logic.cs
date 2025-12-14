@@ -36,7 +36,7 @@ namespace Operating_Systems_Project
 
         private static string ChangeAttributes(string path)
         {            
-            File.WriteAllText(path, "Hello World");
+            File.WriteAllText(path, "Hello World"); // This will create the file, even if it exists
 
             File.SetAttributes(path, FileAttributes.ReadOnly);
             return $"Attributes Changed: {File.GetAttributes(path)}";

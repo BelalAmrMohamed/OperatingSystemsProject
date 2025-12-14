@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Operating_Systems));
             this.MainContainer = new System.Windows.Forms.Panel();
             this.ButtonsPanel = new System.Windows.Forms.Panel();
             this.General_IO_Button = new System.Windows.Forms.Button();
@@ -285,7 +284,6 @@
             this.Controls.Add(this.MainContainer);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Operating_Systems";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
