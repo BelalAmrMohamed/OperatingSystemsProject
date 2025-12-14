@@ -56,6 +56,10 @@ namespace Operating_Systems_Project
                 Padding = new Padding(8, 4, 8, 4)
             };
 
+            // Making a default Directory
+            string defaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+
             TextBox pathTextBox = new TextBox
             {
                 Font = new Font("Segoe UI", 10F),
@@ -64,7 +68,7 @@ namespace Operating_Systems_Project
                 BorderStyle = BorderStyle.None,
                 Location = new Point(8, 6),
                 Size = new Size(PanelWidth - 120, 25),
-                Text = $@"C:\Users\{Environment.UserName}\Downloads"
+                Text = defaultDirectory,
             };
 
             Button browseButton = new Button

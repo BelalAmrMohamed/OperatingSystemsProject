@@ -74,6 +74,9 @@ namespace Operating_Systems_Project
             };
             browseButton.FlatAppearance.BorderSize = 0;
 
+            // Making a default file name
+            string defaultFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), $"Test.txt");
+
             TextBox pathTextBox = new TextBox
             {
                 Name = "pathTextBox",
@@ -83,7 +86,7 @@ namespace Operating_Systems_Project
                 BorderStyle = BorderStyle.None,
                 Location = new Point(8, 8),
                 Size = new Size(PanelWidth - browseButton.Width - 14, 25),
-                Text = $@"C:\Users\{Environment.UserName}\Downloads\File.txt"
+                Text = defaultFile,
             };
             // Event is attached below
 

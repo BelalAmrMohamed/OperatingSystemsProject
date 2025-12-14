@@ -213,10 +213,7 @@ namespace Operating_Systems_Project
                 try
                 {
                     string Documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    string appFolder = Path.Combine(Documents, "Operating Systems app");
-                    Directory.CreateDirectory(appFolder); // ⭐ REQUIRED
-
-                    string path = Path.Combine(appFolder, $"Sample.txt");
+                    string path = Path.Combine(Documents, $"Test.txt");
 
                     if (File.Exists(path)) // Delete it if the program made it before
                     {
