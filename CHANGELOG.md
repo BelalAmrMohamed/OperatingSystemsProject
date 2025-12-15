@@ -18,6 +18,14 @@ and this project follows **Semantic Versioning**.
 
 ---
 
+## [4.5.1] 2025-12-15
+
+### Changed
+
+- Removed useless code from WMI, specifically the **ShowQuery_MultiTextBoxes** Method
+
+---
+
 ## [4.5.0] 2025-12-15
 
 ### Added

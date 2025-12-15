@@ -153,7 +153,8 @@ namespace Operating_Systems_Project
         
         public static int GetBoxHeight(string text)
         {
-            // The height is `number of lines * 21`. 21 is the line height.
+            // The height is: number of lines * 21.
+            // 21 is one line's height.
             // 425 is the maximum height.
             return Math.Min(text.Split('\n').Length * 21, 425);            
         }
