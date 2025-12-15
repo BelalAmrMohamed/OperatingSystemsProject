@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,29 +7,114 @@ namespace Operating_Systems_Project
     internal partial class WMI
     {
         public static Color SmallPanelColor = Color.FromArgb(0, 30, 50);
-        private static void ShowQuery_MultiTextBoxes(Operating_Systems OS, Func<object> action)
+        private static void ShowQuery(string query)
         {
-            object result = action();
+            switch (query)
+            {
+                case "Win32_ComputerSystem (Rename Computer)": // All of these methods return an array
+                    ShowQuery_MultiTextBoxes(RenameComputer());
+                    break;
 
-            // Normalize acceptable return types to an enumerable of strings
-            IEnumerable<string> infoEnumerable;
-            if (result is string single) infoEnumerable = new[] { single };
-            else if (result is string[] arr) infoEnumerable = arr;
-            else if (result is IEnumerable<string> ie) infoEnumerable = ie;
-            else
-                throw new InvalidOperationException("The provided method must return string or string[] or IEnumerable<string>");
+                case "Win32_PerfFormattedData_PerfOS_Memory":
+                    ShowQuery_MultiTextBoxes(GetMemoryInformation());
+                    break;
 
+                case "Win32_LogicalDisk (Logical Disk)":
+                    ShowQuery_MultiTextBoxes(GetLogicalDiskInfo());
+                    break;
+
+                case "Win32_Desktop (Specific info)":
+                    ShowQuery_MultiTextBoxes(GetDesktopInfo());
+                    break;
+
+                case "Win32_ComputerSystem (Type)":
+                    ShowQuery_MultiTextBoxes(GetComputerType());
+                    break;
+
+                case "Win32_ComputerSystemProduct":
+                    ShowQuery_MultiTextBoxes(GetProductInfo());
+                    break;
+
+                case "Win32_Desktop (All info)":
+                    ShowQuery_MultiTextBoxes(GetAllDesktopInfo());
+                    break;
+
+                case "Win32_BootConfiguration":
+                    ShowQuery_MultiTextBoxes(GetBootConfiguration());
+                    break;
+                case "Win32_CodecFile (Video)":
+                    ShowQuery_MultiTextBoxes(CodecVideo());
+                    break;
+
+                case "Win32_CodecFile (Audio)":
+                    ShowQuery_MultiTextBoxes(CodecAudio());
+                    break;
+
+                case "Win32_CodecFile (All)":
+                    ShowQuery_MultiTextBoxes(Codec());
+                    break;
+
+                case "Win32_Service (running)":
+                    ShowQuery_MultiTextBoxes(GetRunningServices());
+                    break;
+
+                case "Win32_Service (stopped)":
+                    ShowQuery_MultiTextBoxes(GetStoppedServices());
+                    break;
+
+                case "Win32_OperatingSystem":
+                    ShowQuery_MultiTextBoxes(Get_OS_Info());
+                    break;
+
+                case "Win32_ComputerSystem":
+                    ShowQuery_MultiTextBoxes(GetComputerSystemInfo());
+                    break;
+
+                case "Win32_Service (all)":
+                    ShowQuery_MultiTextBoxes(GetAllServices());
+                    break;
+
+                case "Win32_Group (Local)":
+                    ShowQuery_MultiTextBoxes(ListOfUserGroups());
+                    break;
+                case "Win32_Group (all)":
+                    ShowQuery_MultiTextBoxes(ListOfAllUserGroups());
+                    break;
+
+                case "Win32_LogicalDisk":
+                    ShowQuery_MultiTextBoxes(GetPartitionsInfo());
+                    break;
+
+                case "Win32_UserAccount":
+                    ShowQuery_MultiTextBoxes(GetUserAccounts());
+                    break;
+
+                case "Win32_CDROMDrive":
+                    ShowQuery_MultiTextBoxes(GET_CD_RomInfo());
+                    break;
+
+                case "Win32_Processor":
+                    ShowQuery_MultiTextBoxes(GetProcessorInfo());
+                    break;
+
+                case "Win32_Battery":
+                    ShowQuery_MultiTextBoxes(GetBatteryInfo());
+                    break;
+
+                case "Win32_Share":
+                    ShowQuery_MultiTextBoxes(GetListOfFileShares());
+                    break;
+            }
+        }
+
+        private static void ShowQuery_MultiTextBoxes(string[] info)
+        {
             const int containerWidth = 1103;
             const int verticalSpacing = 3;
-            const int lineHeight = 21;
-            const int minLines = 1;
-            const int maxHeight = 400;
-            int currentY = 3;
+            int currentY = verticalSpacing;
 
-            foreach (var raw in infoEnumerable)
+            foreach (string text in info)
             {
-                string text = (raw ?? string.Empty).Replace("\n", Environment.NewLine);
-
                 var resultsBox = new Label
                 {
                     Font = new Font("Segoe UI Semibold", 11F),
@@ -42,164 +126,36 @@ namespace Operating_Systems_Project
                     Location = new Point(3, currentY),
                     Text = text
                 };
+                
+                resultsBox.Height = GetBoxHeight(text);
 
-                int availableWidth = Math.Max(1, resultsBox.Width - 8);
-
-                int totalLines = 0;
-                string[] paragraphs = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-
-                foreach (var para in paragraphs)
-                {
-                    if (string.IsNullOrEmpty(para))
-                    {
-                        totalLines += 1;
-                        continue;
-                    }
-
-                    Size measured = TextRenderer.MeasureText(
-                        para,
-                        resultsBox.Font,
-                        new Size(int.MaxValue, int.MaxValue),
-                        TextFormatFlags.SingleLine | TextFormatFlags.NoPadding);
-
-                    int paragraphLines = (int)Math.Ceiling((double)measured.Width / availableWidth);
-                    if (paragraphLines < 1) paragraphLines = 1;
-                    totalLines += paragraphLines;
-                }
-
-                totalLines = Math.Max(minLines, totalLines);
-
-                int desiredHeight = totalLines * lineHeight;
-
-                if (desiredHeight > maxHeight)
-                {
-                    resultsBox.Height = maxHeight;
-                }
-                else
-                {
-                    resultsBox.Height = desiredHeight;
-                }
-                resultsBox.DoubleClick += (s, e) => 
-                { 
-                    if (!String.IsNullOrEmpty(resultsBox.Text))
-                    {
+                resultsBox.DoubleClick += (s, e) =>
+                {        
                         Clipboard.SetText(resultsBox.Text);
+
                         MessageBox.Show(
                             "Text copied to your clipboard", 
                             "Operating Systems app", 
                             MessageBoxButtons.OK, 
-                            MessageBoxIcon.Information);
-                    }
+                            MessageBoxIcon.Information);                    
                 };
+
                 resultsPanel.Controls.Add(resultsBox);
                 currentY += resultsBox.Height + verticalSpacing;
             }
             Panel ExtraSpaceAtTheBottom = new Panel
             {
-                Size = new Size(resultsPanel.Width - 100, 3),
+                Size = new Size(resultsPanel.Width - 100, verticalSpacing),
                 Location = new Point(0, currentY - verticalSpacing),
             };
             resultsPanel.Controls.Add(ExtraSpaceAtTheBottom);
-        }
-
-        private static void ShowQuery(Operating_Systems OS, string query)
+        }   
+        
+        public static int GetBoxHeight(string text)
         {
-            switch (query)
-            {
-                case "Win32_ComputerSystem (Rename Computer)":
-                    ShowQuery_MultiTextBoxes(OS, RenameComputer);
-                    break;
-
-                case "Win32_PerfFormattedData_PerfOS_Memory":
-                    ShowQuery_MultiTextBoxes(OS, GetMemoryInformation);
-                    break;
-
-                case "Win32_LogicalDisk (Logical Disk)":
-                    ShowQuery_MultiTextBoxes(OS, GetLogicalDiskInfo);
-                    break;
-
-                case "Win32_Desktop (Specific info)":
-                    ShowQuery_MultiTextBoxes(OS, GetDesktopInfo);
-                    break;
-
-                case "Win32_ComputerSystem (Type)":
-                    ShowQuery_MultiTextBoxes(OS, GetComputerType);
-                    break;
-
-                case "Win32_ComputerSystemProduct":
-                    ShowQuery_MultiTextBoxes(OS, GetProductInfo);
-                    break;
-
-                case "Win32_Desktop (All info)":
-                    ShowQuery_MultiTextBoxes(OS, GetAllDesktopInfo);
-                    break;
-
-                case "Win32_BootConfiguration":
-                    ShowQuery_MultiTextBoxes(OS, GetBootConfiguration);
-                    break;
-                case "Win32_CodecFile (Video)":
-                    ShowQuery_MultiTextBoxes(OS, CodecVideo);
-                    break;
-
-                case "Win32_CodecFile (Audio)":
-                    ShowQuery_MultiTextBoxes(OS, CodecAudio);
-                    break;
-
-                case "Win32_CodecFile (All)":
-                    ShowQuery_MultiTextBoxes(OS, Codec);
-                    break;
-
-                case "Win32_Service (running)":
-                    ShowQuery_MultiTextBoxes(OS, GetRunningServices);
-                    break;
-
-                case "Win32_Service (stopped)":
-                    ShowQuery_MultiTextBoxes(OS, GetStoppedServices);
-                    break;
-
-                case "Win32_OperatingSystem":
-                    ShowQuery_MultiTextBoxes(OS, Get_OS_Info);
-                    break;
-
-                case "Win32_ComputerSystem":
-                    ShowQuery_MultiTextBoxes(OS, GetComputerSystemInfo);
-                    break;
-
-                case "Win32_Service (all)":
-                    ShowQuery_MultiTextBoxes(OS, GetAllServices);
-                    break;
-
-                case "Win32_Group (Local)":
-                    ShowQuery_MultiTextBoxes(OS, ListOfUserGroups);
-                    break;
-                case "Win32_Group (all)":
-                    ShowQuery_MultiTextBoxes(OS, ListOfAllUserGroups);
-                    break;
-
-                case "Win32_LogicalDisk":
-                    ShowQuery_MultiTextBoxes(OS, GetPartitionsInfo);
-                    break;
-
-                case "Win32_UserAccount":
-                    ShowQuery_MultiTextBoxes(OS, GetUserAccounts);
-                    break;
-
-                case "Win32_CDROMDrive":
-                    ShowQuery_MultiTextBoxes(OS, GET_CD_RomInfo);
-                    break;
-
-                case "Win32_Processor":
-                    ShowQuery_MultiTextBoxes(OS, GetProcessorInfo);
-                    break;
-
-                case "Win32_Battery":
-                    ShowQuery_MultiTextBoxes(OS, GetBatteryInfo);
-                    break;
-
-                case "Win32_Share":
-                    ShowQuery_MultiTextBoxes(OS, GetListOfFileShares);
-                    break;
-            }
+            // The height is `number of lines * 21`. 21 is the line height.
+            // 425 is the maximum height.
+            return Math.Min(text.Split('\n').Length * 21, 425);            
         }
     }
 }

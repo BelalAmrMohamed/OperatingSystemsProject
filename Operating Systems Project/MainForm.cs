@@ -3,7 +3,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -18,7 +17,7 @@ namespace Operating_Systems_Project
 
         // ====== Dark Theme Colors ======
         // Change the IsDarkMode() Method at the bottom of the file if you'll change this value
-        public static Color Background = Color.FromArgb(32, 32, 32); // 32, 32, 32  // 13, 17, 23 
+        public static Color Background = Color.FromArgb(32, 32, 32); // 32, 32, 32  // 13, 17, 23
         public static Color ButtonsPanelBackground = Color.FromArgb(25, 25, 25);
         public static Color PanelColor = Color.FromArgb(43, 43, 43); // 43, 43, 43     // 21, 27, 35
         public static Color TextPrimary = Color.FromArgb(255, 255, 255);
@@ -175,7 +174,7 @@ namespace Operating_Systems_Project
             this.Icon = Properties.Resources.AppIcon;
 
             // The hidden
-            Hacker_Box.DoubleClick += (s, e) => ShowHiddenPage();            
+            Hacker_Box.DoubleClick += (s, e) => ShowHiddenPage();
 
             // What does this do? By default, when you switch pages in WinForms, the screen might "flicker"
             // white for a millisecond. Double Buffering fixes this by drawing the page in memory first, 
@@ -256,12 +255,6 @@ namespace Operating_Systems_Project
             ShowView(os => Settings.ShowSettings(os));
         }
 
-        private async void Hacker_Box_Click(object sender, EventArgs e)
-        {
-            //ShowHiddenPage();
-        }
-
-
         // ========== Helper methods ==========
 
         private async void ShowHiddenPage()
@@ -320,7 +313,7 @@ namespace Operating_Systems_Project
 
             b.FlatAppearance.BorderSize = 0;
             b.FlatAppearance.MouseOverBackColor = IsDarkMode() ? Color.FromArgb(15, 15, 15) : Color.FromArgb(240, 240, 240);
-            b.FlatAppearance.MouseDownBackColor = IsDarkMode() ? Color.Black : Color.White;
+            b.FlatAppearance.MouseDownBackColor = IsDarkMode() ? Color.Black : Color.Gray;
         }
 
         private int count = 0;

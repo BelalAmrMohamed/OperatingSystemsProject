@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Operating_Systems_Project
 {
@@ -13,7 +15,7 @@ namespace Operating_Systems_Project
 
             if (string.IsNullOrWhiteSpace(path) || string.IsNullOrEmpty(content))
             {
-                ShowMessage(messageLabel, "⚠ Please path and content.", Operating_Systems.ErrorColor);
+                ShowMessage(messageLabel, "⚠ Please fill path and content.", Operating_Systems.ErrorColor);
                 return;
             }
 
@@ -35,7 +37,7 @@ namespace Operating_Systems_Project
                 else AppendToTextFile(path, content);
 
 
-                long size = new FileInfo(path).Length;
+                long size = new FileInfo(path).Length; // C: \Users\Belal Amr\Documents\alsalam\OS Writer.txt
 
                 ShowMessage(messageLabel,
                     $"✓ Successfully wrote to '{Path.GetFileName(path)}'  ({size} bytes)",
@@ -43,7 +45,7 @@ namespace Operating_Systems_Project
             }
             catch (Exception ex)
             {
-                ShowMessage(messageLabel, $"✗ Error: {ex.Message}", Operating_Systems.ErrorColor);
+                ShowMessage(messageLabel, $"✗ Error: {ex.Message}", Operating_Systems.ErrorColor);                
             }
         }
     }

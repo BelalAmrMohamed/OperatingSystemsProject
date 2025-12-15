@@ -120,8 +120,6 @@
             this.Hacker_Box.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Hacker_Box.TabIndex = 23;
             this.Hacker_Box.TabStop = false;
-            this.Hacker_Box.Click += new System.EventHandler(this.Hacker_Box_Click);
-            // 
             // Settings_Button
             // 
             this.Settings_Button.BackColor = System.Drawing.Color.Transparent;

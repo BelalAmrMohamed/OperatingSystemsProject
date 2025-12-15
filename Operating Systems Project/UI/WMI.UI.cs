@@ -138,7 +138,7 @@ namespace Operating_Systems_Project
                 resultsPanel.Controls.Clear();
                 resultsPanel.Height = 360;
                 if (copyMessage.Visible != true) copyMessage.Visible = true;
-                ShowQuery(OperatingSystems, querySelector.SelectedItem.ToString());
+                ShowQuery(querySelector.SelectedItem.ToString()); // like: Win32_CodecFile (All)
             };
         }
     }

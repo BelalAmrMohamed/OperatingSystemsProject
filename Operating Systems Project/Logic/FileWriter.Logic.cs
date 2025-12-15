@@ -22,6 +22,7 @@ namespace Operating_Systems_Project
         {
             using (StreamWriter Writer = File.CreateText(path))
             {
+                // Writer.Write(content);
                 for (int i = 0; i < content.Length; i ++)
                     Writer.WriteLine(content[i]);                
             }
