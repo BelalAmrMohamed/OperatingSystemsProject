@@ -177,7 +177,7 @@ namespace Operating_Systems_Project
             // The hidden
             Hacker_Box.DoubleClick += (s, e) => ShowHiddenPage();            
 
-             // What does this do? By default, when you switch pages in WinForms, the screen might "flicker"
+            // What does this do? By default, when you switch pages in WinForms, the screen might "flicker"
             // white for a millisecond. Double Buffering fixes this by drawing the page in memory first, 
             // then painting it to the screen all at once.
             try

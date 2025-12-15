@@ -18,11 +18,27 @@ and this project follows **Semantic Versioning**.
 
 ---
 
-## [Unreleased]
+## [4.5.0] 2025-12-15
 
 ### Added
 
-- ***
+- Clipboard support for WMI resutls.
+- Stop ability for the TimerAccuracy class.
+
+---
+
+### Changed
+
+- Improved WMI resutls panel.
+- The hidden page now requires 2 clicks instead of 1.
+
+---
+
+### Fixed
+
+- The default path conflict between FileWriter and General IO.
+
+---
 
 ## [4.4.2]
 
