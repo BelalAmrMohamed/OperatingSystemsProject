@@ -173,8 +173,11 @@ namespace Operating_Systems_Project
             // This line fixed the MainForm.resx Error, previously the app icon was saved as binary data in that file
             // Now the icon is set from this line;
             this.Icon = Properties.Resources.AppIcon;
-            
-            // What does this do? By default, when you switch pages in WinForms, the screen might "flicker"
+
+            // The hidden
+            Hacker_Box.DoubleClick += (s, e) => ShowHiddenPage();            
+
+             // What does this do? By default, when you switch pages in WinForms, the screen might "flicker"
             // white for a millisecond. Double Buffering fixes this by drawing the page in memory first, 
             // then painting it to the screen all at once.
             try
@@ -255,19 +258,24 @@ namespace Operating_Systems_Project
 
         private async void Hacker_Box_Click(object sender, EventArgs e)
         {
+            //ShowHiddenPage();
+        }
+
+
+        // ========== Helper methods ==========
+
+        private async void ShowHiddenPage()
+        {
             ButtonsPanel.Visible = false;
             Loading.StartLoading();
 
-            await Task.Delay(300);
+            await Task.Delay(1000);
 
             ClearContent();
             Experimental.ShowExperimental(this);
 
             Loading.StopLoading();
         }
-
-
-        // ========== Helper methods ==========
 
         private void ShowView(Action<Operating_Systems> action)
         {
