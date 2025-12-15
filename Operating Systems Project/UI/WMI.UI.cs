@@ -107,8 +107,20 @@ namespace Operating_Systems_Project
                 Location = new Point(0, 100),
             };
             runQueryButton.FlatAppearance.BorderSize = 0;
-            currentY += runQueryButton.Height + 25;
             OperatingSystems.AddToMainContainer(runQueryButton);
+
+            Label copyMessage = new Label
+            {
+                Text = "Double click any box to copy its information",
+                AutoSize = true,
+                ForeColor = Operating_Systems.TextSecondary,
+                Font = new Font("Segoe UI Semibold", 10F, FontStyle.Italic),
+                Location = new Point(runQueryButton.Width + 10, 112),
+                Visible = false,
+            };
+            OperatingSystems.AddToMainContainer(copyMessage);
+
+            currentY += runQueryButton.Height + 25;
 
             resultsPanel = new Panel
             {
@@ -125,6 +137,7 @@ namespace Operating_Systems_Project
             {
                 resultsPanel.Controls.Clear();
                 resultsPanel.Height = 360;
+                if (copyMessage.Visible != true) copyMessage.Visible = true;
                 ShowQuery(OperatingSystems, querySelector.SelectedItem.ToString());
             };
         }

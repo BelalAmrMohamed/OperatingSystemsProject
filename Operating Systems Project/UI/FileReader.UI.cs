@@ -64,7 +64,7 @@ namespace Operating_Systems_Project
                 Text = "Browse",
                 Size = new Size(90, 28),
                 Location = new Point(PanelWidth - 95, 3),
-                BackColor = Operating_Systems.AccentGreen,
+                BackColor = Operating_Systems.AccentBlue,
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 9F),
@@ -164,7 +164,7 @@ namespace Operating_Systems_Project
             {
                 Text = "📖 Read File",
                 Size = new Size(150, 42),
-                BackColor = Operating_Systems.AccentBlue,
+                BackColor = Operating_Systems.AccentGreen,
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI Semibold", 10F),

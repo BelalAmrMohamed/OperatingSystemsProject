@@ -31,23 +31,19 @@ namespace Operating_Systems_Project
             {
                 string text = (raw ?? string.Empty).Replace("\n", Environment.NewLine);
 
-                var resultsTextBox = new TextBox
+                var resultsBox = new Label
                 {
                     Font = new Font("Segoe UI Semibold", 11F),
                     ForeColor = Operating_Systems.TextPrimary,
                     BackColor = SmallPanelColor, // 1- 59, 60, 109 // 2- AccentBlue // 3- White and black // 4- 108, 250, 125 // 5- 0, 30, 50
-                    Multiline = true,
                     BorderStyle = BorderStyle.FixedSingle,
-                    ReadOnly = true,
-                    WordWrap = true,
-                    ScrollBars = ScrollBars.None,
                     Margin = new Padding(30, 30, 30, 30),
                     Width = containerWidth - 25,
                     Location = new Point(3, currentY),
                     Text = text
                 };
 
-                int availableWidth = Math.Max(1, resultsTextBox.Width - 8);
+                int availableWidth = Math.Max(1, resultsBox.Width - 8);
 
                 int totalLines = 0;
                 string[] paragraphs = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
@@ -62,7 +58,7 @@ namespace Operating_Systems_Project
 
                     Size measured = TextRenderer.MeasureText(
                         para,
-                        resultsTextBox.Font,
+                        resultsBox.Font,
                         new Size(int.MaxValue, int.MaxValue),
                         TextFormatFlags.SingleLine | TextFormatFlags.NoPadding);
 
@@ -77,16 +73,26 @@ namespace Operating_Systems_Project
 
                 if (desiredHeight > maxHeight)
                 {
-                    resultsTextBox.Height = maxHeight;
-                    resultsTextBox.ScrollBars = ScrollBars.Vertical;
+                    resultsBox.Height = maxHeight;
                 }
                 else
                 {
-                    resultsTextBox.Height = desiredHeight;
+                    resultsBox.Height = desiredHeight;
                 }
-
-                resultsPanel.Controls.Add(resultsTextBox);
-                currentY += resultsTextBox.Height + verticalSpacing;
+                resultsBox.DoubleClick += (s, e) => 
+                { 
+                    if (!String.IsNullOrEmpty(resultsBox.Text))
+                    {
+                        Clipboard.SetText(resultsBox.Text);
+                        MessageBox.Show(
+                            "Text copied to your clipboard", 
+                            "Operating Systems app", 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Information);
+                    }
+                };
+                resultsPanel.Controls.Add(resultsBox);
+                currentY += resultsBox.Height + verticalSpacing;
             }
             Panel ExtraSpaceAtTheBottom = new Panel
             {
