@@ -19,7 +19,6 @@ namespace Operating_Systems_Project
         {
             // 1. Layout Constants
             const int PanelWidth = 1104;
-            const int ContainerHeight = 482;
             int currentY = 40; // Top margin reserved
 
 

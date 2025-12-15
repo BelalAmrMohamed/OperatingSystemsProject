@@ -18,7 +18,19 @@ and this project follows **Semantic Versioning**.
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- ***
+
 ## [4.4.2]
+
+### Changed
+
+- Improved the default file and folder paths
+
+---
 
 ### Fixed
 

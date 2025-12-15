@@ -173,8 +173,10 @@ namespace Operating_Systems_Project
             // This line fixed the MainForm.resx Error, previously the app icon was saved as binary data in that file
             // Now the icon is set from this line;
             this.Icon = Properties.Resources.AppIcon;
-
-            // Enable double buffering for the main container to reduce flicker
+            
+            // What does this do? By default, when you switch pages in WinForms, the screen might "flicker"
+            // white for a millisecond. Double Buffering fixes this by drawing the page in memory first, 
+            // then painting it to the screen all at once.
             try
             {
                 typeof(Panel).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
