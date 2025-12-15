@@ -9,109 +9,124 @@ namespace Operating_Systems_Project
 {
     internal partial class TimersAccuracy
     {
+        // --- Cancellation & State Flags ---
+        private static bool _isRunning = false;
+        private static bool _cancelRequested = false;
+
         private static void RunExperiment()
         {
-            _runButton.Enabled = false;
-            _runButton.Text = "Running 0%";
-            Application.DoEvents(); // Force UI update
+            // 1. Handle Cancellation / Toggle Logic
+            if (_isRunning)
+            {
+                // If already running, request stop
+                _cancelRequested = true;
+                _runButton.Text = "Stopping...";
+                _runButton.Enabled = false; // Prevent double clicks while stopping
+                return;
+            }
 
+            // 2. Initialize Experiment
+            _isRunning = true;
+            _cancelRequested = false;
+            _runButton.Text = "Stop / إيقاف";
+            _runButton.BackColor = Operating_Systems.ErrorColor; // Red for stop action
+
+            // Read Inputs
             int iterations = (int)_iterationsBox.Value;
             int workloadMs = (int)_workloadBox.Value;
-            bool useSleep = _testTypeBox.SelectedIndex == 0;
+            bool useSleep = _testTypeBox.SelectedIndex == 0; // 0=Sleep, 1=Spin
 
-            // Prepare storage
-            var swSamples = new List<double>();
-            var dtSamples = new List<double>();
-            var tcSamples = new List<double>();
-
-            // Clear previous results
-            _testResults.Clear();
+            // Reset UI
             _resultsGrid.Rows.Clear();
-            _chartPanel.Invalidate();
-
-            _progressBar.Maximum = Math.Max(1, iterations);
+            _testResults.Clear();
             _progressBar.Value = 0;
-            _progressLabel.Text = "0%";
+            _progressBar.Maximum = iterations;
 
-            // --- THE LOOP ---
+            // Prepare Data Containers
+            List<double> stopwatchSamples = new List<double>();
+            List<double> dateTimeSamples = new List<double>();
+            List<double> tickCountSamples = new List<double>();
+
+            // 3. Main Measurement Loop
             for (int i = 0; i < iterations; i++)
             {
+                // Check for cancel
+                if (_cancelRequested) break;
+
+                // --- A. Capture Start Times ---
+                // 1. Stopwatch (High Resolution Hardware Timer)
                 long swStart = Stopwatch.GetTimestamp();
+                // 2. DateTime (System Clock)
                 DateTime dtStart = DateTime.Now;
+                // 3. TickCount (System Uptime in ms)
                 int tcStart = Environment.TickCount;
 
-                // Simulate Work
+                // --- B. Perform Work ---
                 if (useSleep)
                 {
+                    // OS Scheduler puts thread to sleep
                     Thread.Sleep(workloadMs);
                 }
                 else
                 {
-                    // Busy wait (spin)
-                    long spinUntil = Stopwatch.GetTimestamp() + (long)(workloadMs * Stopwatch.Frequency / 1000.0);
-                    while (Stopwatch.GetTimestamp() < spinUntil) { /* Spin */ }
+                    // Busy Wait (CPU Spin) - keeps CPU active
+                    Stopwatch spinSw = Stopwatch.StartNew();
+                    while (spinSw.ElapsedMilliseconds < workloadMs) { /* Spin */ }
+                    spinSw.Stop();
                 }
 
+                // --- C. Capture End Times ---
                 long swEnd = Stopwatch.GetTimestamp();
                 DateTime dtEnd = DateTime.Now;
                 int tcEnd = Environment.TickCount;
 
-                // Calculate Deltas (ms)
-                double swDelta = (swEnd - swStart) * 1000.0 / Stopwatch.Frequency;
-                double dtDelta = (dtEnd - dtStart).TotalMilliseconds;
-                double tcDelta = (tcEnd - tcStart); // TickCount is essentially milliseconds
+                // --- D. Calculate Deltas ---
+                // Convert ticks to milliseconds
+                double swMs = (swEnd - swStart) * 1000.0 / Stopwatch.Frequency;
+                double dtMs = (dtEnd - dtStart).TotalMilliseconds;
+                double tcMs = (tcEnd - tcStart);
 
-                swSamples.Add(swDelta);
-                dtSamples.Add(dtDelta);
-                tcSamples.Add(tcDelta);
+                stopwatchSamples.Add(swMs);
+                dateTimeSamples.Add(dtMs);
+                tickCountSamples.Add(tcMs);
 
-                // Update progress
-                try
+                // --- E. Update UI (Every 5th iteration to save performance) ---
+                if (i % 5 == 0 || i == iterations - 1)
                 {
-                    _progressBar.Value = Math.Min(_progressBar.Maximum, i + 1);
-                }
-                catch { /* in case of cross-thread but we're on UI thread */ }
-                int pct = (int)(100.0 * (i + 1) / iterations);
-                _runButton.Text = $"Running {pct}%";
-                _progressLabel.Text = $"{pct}%";
+                    // Update Progress
+                    _progressBar.Value = i + 1;
+                    int percent = (int)((i + 1) / (float)iterations * 100);
+                    _progressLabel.Text = $"{percent}%";
 
-                // Update Chart live (every 5th frame to save UI perf)
-                if ((i % 5 == 0) || i == iterations - 1)
-                {
-                    // temporary partial mean values to show evolving chart
-                    var partialResults = new List<TestResult>
+                    // Update Real-Time Chart Data
+                    // We create a NEW list to avoid 'Collection Modified' errors in Paint event
+                    var currentStats = new List<TestResult>
                     {
-                        new TestResult { TimerName = "Stopwatch", MeanMs = swSamples.Count>0 ? swSamples.Average() : 0 },
-                        new TestResult { TimerName = "DateTime", MeanMs = dtSamples.Count>0 ? dtSamples.Average() : 0 },
-                        new TestResult { TimerName = "TickCount", MeanMs = tcSamples.Count>0 ? tcSamples.Average() : 0 }
+                        new TestResult { TimerName = "Stopwatch", MeanMs = stopwatchSamples.Average() },
+                        new TestResult { TimerName = "DateTime", MeanMs = dateTimeSamples.Average() },
+                        new TestResult { TimerName = "TickCount", MeanMs = tickCountSamples.Average() }
                     };
-                    // swap into main test result list for DrawChart to read
-                    _testResults = partialResults;
-                    _chartPanel.Invalidate(); // triggers Paint (DrawChart)
+
+                    _testResults = currentStats;
+                    _chartPanel.Invalidate(); // Trigger redraw
+
+                    // Keep UI responsive
                     Application.DoEvents();
                 }
             }
 
-            // Compute final _testResults (means)
-            _testResults = new List<TestResult>
-            {
-                new TestResult { TimerName = "Stopwatch", MeanMs = swSamples.Average() },
-                new TestResult { TimerName = "DateTime", MeanMs = dtSamples.Average() },
-                new TestResult { TimerName = "TickCount", MeanMs = tcSamples.Average() }
-            };
+            // 4. Finalize Results
+            // Add rows to the grid
+            AddResultRow("Stopwatch (High Res)", stopwatchSamples, workloadMs);
+            AddResultRow("DateTime (System Clock)", dateTimeSamples, workloadMs);
+            AddResultRow("Environment.TickCount", tickCountSamples, workloadMs);
 
-            // Fill missing chart points - request repaint
-            _chartPanel.Invalidate();
-
-            // Compute and Display Stats
-            AddResultRow("Sys.Diag.Stopwatch", swSamples, iterations * workloadMs);
-            AddResultRow("DateTime.Now", dtSamples, iterations * workloadMs);
-            AddResultRow("Env.TickCount", tcSamples, iterations * workloadMs);
-
-            // Finalize progress
-            _progressBar.Value = _progressBar.Maximum;
+            // 5. Reset State
+            _isRunning = false;
+            _cancelRequested = false;
+            _runButton.Text = "Run / تشغيل";
             _runButton.Enabled = true;
-            _runButton.Text = "Run Diagnostics";
+            _runButton.BackColor = Operating_Systems.AccentBlue;
             _progressLabel.Text = "Done";
         }
     }
