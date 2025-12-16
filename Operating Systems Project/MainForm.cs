@@ -16,7 +16,7 @@ namespace Operating_Systems_Project
         public static readonly string APP_VERSION;
 
         // ====== Dark Theme Colors ======
-        // Change the IsDarkMode() Method at the bottom of the file if you'll change this value
+        // Change the IsDarkMode() Method at the bottom of the file if you'll change `Background` value
         public static Color Background = Color.FromArgb(32, 32, 32); // 32, 32, 32  // 13, 17, 23
         public static Color ButtonsPanelBackground = Color.FromArgb(25, 25, 25);
         public static Color PanelColor = Color.FromArgb(43, 43, 43); // 43, 43, 43     // 21, 27, 35
@@ -326,7 +326,6 @@ namespace Operating_Systems_Project
                 {
                     case 0:
                         this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.IslamicWallpaper_2;
-
                         break;
 
                     case 1:
@@ -351,9 +350,7 @@ namespace Operating_Systems_Project
 
                     case 6:
                         this.BackgroundImage = global::Operating_Systems_Project.Properties.Resources.IslamicWallpaper;
-                        break;
-                    default:
-                        break;
+                        break;                    
                 }
                 count = (count + 1) % 7;
             }

@@ -29,9 +29,9 @@ namespace Operating_Systems_Project
                 return reader.ReadInt32();
         }
 
-        // =====================
+        // ============== Important note ==============
         // These Methods are extra ( We didn't take them in the section)
-        // =====================
+
         private static string ReadBinaryFile(string path) // Returns text
         {
             // ReadAllText() is a simpler version of this

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
@@ -36,7 +37,8 @@ namespace Operating_Systems_Project
                     break;
 
                 case "Win32_Desktop (All info)":
-                    ShowQuery_MultiTextBoxes(GetAllDesktopInfo());
+                    //ShowQuery_MultiTextBoxes(GetAllDesktopInfo());
+                    ShowQuery_MultiTextBoxes(GetQueryInfo("SELECT * FROM Win32_Desktop WHERE Name = '.Default'"));
                     break;
 
                 case "Win32_BootConfiguration":
@@ -126,18 +128,13 @@ namespace Operating_Systems_Project
                     Location = new Point(3, currentY),
                     Text = text
                 };
-                
+
                 resultsBox.Height = GetBoxHeight(text);
 
                 resultsBox.DoubleClick += (s, e) =>
-                {        
-                        Clipboard.SetText(resultsBox.Text);
-
-                        MessageBox.Show(
-                            "Text copied to your clipboard", 
-                            "Operating Systems app", 
-                            MessageBoxButtons.OK, 
-                            MessageBoxIcon.Information);                    
+                {
+                    Clipboard.SetText(resultsBox.Text);
+                    _ = Display_CopiedSuccessfully(); // The '_ = ' is a fix to the restricted 'await' problem
                 };
 
                 resultsPanel.Controls.Add(resultsBox);
@@ -149,14 +146,29 @@ namespace Operating_Systems_Project
                 Location = new Point(0, currentY - verticalSpacing),
             };
             resultsPanel.Controls.Add(ExtraSpaceAtTheBottom);
-        }   
-        
-        public static int GetBoxHeight(string text)
+        }
+
+        /// ======================
+        /// Helper Methods
+        /// ======================
+
+        private static int GetBoxHeight(string text)
         {
             // The height is: number of lines * 21.
             // 21 is one line's height.
             // 425 is the maximum height.
-            return Math.Min(text.Split('\n').Length * 21, 425);            
+            return Math.Min(text.Split('\n').Length * 21, 425);
+        }
+
+        private static async Task Display_CopiedSuccessfully()
+        {
+            copyMessageLabel.Text = SuccessfulCopyingMessage;
+            copyMessageLabel.ForeColor = Color.Green;
+
+            await Task.Delay(2000); // Non-blocking wait for 3 seconds
+
+            copyMessageLabel.Text = DefaultCopyMessage;
+            copyMessageLabel.ForeColor = Operating_Systems.TextPrimary;
         }
     }
 }

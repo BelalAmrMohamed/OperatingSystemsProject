@@ -6,7 +6,11 @@ namespace Operating_Systems_Project
     internal partial class WMI
     {
         private static Panel resultsPanel;
-        public static void ShowWMI(Operating_Systems OperatingSystems)
+        private static Label copyMessageLabel;
+
+        private static readonly string DefaultCopyMessage = "Double click any box to copy its information";
+        private static readonly string SuccessfulCopyingMessage = "✓ Content copied to your clipboard";
+        public static void ShowWMI(Operating_Systems OS)
         {
             // Layout constants
             const int PanelWidth = 1104;
@@ -38,8 +42,8 @@ namespace Operating_Systems_Project
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Operating_Systems.TextPrimary,
             };
-            OperatingSystems.AddToMainContainer(HeaderLabel);
-            OperatingSystems.AddToMainContainer(SubHeaderLabel);
+            OS.AddToMainContainer(HeaderLabel);
+            OS.AddToMainContainer(SubHeaderLabel);
             currentY += 32;
 
             // --- 4. Query Label ---
@@ -51,7 +55,7 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 Location = new Point(0, currentY)
             };
-            OperatingSystems.AddToMainContainer(queryLabel);
+            OS.AddToMainContainer(queryLabel);
             currentY += queryLabel.Height + 6;
 
             // Query Selector
@@ -64,7 +68,7 @@ namespace Operating_Systems_Project
                 FlatStyle = FlatStyle.Popup,
                 DropDownStyle = ComboBoxStyle.DropDownList,
             };
-            OperatingSystems.AddToMainContainer(querySelector);
+            OS.AddToMainContainer(querySelector);
             currentY += querySelector.Height + VerticalSpacing;
 
             querySelector.Items.Add("Win32_ComputerSystem (Rename Computer)");
@@ -107,18 +111,18 @@ namespace Operating_Systems_Project
                 Location = new Point(0, 100),
             };
             runQueryButton.FlatAppearance.BorderSize = 0;
-            OperatingSystems.AddToMainContainer(runQueryButton);
+            OS.AddToMainContainer(runQueryButton);
 
-            Label copyMessage = new Label
+            copyMessageLabel = new Label
             {
-                Text = "Double click any box to copy its information",
+                Text = DefaultCopyMessage,
                 AutoSize = true,
                 ForeColor = Operating_Systems.TextSecondary,
                 Font = new Font("Segoe UI Semibold", 10F, FontStyle.Italic),
                 Location = new Point(runQueryButton.Width + 10, 112),
                 Visible = false,
             };
-            OperatingSystems.AddToMainContainer(copyMessage);
+            OS.AddToMainContainer(copyMessageLabel);
 
             currentY += runQueryButton.Height + 25;
 
@@ -131,13 +135,13 @@ namespace Operating_Systems_Project
                 AutoScrollMinSize = new Size(0, 360),
                 BorderStyle = BorderStyle.FixedSingle,
             };
-            OperatingSystems.AddToMainContainer(resultsPanel);
+            OS.AddToMainContainer(resultsPanel);
 
             runQueryButton.Click += (s, e) =>
             {
                 resultsPanel.Controls.Clear();
                 resultsPanel.Height = 360;
-                if (copyMessage.Visible != true) copyMessage.Visible = true;
+                if (copyMessageLabel.Visible != true) copyMessageLabel.Visible = true;
                 ShowQuery(querySelector.SelectedItem.ToString()); // like: Win32_CodecFile (All)
             };
         }

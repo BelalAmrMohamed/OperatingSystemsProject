@@ -8,9 +8,32 @@ namespace Operating_Systems_Project
         /// <summary>
         /// ======= Methods that need to be fixed =======
         /// Win32_Battery (one object doesn't work, the commented one)
-        /// Win32_Service (doesn't work when state is set to "running" or "stopped")
-        /// Win32_CDROMDrive (doesn't show anything)
         /// </summary>
+
+        // This method will work with any query, and won't return any empty values
+        private static string[] GetQueryInfo(string query)
+        {
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
+            ManagementObjectCollection collection = searcher.Get();
+            string[] info = new string[collection.Count];
+            int index = 0;
+            foreach (ManagementObject obj in collection)
+            {
+                info[index] = string.Empty;
+                foreach (PropertyData prop in obj.Properties)
+                {
+                    // Skip null, empty, or default values
+                    if (prop.Value != null &&
+                        !string.IsNullOrWhiteSpace(prop.Value.ToString()))
+                    {
+                        info[index] += $"{prop.Name}: {prop.Value}\r\n";
+                    }
+                }
+                info[index] = info[index].ToString().TrimEnd('\r', '\n');
+                index++;
+            }
+            return info;
+        }
 
         private static string[] GetPartitionsInfo()
         {
@@ -178,7 +201,7 @@ namespace Operating_Systems_Project
         private static string[] GetComputerSystemInfo()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystem");
-            
+
             string info = string.Empty;
             foreach (ManagementObject obj in searcher.Get())
             {
@@ -246,7 +269,7 @@ namespace Operating_Systems_Project
         private static string[] GetProcessorInfo()
         {
             ManagementObjectSearcher cpuSearcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
-            
+
             string info = string.Empty;
             foreach (ManagementObject obj in cpuSearcher.Get())
             {
@@ -258,7 +281,7 @@ namespace Operating_Systems_Project
         private static string[] Get_OS_Info()
         {
             ManagementObjectSearcher osSearcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem");
-            
+
             string info = string.Empty;
             foreach (ManagementObject obj in osSearcher.Get())
             {
@@ -289,7 +312,7 @@ namespace Operating_Systems_Project
                         info += $"\n{"Screen Saver time out:",-20} {obj["ScreenSaverTimeout"]}";
                     }
                 }
-                catch{ }
+                catch { }
             }
             return new[] { info };
         }
@@ -352,7 +375,7 @@ namespace Operating_Systems_Project
         private static string[] GetBootConfiguration()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_BootConfiguration");
-            
+
             string info = string.Empty;
             foreach (ManagementObject obj in searcher.Get())
             {
@@ -369,7 +392,7 @@ namespace Operating_Systems_Project
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Battery");
             ManagementObjectCollection collection = searcher.Get();
             if (collection.Count == 0) return new[] { "No Win32_Battery instances found (likely a desktop PC)." };
-            
+
             string[] info = new string[collection.Count];
             int index = 0;
 
