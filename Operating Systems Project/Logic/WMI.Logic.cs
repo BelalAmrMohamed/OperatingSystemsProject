@@ -179,165 +179,149 @@ namespace Operating_Systems_Project
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystem");
             
-            string[] info = new string[1];
-            info[0] = string.Empty;
-
+            string info = string.Empty;
             foreach (ManagementObject obj in searcher.Get())
             {
-                info[0] += $"{"Computer Name:",-22} {obj["Name"]}\r\n";
-                info[0] += $"{"Domain:",-22} {obj["Domain"]}\r\n";
-                info[0] += $"{"Model:",-22} {obj["Model"]}\r\n";
-                info[0] += $"{"Manufacturer:",-22} {obj["Manufacturer"]}\r\n";
-                info[0] += $"{"Total Physical Memory:",-22} {Math.Round(Convert.ToDouble(obj["TotalPhysicalMemory"]) / (1024.0 * 1024.0 * 1024.0), 2)} GB\n";
-                info[0] += $"{"System Type:",-22} {obj["SystemType"]}\r\n";
-                info[0] += $"{"Workgroup/Domain Join:",-22} {obj["Workgroup"]}\r\n";
-                info[0] += $"{"Type:",-22} {GetComputerType()}";
+                info += $"{"Computer Name:",-22} {obj["Name"]}\r\n";
+                info += $"{"Domain:",-22} {obj["Domain"]}\r\n";
+                info += $"{"Model:",-22} {obj["Model"]}\r\n";
+                info += $"{"Manufacturer:",-22} {obj["Manufacturer"]}\r\n";
+                info += $"{"Total Physical Memory:",-22} {Math.Round(Convert.ToDouble(obj["TotalPhysicalMemory"]) / (1024.0 * 1024.0 * 1024.0), 2)} GB\n";
+                info += $"{"System Type:",-22} {obj["SystemType"]}\r\n";
+                info += $"{"Workgroup/Domain Join:",-22} {obj["Workgroup"]}\r\n";
+                info += $"{"Type:",-22} {GetComputerType()}";
             }
-            return info;
+            return new[] { info };
         }
 
         private static string[] GetComputerType()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystem");
-            string[] type = new string[1];
-            type[0] = "Type: ";
+            string type = "Type: ";
             foreach (ManagementObject obj in searcher.Get())
             {
                 switch (Convert.ToInt32(obj["DomainRole"]))
                 {
                     case 0:
-                        type[0] += "Standalone Workstation";
+                        type += "Standalone Workstation";
                         break;
                     case 1:
-                        type[0] += "Member Workstation"; // Represents a member of a domain
+                        type += "Member Workstation"; // Represents a member of a domain
                         break;
                     case 2:
-                        type[0] += "Primary Domain Controller";
+                        type += "Primary Domain Controller";
                         break;
                     case 3:
-                        type[0] += "Backup Domain Controller";
+                        type += "Backup Domain Controller";
                         break;
                     case 4:
-                        type[0] += "Standalone Server"; // Standalone server that's not part of a domain
+                        type += "Standalone Server"; // Standalone server that's not part of a domain
                         break;
                     case 5:
-                        type[0] += "Member Server"; // Server that is a member of a domain
+                        type += "Member Server"; // Server that is a member of a domain
                         break;
                     default:
-                        type[0] += "Role Undefined (Code: " + Convert.ToInt32(obj["DomainRole"]) + ")";
+                        type += "Role Undefined (Code: " + Convert.ToInt32(obj["DomainRole"]) + ")";
                         break;
                 }
             }
-            return type;
+            return new[] { type };
         }
 
         private static string[] GetProductInfo()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystemProduct");
 
-            string[] info = new string[1];
-            info[0] = string.Empty;
-
+            string info = string.Empty;
             foreach (ManagementObject obj in searcher.Get())
             {
-                info[0] += $"{"Manufacturer:",-20} {obj["Vendor"]}\r\n";
-                info[0] += $"{"UUID:",-20} {obj["UUID"]}\r\n";
-                info[0] += $"{"Name:",-20} {obj["Name"]}\r\n";
-                info[0] += $"{"Identifying Number:",-20} {obj["IdentifyingNumber"]}";
+                info += $"{"Manufacturer:",-20} {obj["Vendor"]}\r\n";
+                info += $"{"UUID:",-20} {obj["UUID"]}\r\n";
+                info += $"{"Name:",-20} {obj["Name"]}\r\n";
+                info += $"{"Identifying Number:",-20} {obj["IdentifyingNumber"]}";
             }
-            return info;
+            return new[] { info };
         }
 
         private static string[] GetProcessorInfo()
         {
             ManagementObjectSearcher cpuSearcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
-
-            string[] info = new string[1];
-            info[0] = string.Empty;
-
+            
+            string info = string.Empty;
             foreach (ManagementObject obj in cpuSearcher.Get())
             {
-                info[0] += $"Number of Cores: {obj["NumberOfCores"]}";
+                info += $"Number of Cores: {obj["NumberOfCores"]}";
             }
-            return info;
+            return new[] { info };
         }
 
         private static string[] Get_OS_Info()
         {
             ManagementObjectSearcher osSearcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem");
             
-            string[] info = new string[1];
-            info[0] = string.Empty;
-            
+            string info = string.Empty;
             foreach (ManagementObject obj in osSearcher.Get())
             {
-                info[0] += $"{"Name:",-20}{obj["Caption"]}\n";
-                info[0] += $"{"Version:",-20}{obj["Version"]}\n";
-                info[0] += $"{"Manufacturer:",-20}{obj["Manufacturer"]}\n";
-                info[0] += $"{"Windows Directory:",-20}{obj["WindowsDirectory"]}";
+                info += $"{"Name:",-20}{obj["Caption"]}\n";
+                info += $"{"Version:",-20}{obj["Version"]}\n";
+                info += $"{"Manufacturer:",-20}{obj["Manufacturer"]}\n";
+                info += $"{"Windows Directory:",-20}{obj["WindowsDirectory"]}";
             }
-            return info;
+            return new[] { info };
         }
 
         private static string[] GetDesktopInfo()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Desktop WHERE Name = '.Default'");
-            
-            string[] info = new string[1];
-            info[0] = string.Empty;
 
+            string info = string.Empty;
             foreach (ManagementObject obj in searcher.Get())
             {
-                info[0] += $"{"Desktop Name:",-20} {obj["Name"]}\n";
-                info[0] += $"{"Icon Title Size:",-20} {obj["IconTitleSize"]}\n";
-                info[0] += $"{"Wallpaper Stretched:",-20} {obj["WallpaperStretched"]}\n";
-                info[0] += $"{"Is there a screen saver:",-20} {obj["ScreenSaverActive"]}";
+                info += $"{"Desktop Name:",-20} {obj["Name"]}\n";
+                info += $"{"Icon Title Size:",-20} {obj["IconTitleSize"]}\n";
+                info += $"{"Wallpaper Stretched:",-20} {obj["WallpaperStretched"]}\n";
+                info += $"{"Is there a screen saver:",-20} {obj["ScreenSaverActive"]}";
 
                 try
                 {
                     if (obj["ScreenSaverActive"].ToString() != "False")
                     {
-                        info[0] += $"\n{"Screen Saver time out:",-20} {obj["ScreenSaverTimeout"]}";
+                        info += $"\n{"Screen Saver time out:",-20} {obj["ScreenSaverTimeout"]}";
                     }
                 }
                 catch{ }
             }
-            return info;
+            return new[] { info };
         }
 
         private static string[] GetAllDesktopInfo()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Desktop WHERE Name = '.Default'");
 
-            string[] info = new string[1];
-            info[0] = string.Empty;
-
+            string info = string.Empty;
             foreach (ManagementObject obj in searcher.Get())
             {
                 foreach (PropertyData prop in obj.Properties)
                 {
-                    info[0] += $"{prop.Name} : {prop.Value}\r\n";
+                    info += $"{prop.Name} : {prop.Value}\r\n";
                 }
             }
-            info[0] = info[0].TrimEnd('\r', '\n');
-            return info;
+            return new[] { info.TrimEnd('\r', '\n') };
         }
 
         private static string[] GetMemoryInformation()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PerfFormattedData_PerfOS_Memory");
 
-            string[] info = new string[1];
-            info[0] = string.Empty;
-
+            string info = string.Empty;
             foreach (ManagementObject obj in searcher.Get())
             {
-                info[0] += $"{"Available MBs:",-20} {obj["AvailableMbytes"]}\r\n";
-                info[0] += $"{"Cache Bytes:",-20} {obj["CacheBytes"]}\r\n";
-                info[0] += $"{"Committed Bytes:",-20} {obj["CommittedBytes"]}\r\n";
-                info[0] += $"{"Commit Limit:",-20} {obj["CommitLimit"]}";
+                info += $"{"Available MBs:",-20} {obj["AvailableMbytes"]}\r\n";
+                info += $"{"Cache Bytes:",-20} {obj["CacheBytes"]}\r\n";
+                info += $"{"Committed Bytes:",-20} {obj["CommittedBytes"]}\r\n";
+                info += $"{"Commit Limit:",-20} {obj["CommitLimit"]}";
             }
-            return info;
+            return new[] { info };
         }
 
         private static string[] GET_CD_RomInfo()
@@ -368,18 +352,16 @@ namespace Operating_Systems_Project
         private static string[] GetBootConfiguration()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_BootConfiguration");
-
-            string[] info = new string[1];
-            info[0] = string.Empty;
-
+            
+            string info = string.Empty;
             foreach (ManagementObject obj in searcher.Get())
             {
-                info[0] += $"{"BootDirectory:",-20} {obj["BootDirectory"]}\r\n";
-                info[0] += $"{"Description:",-20} {obj["Description"]}\r\n";
-                info[0] += $"{"Scratch Directory:",-20} {obj["ScratchDirectory"]}\r\n";
-                info[0] += $"{"Temp Directory:",-20} {obj["TempDirectory"]}";
+                info += $"{"BootDirectory:",-20} {obj["BootDirectory"]}\r\n";
+                info += $"{"Description:",-20} {obj["Description"]}\r\n";
+                info += $"{"Scratch Directory:",-20} {obj["ScratchDirectory"]}\r\n";
+                info += $"{"Temp Directory:",-20} {obj["TempDirectory"]}";
             }
-            return info;
+            return new[] { info };
         }
 
         private static string[] GetBatteryInfo()
