@@ -71,25 +71,23 @@ namespace Operating_Systems_Project
             OS.AddToMainContainer(querySelector);
             currentY += querySelector.Height + VerticalSpacing;
 
-            querySelector.Items.Add("Win32_ComputerSystem (Rename Computer)");
             querySelector.Items.Add("Win32_PerfFormattedData_PerfOS_Memory");
-            querySelector.Items.Add("Win32_LogicalDisk (Logical Disk)");
-            querySelector.Items.Add("Win32_Desktop (Specific info)");
-            querySelector.Items.Add("Win32_ComputerSystem (Type)");
-            querySelector.Items.Add("Win32_ComputerSystemProduct");
-            querySelector.Items.Add("Win32_Desktop (All info)");
-            querySelector.Items.Add("Win32_BootConfiguration");
-            querySelector.Items.Add("Win32_CodecFile (Video)");
-            querySelector.Items.Add("Win32_CodecFile (Audio)");
-            querySelector.Items.Add("Win32_CodecFile (All)");
-            querySelector.Items.Add("Win32_Service (running)");
-            querySelector.Items.Add("Win32_Service (stopped)");
-            querySelector.Items.Add("Win32_OperatingSystem");
-            querySelector.Items.Add("Win32_ComputerSystem");
-            querySelector.Items.Add("Win32_Service (all)");
-            querySelector.Items.Add("Win32_Group (Local)");
-            querySelector.Items.Add("Win32_Group (all)");
             querySelector.Items.Add("Win32_LogicalDisk");
+            querySelector.Items.Add("Win32_Desktop WHERE Name = '.Default'");
+            querySelector.Items.Add("Win32_ComputerSystem");
+            querySelector.Items.Add("Win32_ComputerSystem (Type)"); // Don't use default method
+            querySelector.Items.Add("Win32_ComputerSystem (Rename Computer)"); // Don't use default method
+            querySelector.Items.Add("Win32_ComputerSystemProduct");
+            querySelector.Items.Add("Win32_BootConfiguration");
+            querySelector.Items.Add("Win32_CodecFile");
+            querySelector.Items.Add("Win32_CodecFile WHERE Group='Video'");
+            querySelector.Items.Add("Win32_CodecFile WHERE Group='Audio'");
+            querySelector.Items.Add("Win32_Service");
+            querySelector.Items.Add("Win32_Service WHERE State='running'");
+            querySelector.Items.Add("Win32_Service WHERE State='stopped'");
+            querySelector.Items.Add("Win32_OperatingSystem");
+            querySelector.Items.Add("Win32_Group");
+            querySelector.Items.Add("Win32_Group WHERE LocalAccount = 'true'");
             querySelector.Items.Add("Win32_UserAccount");
             querySelector.Items.Add("Win32_CDROMDrive");
             querySelector.Items.Add("Win32_Processor");
@@ -113,13 +111,34 @@ namespace Operating_Systems_Project
             runQueryButton.FlatAppearance.BorderSize = 0;
             OS.AddToMainContainer(runQueryButton);
 
+            CheckBox ShowEmptyValues = new CheckBox
+            {
+                Text = "Show Empty Values",
+                Font = new Font("Segoe UI", 9F),
+                ForeColor = Operating_Systems.TextSecondary,
+                Checked = false,
+                AutoSize = true,
+                Margin = new Padding(0, 2, 12, 0), // ✅ spacing + alignment
+                Location = new Point(runQueryButton.Width + 20, 112),
+            };
+            OS.AddToMainContainer(ShowEmptyValues);
+
+            Panel divider = new Panel
+            {
+                BackColor = Operating_Systems.TextSecondary,
+                Visible = false,
+                Size = new Size(1, 55),
+                Location = new Point(runQueryButton.Width + ShowEmptyValues.Width + 30, 95),
+            };
+            OS.AddToMainContainer(divider);
+
             copyMessageLabel = new Label
             {
                 Text = DefaultCopyMessage,
                 AutoSize = true,
                 ForeColor = Operating_Systems.TextSecondary,
                 Font = new Font("Segoe UI Semibold", 10F, FontStyle.Italic),
-                Location = new Point(runQueryButton.Width + 10, 112),
+                Location = new Point(runQueryButton.Width + ShowEmptyValues.Width + 40, 112),
                 Visible = false,
             };
             OS.AddToMainContainer(copyMessageLabel);
@@ -142,7 +161,25 @@ namespace Operating_Systems_Project
                 resultsPanel.Controls.Clear();
                 resultsPanel.Height = 360;
                 if (copyMessageLabel.Visible != true) copyMessageLabel.Visible = true;
-                ShowQuery(querySelector.SelectedItem.ToString()); // like: Win32_CodecFile (All)
+                if (divider.Visible != true) divider.Visible = true;
+
+                // Storing the user choice in a string
+                string query = querySelector.SelectedItem.ToString();
+                // Don't use the default method for specific methods
+                if (query == "Win32_ComputerSystem (Rename Computer)")
+                
+                    ShowQuery_MultiTextBoxes(RenameComputer());
+                
+                else if (query == "Win32_ComputerSystem (Type)")
+                
+                    ShowQuery_MultiTextBoxes(GetComputerType());
+                
+                else
+                {
+                    if (!ShowEmptyValues.Checked)
+                        ShowQuery_MultiTextBoxes(GetQueryInfo(query));
+                    else ShowQuery_MultiTextBoxes(GetAllQueryInfo(query));
+                }
             };
         }
     }

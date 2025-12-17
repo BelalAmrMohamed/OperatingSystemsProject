@@ -18,6 +18,23 @@ and this project follows **Semantic Versioning**.
 
 ---
 
+## [4.6.0] 2025-12-17
+
+### Added
+
+- Added a **Show Empty Values** option in WMI
+- Added an **Append Content** option in FileWriter
+
+---
+
+### Changed
+
+- Improved WMI.Logic.cs syntax.
+- Improved WMI copying.
+- Totaly redid the WMI.Logic.cs
+
+---
+
 ## [4.5.1] 2025-12-15
 
 ### Changed

@@ -4,7 +4,7 @@ namespace Operating_Systems_Project
 {
     internal partial class FileWriter
     {
-        private static void CreateAndWriteToTextFile(string path, string content)
+        private static void WriteToTextFile(string path, string content)
         {
             // Creates a new file
             using (FileStream fileS = new FileStream(path, FileMode.Create))
@@ -18,7 +18,7 @@ namespace Operating_Systems_Project
             File.WriteAllText(path, content);
         }
 
-        private static void CreateAndWriteAllLinesToTextFile(string path, string[] content) 
+        private static void WriteAllLinesToTextFile(string path, string[] content) 
         {
             using (StreamWriter Writer = File.CreateText(path))
             {
@@ -35,7 +35,7 @@ namespace Operating_Systems_Project
                 writer.WriteLine(content);
         }
 
-        private static void CreateAndWriteToBinaryFile(string path, string content)
+        private static void WriteToBinaryFile(string path, string content)
         {
             using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
             using (BinaryWriter writer = new BinaryWriter(fs))
@@ -45,7 +45,7 @@ namespace Operating_Systems_Project
         // =====================
         // This Method is extra ( We didn't take it in the section )
         // =====================
-        private static void WriteToBinaryFile(string path, string content)
+        private static void AppendToBinaryFile(string path, string content)
         {
             using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Append)))
                 writer.Write(content);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
@@ -105,7 +106,7 @@ namespace Operating_Systems_Project
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
                 Location = new Point(0, currentY)
-            };
+            };            
             currentY += contentLabel.Height + 6;
 
             const int ContentPanelHeight = 250; // Increased height to take advantage of remaining space
@@ -192,6 +193,16 @@ namespace Operating_Systems_Project
             };
             clearButton.FlatAppearance.BorderSize = 0;
 
+            CheckBox AppendContent = new CheckBox
+            {
+                Text = "Append content",
+                Font = new Font("Segoe UI", 9F),
+                ForeColor = Operating_Systems.TextSecondary,
+                Checked = false,
+                Margin = new Padding(15, 10, 20, 0),
+                Size = new Size(120, 22)
+            };
+
             // Message Label (Takes remaining space)
             Label messageLabel = new Label
             {
@@ -204,6 +215,7 @@ namespace Operating_Systems_Project
 
             buttonFlow.Controls.Add(writeButton);
             buttonFlow.Controls.Add(clearButton);
+            buttonFlow.Controls.Add(AppendContent);
             buttonFlow.Controls.Add(messageLabel);
             currentY += buttonFlow.Height + VerticalSpacing;
 
@@ -223,7 +235,7 @@ namespace Operating_Systems_Project
             // Attach Events
             contentTextBox.TextChanged += UpdateCharCount.Invoke;
             browseButton.Click += (s, e) => BrowseForFile(pathTextBox);
-            writeButton.Click += (s, e) => WriteFile(pathTextBox, contentTextBox, messageLabel);
+            writeButton.Click += (s, e) => WriteFile(pathTextBox.Text.Trim(), contentTextBox.Text, messageLabel, AppendContent.Checked);
             clearButton.Click += ClearControls.Invoke;
             
             // --- Add Controls to Holder ---
@@ -257,10 +269,20 @@ namespace Operating_Systems_Project
             }
         }
 
-        private static void ShowMessage(Label label, string message, Color color)
+        //private static void ShowMessage(Label label, string message, Color color)
+        //{
+        //    label.Text = message;
+        //    label.ForeColor = color;
+        //}
+
+        private static async Task ShowMessage(Label label, string message, Color color)
         {
             label.Text = message;
             label.ForeColor = color;
+
+            await Task.Delay(3000); // Non-blocking wait for 3 seconds
+
+            label.Text = string.Empty;
         }
     }
 }
