@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Operating_Systems_Project
+﻿namespace Operating_Systems_Project
 {
-    internal partial class Settings
+    internal partial class About
     {
         // Use a shortened version of app version format. "1.0" instead of "1.0.0", which stand for "MAJOR.MINOR.PATCH"
         private static string _APP_VERSION = Operating_Systems.APP_VERSION;

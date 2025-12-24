@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Operating_Systems_Project
 {
-    internal partial class FolderMonitor
+    internal partial class FolderWatcher
     {
         private static void BrowseForFolder(TextBox pathTextBox)
         {

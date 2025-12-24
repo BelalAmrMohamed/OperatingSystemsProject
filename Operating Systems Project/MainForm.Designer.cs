@@ -1,4 +1,4 @@
-﻿namespace Operating_Systems_Project // red background
+﻿namespace Operating_Systems_Project // FormBorderStyle FormBorderStyle
 {
     partial class Operating_Systems
     {
@@ -50,10 +50,11 @@
             // MainContainer
             // 
             this.MainContainer.BackColor = System.Drawing.Color.Transparent;
-            this.MainContainer.Location = new System.Drawing.Point(12, 5);
+            this.MainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainContainer.Location = new System.Drawing.Point(0, 0);
             this.MainContainer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MainContainer.Name = "MainContainer";
-            this.MainContainer.Size = new System.Drawing.Size(1110, 533);
+            this.MainContainer.Size = new System.Drawing.Size(1134, 545);
             this.MainContainer.TabIndex = 1;
             // 
             // ButtonsPanel
@@ -120,6 +121,7 @@
             this.Hacker_Box.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Hacker_Box.TabIndex = 23;
             this.Hacker_Box.TabStop = false;
+            // 
             // Settings_Button
             // 
             this.Settings_Button.BackColor = System.Drawing.Color.Transparent;
@@ -135,7 +137,7 @@
             this.Settings_Button.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Settings_Button.Size = new System.Drawing.Size(280, 45);
             this.Settings_Button.TabIndex = 22;
-            this.Settings_Button.Text = "     ⚙️ Settings";
+            this.Settings_Button.Text = "      ⓘ About";
             this.Settings_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Settings_Button.UseVisualStyleBackColor = false;
             this.Settings_Button.Click += new System.EventHandler(this.Settings_Button_Click);
@@ -213,7 +215,7 @@
             this.WMI_Button.Name = "WMI_Button";
             this.WMI_Button.Size = new System.Drawing.Size(280, 45);
             this.WMI_Button.TabIndex = 18;
-            this.WMI_Button.Text = "     ⚙️ WMI";
+            this.WMI_Button.Text = "     💻 WMI";
             this.WMI_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.WMI_Button.UseVisualStyleBackColor = false;
             this.WMI_Button.Click += new System.EventHandler(this.WMI_Button_Click);
@@ -280,9 +282,11 @@
             this.Controls.Add(this.ButtonsPanel);
             this.Controls.Add(this.Menu_Button);
             this.Controls.Add(this.MainContainer);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.HelpButton = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MinimumSize = new System.Drawing.Size(720, 400);
             this.Name = "Operating_Systems";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Operating Systems";

@@ -5,33 +5,38 @@ using System.Windows.Forms;
 
 namespace Operating_Systems_Project
 {
-    internal partial class FolderMonitor
+    internal partial class FolderWatcher
     {
         private static TextBox _reportTextBox;
         private static Label _statusLabel;
         private static int _eventCount = 0;
-        public static void ShowFolderMonitor(Operating_Systems OperatingSystems)
+        public static void ShowFolderWatcher(Operating_Systems OperatingSystems)
         {
             const int PanelWidth = 1104;
             const int VerticalSpacing = 8;
             int currentY = 0;
+            const int LeftPadding = 15;
 
             Label HeaderLabel = new Label
             {
                 Text = "📁 Folder Watcher",
-                Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
-                Location = new Point(457, 8),
-                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),                
                 ForeColor = Operating_Systems.HeaderColor,
+
+                Location = new Point(0, 8),
+                Size = new Size(PanelWidth, 30),
             };
 
             Label SubHeaderLabel = new Label
             {
                 Text = "Monitor file system changes in real-time.",
+                TextAlign = ContentAlignment.MiddleCenter,
                 Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
-                Location = new Point(414, 38),
-                AutoSize = true,
                 ForeColor = Operating_Systems.TextPrimary,
+
+                Size = new Size(PanelWidth, 30),
+                Location = new Point(0, 38),
             };
 
             currentY += 47;
@@ -41,19 +46,21 @@ namespace Operating_Systems_Project
                 Text = "Path",
                 Font = new Font("Segoe UI Semibold", 11F),
                 ForeColor = Operating_Systems.TextPrimary,
+
                 AutoSize = true,
-                Location = new Point(0, currentY)
+                Location = new Point(LeftPadding, currentY),
             };
 
             currentY += labelInputPath.Height + 6;
 
             Panel pathPanel = new Panel
             {
-                Location = new Point(0, currentY),
                 Size = new Size(PanelWidth, 36),
                 BackColor = Operating_Systems.PanelColor,
                 BorderStyle = BorderStyle.FixedSingle,
-                Padding = new Padding(8, 4, 8, 4)
+                Padding = new Padding(8, 4, 8, 4),
+
+                Location = new Point(LeftPadding, currentY),
             };
 
             // Making a default Directory
@@ -62,23 +69,25 @@ namespace Operating_Systems_Project
 
             TextBox pathTextBox = new TextBox
             {
+                Text = defaultDirectory,
                 Font = new Font("Segoe UI", 10F),
                 ForeColor = Operating_Systems.TextPrimary,
                 BackColor = pathPanel.BackColor,
                 BorderStyle = BorderStyle.None,
-                Location = new Point(8, 6),
+
                 Size = new Size(PanelWidth - 120, 25),
-                Text = defaultDirectory,
+                Location = new Point(8, 6),
             };
 
             Button browseButton = new Button
             {
                 Text = "Browse",
-                Size = new Size(90, 28),
-                Location = new Point(PanelWidth - 95, 3),
                 BackColor = Operating_Systems.AccentBlue,
                 ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat
+                FlatStyle = FlatStyle.Flat,
+
+                Size = new Size(90, 28),
+                Location = new Point(PanelWidth - 95, 3),
             };
             browseButton.FlatAppearance.BorderSize = 0;
             browseButton.Click += (s, e) => BrowseForFolder(pathTextBox);
@@ -89,11 +98,12 @@ namespace Operating_Systems_Project
 
             FlowLayoutPanel optionsFlow = new FlowLayoutPanel
             {
-                Location = new Point(0, currentY),
-                Size = new Size(PanelWidth, 30),
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
-                Padding = new Padding(0, 4, 0, 0) // ✅ vertical alignment fix
+                Padding = new Padding(0, 4, 0, 0), // ✅ vertical alignment fix
+
+                Size = new Size(PanelWidth, 30),
+                Location = new Point(LeftPadding, currentY),
             };
 
             CheckBox includeSubdirCheck = new CheckBox
@@ -133,11 +143,12 @@ namespace Operating_Systems_Project
 
             Panel contentPanel = new Panel
             {
-                Location = new Point(0, currentY),
+                Location = new Point(LeftPadding, currentY),
                 Size = new Size(PanelWidth, 260),
                 BackColor = Operating_Systems.PanelColor,
                 BorderStyle = BorderStyle.FixedSingle,
-                Padding = new Padding(8)
+                Padding = new Padding(8),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
             };
 
             _reportTextBox = new TextBox
@@ -152,6 +163,7 @@ namespace Operating_Systems_Project
                 Text = "Click 'Start Monitoring' to begin tracking file system changes..." // include
             };
 
+
             contentPanel.Controls.Add(_reportTextBox);
             currentY += contentPanel.Height + VerticalSpacing;
 
@@ -159,8 +171,8 @@ namespace Operating_Systems_Project
 
             FlowLayoutPanel buttonFlow = new FlowLayoutPanel
             {
-                Location = new Point(0, currentY),
-                Size = new Size(PanelWidth, buttonsRowHeight), // 
+                Location = new Point(LeftPadding, currentY),
+                Size = new Size(PanelWidth, buttonsRowHeight),
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
             };

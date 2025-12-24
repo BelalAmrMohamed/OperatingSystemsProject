@@ -81,10 +81,7 @@ namespace Operating_Systems_Project
                     // 3) No version found — fall through to default
                 }
             }
-            catch
-            {
-                // ignore parsing errors, fall back to default
-            }
+            catch { /*ignore parsing errors, fall back to default*/ }
 
             APP_VERSION = defaultVersion;
         }
@@ -184,10 +181,7 @@ namespace Operating_Systems_Project
                 typeof(Panel).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                     .SetValue(MainContainer, true);
             }
-            catch
-            {
-                // ignore if reflection fails
-            }
+            catch { /* ignore if reflection fails */ }
         }
 
         private void Operating_Systems_Load(object sender, EventArgs e)
@@ -199,7 +193,10 @@ namespace Operating_Systems_Project
             {
                 Loading.StartLoading(this);
                 await Task.Delay(300); // allow overlay to render briefly
-                General_IO.ShowGeneral_IO(this);
+
+                //General_IO.ShowGeneral_IO(this);
+                FileReader.ShowFileReader(this);
+
                 Loading.StopLoading();
             }));
         }
@@ -232,7 +229,7 @@ namespace Operating_Systems_Project
 
         private void FolderWatcher_Button_Click(object sender, EventArgs e)
         {
-            ShowView(os => FolderMonitor.ShowFolderMonitor(os));
+            ShowView(os => FolderWatcher.ShowFolderWatcher(os));
         }
 
         private void StopwatchTimer_Button_Click(object sender, EventArgs e)
@@ -252,7 +249,7 @@ namespace Operating_Systems_Project
 
         private void Settings_Button_Click(object sender, EventArgs e)
         {
-            ShowView(os => Settings.ShowSettings(os));
+            ShowView(os => About.ShowAbout(os));
         }
 
         // ========== Helper methods ==========

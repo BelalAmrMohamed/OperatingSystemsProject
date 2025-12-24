@@ -5,31 +5,31 @@ using System.Windows.Forms;
 
 namespace Operating_Systems_Project
 {
-    internal partial class Settings
+    internal partial class About
     {
         private const string PRIMARY_ACCENT_COLOR = "#4A9EFF";
 
-        public static void ShowSettings(Operating_Systems OS)
+        public static void ShowAbout(Operating_Systems OS)
         {
             // Define Layout Constants
             int contentWidth = (int)(Operating_Systems.formWidth * 0.95);
             int rowHeight = 55;
-            Color cardColor = Operating_Systems.Background;
             int currentY = 30;
+            int leftPadding = 35;
 
             // Logo box
             Panel logoBox = new Panel
             {
                 Size = new Size(60, 60),
                 BackColor = Operating_Systems.PanelColor,
-                Location = new Point(20, currentY),
+                Location = new Point(leftPadding, currentY),
                 BorderStyle = BorderStyle.FixedSingle,
             };
 
             PictureBox pb = new PictureBox
             {
                 Size = new Size(40, 40),
-                Location = new Point(10, 10),
+                Location = new Point(leftPadding - 25, 10),
                 SizeMode = PictureBoxSizeMode.Zoom
             };
 
@@ -66,7 +66,7 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI", 16F, FontStyle.Bold),
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
-                Location = new Point(90, currentY)
+                Location = new Point(leftPadding + 70, currentY)
             };
             OS.AddToMainContainer(appName);
 
@@ -77,15 +77,15 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI", 10F),
                 ForeColor = Operating_Systems.TextSecondary,
                 AutoSize = true,
-                Location = new Point(92, currentY + 32)
+                Location = new Point(leftPadding + 72, currentY + 32)
             };
             OS.AddToMainContainer(versionLabel);
 
             // Top Right Buttons (Fixed Widths to prevent "Check..." cutoff)
-            Button btnUpdate = CreateLinkButton("Check Updates", new Point(contentWidth - 140, currentY + 10));
+            Button btnUpdate = CreateLinkButton("Check Updates", new Point(leftPadding + contentWidth - 140, currentY + 10));
             btnUpdate.Size = new Size(110, 30); // Explicit larger size
 
-            Button btnCopyVer = CreateLinkButton("Copy Version", new Point(contentWidth - 250, currentY + 10));
+            Button btnCopyVer = CreateLinkButton("Copy Version", new Point(leftPadding + contentWidth - 250, currentY + 10));
             btnCopyVer.Size = new Size(100, 30);
 
             // Events
@@ -105,7 +105,7 @@ namespace Operating_Systems_Project
                 ForeColor = Operating_Systems.TextSecondary,
                 MaximumSize = new Size(contentWidth - 40, 0),
                 AutoSize = true,
-                Location = new Point(20, currentY)
+                Location = new Point(leftPadding, currentY)
             };
             OS.AddToMainContainer(infoLabel);
             currentY += infoLabel.Height + 20;
@@ -124,7 +124,7 @@ namespace Operating_Systems_Project
                 Panel row = new Panel
                 {
                     Size = new Size(contentWidth - 40, rowHeight),
-                    Location = new Point(20, currentY),
+                    Location = new Point(leftPadding, currentY),
                     BackColor = Color.Transparent // Or alternating colors if preferred
                 };
 
@@ -134,7 +134,7 @@ namespace Operating_Systems_Project
                     Text = dev.Name,
                     Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                     ForeColor = Operating_Systems.TextPrimary,
-                    Location = new Point(0, 15), // Vertically centered roughly
+                    Location = new Point(leftPadding - 20, 15), // Vertically centered roughly
                     AutoSize = true
                 };
 
@@ -144,7 +144,7 @@ namespace Operating_Systems_Project
                     Text = dev.Email,
                     Font = new Font("Segoe UI", 10F),
                     ForeColor = Color.Gray,
-                    Location = new Point(250, 15), // Fixed X position creates a clean column
+                    Location = new Point(leftPadding + 250, 15), // Fixed X position creates a clean column
                     AutoSize = true
                 };
 
@@ -152,7 +152,7 @@ namespace Operating_Systems_Project
                 int btnY = 12;
 
                 // Contact Button
-                Button btnContact = CreateLinkButton("Contact", new Point(row.Width - 90, btnY));
+                Button btnContact = CreateLinkButton("Contact", new Point(leftPadding + row.Width - 130, btnY));
                 btnContact.Size = new Size(80, 30); // Ensure text fits
                 btnContact.Click += (s, e) =>
                 {
@@ -169,7 +169,7 @@ namespace Operating_Systems_Project
                 };
 
                 // Copy Button
-                Button btnCopy = CreateLinkButton("Copy", new Point(row.Width - 180, btnY));
+                Button btnCopy = CreateLinkButton("Copy", new Point(leftPadding + row.Width - 250, btnY));
                 btnCopy.Size = new Size(80, 30);
                 btnCopy.Click += (s, e) =>
                 {
@@ -194,7 +194,7 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI", 9F),
                 ForeColor = Color.FromArgb(80, 80, 80),
                 AutoSize = true,
-                Location = new Point(20, currentY)
+                Location = new Point(leftPadding, currentY)
             };
             OS.AddToMainContainer(footer);
         }

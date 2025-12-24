@@ -7,7 +7,7 @@ namespace Operating_Systems_Project
 {
     internal partial class WMI
     {
-        public static Color SmallPanelColor = Color.FromArgb(0, 30, 50);       
+        public static Color SmallPanelColor = Color.FromArgb(0, 30, 50);
 
         private static void ShowQuery_MultiTextBoxes(string[] info)
         {
@@ -69,6 +69,78 @@ namespace Operating_Systems_Project
 
             copyMessageLabel.Text = DefaultCopyMessage;
             copyMessageLabel.ForeColor = Operating_Systems.TextPrimary;
+        }
+
+        /// =============================
+        /// WMI.UI.cs helpers
+        /// =============================
+        private static string[] GetMatchingQuery(string query, bool allInfo)
+        {
+            switch (query)
+            {
+                case "Win32_PerfFormattedData_PerfOS_Memory":
+                    return new[] { GetMemoryInformation() };
+
+                case "Win32_LogicalDisk":
+                    return GetLogicalDiskInfo();
+
+                case "Win32_Desktop WHERE Name = '.Default'":
+                    return new[] { GetDesktopInfo() };
+
+                case "Win32_ComputerSystem":
+                    return new[] { GetComputerSystemInfo() };
+
+                case "Win32_ComputerSystemProduct":
+                    return new[] { GetProductInfo() };
+
+                case "Win32_BootConfiguration":
+                    return new[] { GetBootConfiguration() };
+
+                case "Win32_CodecFile":
+                    return Codec();
+
+                case "Win32_CodecFile WHERE Group='Video'":
+                    return CodecVideo();
+
+                case "Win32_CodecFile WHERE Group='Audio'":
+                    return CodecAudio();
+
+                case "Win32_Service":
+                    return GetAllServices();
+
+                case "Win32_Service WHERE State='running'":
+                    return GetRunningServices();
+
+                case "Win32_Service WHERE State='stopped'":
+                    return GetStoppedServices();
+
+                case "Win32_OperatingSystem":
+                    return new[] { Get_OS_Info() };
+
+                case "Win32_Group":
+                    return ListOfAllUserGroups();
+
+                case "Win32_Group WHERE LocalAccount = 'true'":
+                    return ListOfUserGroups();
+
+                case "Win32_UserAccount":
+                    return GetUserAccounts();
+
+                case "Win32_CDROMDrive":
+                    return GET_CD_RomInfo();
+
+                case "Win32_Processor":
+                    return new[] { GetNumberOfCores() };
+
+                case "Win32_Battery":
+                    return GetBatteryInfo();
+
+                case "Win32_Share":
+                    return GetListOfFileShares();
+
+                default:
+                    return allInfo ? GetAllQueryInfo(query) : GetQueryInfo(query);                    
+            }
         }
     }
 }

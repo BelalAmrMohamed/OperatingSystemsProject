@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Operating_Systems_Project
@@ -14,7 +15,8 @@ namespace Operating_Systems_Project
         {
             const int PanelWidth = 1104;
             const int VerticalSpacing = 16;
-            int currentY = 0; // Tracks vertical position            
+            int currentY = 20; // Tracks vertical position            
+            int leftPadding = 15;
 
             // Header + Refresh button area
             Label HeaderLabel = new Label
@@ -24,7 +26,7 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleLeft,
                 ForeColor = Operating_Systems.HeaderColor,
-                Location = new Point(25, 8)
+                Location = new Point(25 + leftPadding, currentY)
             };
 
             // Refresh button (top-right of the content area)
@@ -32,7 +34,7 @@ namespace Operating_Systems_Project
             {
                 Text = "Refresh",
                 Size = new Size(100, 30),
-                Location = new Point(PanelWidth - 110, 6),
+                Location = new Point(PanelWidth - 110 + leftPadding, currentY + 6),
                 BackColor = Operating_Systems.AccentBlue,
                 ForeColor = Operating_Systems.TextPrimary,
                 FlatStyle = FlatStyle.Flat
@@ -46,11 +48,11 @@ namespace Operating_Systems_Project
                 AutoSize = true,
                 TextAlign = ContentAlignment.MiddleLeft,
                 ForeColor = Operating_Systems.TextSecondary,
-                Location = new Point(0, 40)
+                Location = new Point(leftPadding, currentY + 40)
             };
 
             // Keep some space below headers
-            currentY = 72;
+            currentY += 72;
 
             // --- Reflection Path controls ---
             Label reflectionLabel = new Label
@@ -59,13 +61,13 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI Semibold", 11F),
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
-                Location = new Point(0, currentY)
+                Location = new Point(leftPadding, currentY)
             };
             currentY += reflectionLabel.Height + 6;
 
             Panel reflectionPanel = new Panel
             {
-                Location = new Point(0, currentY),
+                Location = new Point(leftPadding, currentY),
                 Size = new Size(PanelWidth, 36),
                 BackColor = Operating_Systems.PanelColor,
                 BorderStyle = BorderStyle.FixedSingle,
@@ -92,7 +94,7 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI Semibold", 11F),
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
-                Location = new Point(0, currentY)
+                Location = new Point(leftPadding, currentY)
             };
             currentY += appLabel.Height + 6;
 
@@ -102,7 +104,7 @@ namespace Operating_Systems_Project
                 BorderStyle = BorderStyle.FixedSingle,
                 Padding = new Padding(8),
                 Size = new Size(PanelWidth, 36),
-                Location = new Point(0, currentY),
+                Location = new Point(leftPadding, currentY),
             };
             TextBox appTextBox = new TextBox
             {
@@ -124,7 +126,7 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI Semibold", 11F),
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
-                Location = new Point(0, currentY)
+                Location = new Point(leftPadding, currentY)
             };
             currentY += fileAndDirLabel.Height + 6;
 
@@ -134,7 +136,7 @@ namespace Operating_Systems_Project
                 BorderStyle = BorderStyle.FixedSingle,
                 Padding = new Padding(8),
                 Size = new Size(PanelWidth, 100),
-                Location = new Point(0, currentY),
+                Location = new Point(leftPadding, currentY),
             };
 
             TextBox fileAndDirTextBox = new TextBox
@@ -161,7 +163,7 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI Semibold", 11F),
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
-                Location = new Point(0, currentY)
+                Location = new Point(leftPadding, currentY)
             };
             currentY += attributesLabel.Height + 6;
 
@@ -171,7 +173,7 @@ namespace Operating_Systems_Project
                 BorderStyle = BorderStyle.FixedSingle,
                 Padding = new Padding(8),
                 Size = new Size(PanelWidth, 60),
-                Location = new Point(0, currentY),
+                Location = new Point(leftPadding, currentY),
             };
 
             TextBox attributesTextBox = new TextBox
@@ -236,6 +238,7 @@ namespace Operating_Systems_Project
                 try 
                 {
                     refreshValues();
+                    _ = Display_TemporaryMessage("Done", refreshButton.Text, refreshButton);
                 }
                 catch (Exception ex) 
                 {
@@ -262,6 +265,16 @@ namespace Operating_Systems_Project
 
             // Initial load
             refreshValues();
+        }
+        private static async Task Display_TemporaryMessage(string tempMessage, string originalMessage, Control ctrl)
+        {
+            ctrl.Text = tempMessage;
+            ctrl.ForeColor = Color.Black;
+
+            await Task.Delay(2000); // Non-blocking wait for 3 seconds
+
+            ctrl.Text = originalMessage;
+            ctrl.ForeColor = Operating_Systems.TextPrimary;
         }
     }
 }

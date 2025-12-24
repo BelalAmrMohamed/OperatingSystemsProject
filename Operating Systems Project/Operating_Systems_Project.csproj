@@ -62,9 +62,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\Experimental.Services.cs" />
-    <Compile Include="Services\Loading.Services.cs" />
-    <Compile Include="Services\Settings.Services.cs" />
+    <Compile Include="Herlper\Experimental.Herlper.cs" />
+    <Compile Include="Herlper\Loading.Herlper.cs" />
+    <Compile Include="Herlper\About.Herlper.cs" />
     <Compile Include="Confirm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,7 +73,7 @@
     </Compile>
     <Compile Include="Logic\FileReader.Logic.cs" />
     <Compile Include="Logic\FileWriter.Logic.cs" />
-    <Compile Include="Logic\FolderMonitor.Logic.cs" />
+    <Compile Include="Logic\FolderWatcher.Logic.cs" />
     <Compile Include="Logic\PowerOptions.Logic.cs" />
     <Compile Include="Logic\TimersAccuracy.Logic.cs" />
     <Compile Include="Logic\WMI.Logic.cs" />
@@ -85,19 +85,19 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\FileWriter.Services.cs" />
-    <Compile Include="Services\FolderMonitor.Services.cs" />
-    <Compile Include="Services\FileReader.Services.cs" />
-    <Compile Include="Services\TimersAccuracy.Services.cs" />
-    <Compile Include="Services\WMI.Services.cs" />
+    <Compile Include="Herlper\FileWriter.Herlper.cs" />
+    <Compile Include="Herlper\FolderWatcher.Herlper.cs" />
+    <Compile Include="Herlper\FileReader.Herlper.cs" />
+    <Compile Include="Herlper\TimersAccuracy.Herlper.cs" />
+    <Compile Include="Herlper\WMI.Herlper.cs" />
     <Compile Include="UI\Experimental.UI.cs" />
     <Compile Include="UI\FileReader.UI.cs" />
     <Compile Include="UI\FileWriter.UI.cs" />
-    <Compile Include="UI\FolderMonitor.UI.cs" />
+    <Compile Include="UI\FolderWatcher.UI.cs" />
     <Compile Include="UI\General_IO.UI.cs" />
     <Compile Include="UI\Loading.UI.cs" />
     <Compile Include="UI\PowerOptions.UI.cs" />
-    <Compile Include="UI\Settings.UI.cs" />
+    <Compile Include="UI\About.UI.cs" />
     <Compile Include="UI\TimersAccuracy.UI.cs" />
     <Compile Include="UI\WMI.UI.cs" />
     <EmbeddedResource Include="Confirm.resx">

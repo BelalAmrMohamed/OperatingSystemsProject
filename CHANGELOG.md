@@ -7,23 +7,21 @@ and this project follows **Semantic Versioning**.
 
 ---
 
-## [Pending]
+## [4.7.0] 2025-12-24
 
-### Additions
+### Added
 
-- Document the project in Arabic
-- Add a main general View instead of defaulting to one of the Section.
-- The dark/light mode switch from the Experimental Settings.
-- The Background image switch from the Experimental Settings.
-
----
+- The ability to resize the Form.
+- The ability to choose **Important Information** from the WMI tool.
+- A message in the `Refresh` button in the `General_IO` section.
+- Improved loading performance. Noticable when you add a background image from the Experimental Settings.
 
 ## [4.6.0] 2025-12-17
 
 ### Added
 
-- Added a **Show Empty Values** option in WMI
-- Added an **Append Content** option in FileWriter
+- Added a **Show Empty Values** option in WMI.
+- Added an **Append Content** option in FileWriter.
 
 ---
 
@@ -33,15 +31,11 @@ and this project follows **Semantic Versioning**.
 - Improved WMI copying.
 - Totaly redid the WMI.Logic.cs
 
----
-
 ## [4.5.1] 2025-12-15
 
 ### Changed
 
 - Removed useless code from WMI, specifically the **ShowQuery_MultiTextBoxes** Method
-
----
 
 ## [4.5.0] 2025-12-15
 
@@ -63,8 +57,6 @@ and this project follows **Semantic Versioning**.
 
 - The default path conflict between FileWriter and General IO.
 
----
-
 ## [4.4.2]
 
 ### Changed
@@ -77,15 +69,11 @@ and this project follows **Semantic Versioning**.
 
 - The MainForm.resx Error, previously the app icon was saved as binary data in MainForm.resx. Now the icon is set from the MainForm Constructor
 
----
-
 ## [4.4.1]
 
 ### Fixed
 
 - A FileName Error
-
----
 
 ## [4.4.0]
 
@@ -108,8 +96,6 @@ and this project follows **Semantic Versioning**.
 - The conflict between MainForm.cs and MainForm.UI.cs: VS Studio 2022 thought MainForm.UI.cs was an independent form so I merged it into MainForm.cs
 - Removed useless Resources
 
----
-
 ## [4.3.0] 2025-12-12
 
 ### Added
@@ -131,8 +117,6 @@ and this project follows **Semantic Versioning**.
 
 - Namespace mismatch
 
----
-
 ## [v4.2.3] - 2025-12-10
 
 ### Fixed
@@ -141,8 +125,6 @@ and this project follows **Semantic Versioning**.
 - Resolved About.config parsing errors for the version field.
 - Minor dark-theme UI adjustments.
 - Improved loading behavior for the About page.
-
----
 
 ## [v4.2.2] - 2025-12-01
 
@@ -154,15 +136,11 @@ and this project follows **Semantic Versioning**.
 
 - Stability improvements for Folder Monitor.
 
----
-
 ## [v4.2.1] - 2025-11-27
 
 ### Changed
 
 - Updated WMI performance and query handling.
-
----
 
 ## [v4.2.0] - 2025-11-20
 

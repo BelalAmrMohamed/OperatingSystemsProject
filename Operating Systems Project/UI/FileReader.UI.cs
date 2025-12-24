@@ -11,13 +11,14 @@ namespace Operating_Systems_Project
             const int PanelWidth = 1104;
             const int VerticalSpacing = 16;
             int currentY = 0;
+            int leftPadding = 15;
 
             Label HeaderLabel = new Label
             {
                 Text = "📖 File Reader",
                 Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
                 MinimumSize = new Size(200, 30),
-                Location = new Point(457, 8),
+                Location = new Point(leftPadding + 457, 8),
                 Size = new Size(200, 30),
 
                 AutoSize = true,
@@ -29,7 +30,7 @@ namespace Operating_Systems_Project
                 Text = "Read and display content from text or binary files.",
                 Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
                 MinimumSize = new Size(300, 20),
-                Location = new Point(414, 38),
+                Location = new Point(leftPadding + 414, 38),
                 Size = new Size(300, 20),
 
                 AutoSize = true,
@@ -45,14 +46,14 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI Semibold", 11F),
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
-                Location = new Point(0, currentY)
+                Location = new Point(leftPadding, currentY)
             };
             currentY += labelInputPath.Height + 6;
 
             // Path Panel
             Panel pathPanel = new Panel
             {
-                Location = new Point(0, currentY),
+                Location = new Point(leftPadding, currentY),
                 Size = new Size(PanelWidth, 36),
                 BackColor = Operating_Systems.PanelColor,
                 BorderStyle = BorderStyle.FixedSingle,
@@ -93,7 +94,7 @@ namespace Operating_Systems_Project
             // File Info (hidden initially) - styled like FileWriter (dark theme)
             Panel fileInfoPanel = new Panel
             {
-                Location = new Point(0, currentY - 10),
+                Location = new Point(leftPadding, currentY - 10),
                 Size = new Size(PanelWidth, 36),
                 BackColor = Color.Transparent,
                 BorderStyle = BorderStyle.None,
@@ -105,7 +106,7 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI", 9F),
                 ForeColor = Operating_Systems.TextSecondary,
                 AutoSize = true,
-                Location = new Point(0, 8)
+                Location = new Point(leftPadding, 8)
             };
             fileInfoPanel.Controls.Add(fileInfoLabel);
             currentY += fileInfoLabel.Height - 15;
@@ -117,7 +118,7 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI Semibold", 11F),
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
-                Location = new Point(0, currentY)
+                Location = new Point(leftPadding, currentY)
             };
             currentY += contentLabel.Height + 6;
 
@@ -125,7 +126,7 @@ namespace Operating_Systems_Project
             const int ContentPanelHeight = 250;
             Panel contentPanel = new Panel
             {
-                Location = new Point(0, currentY),
+                Location = new Point(leftPadding, currentY),
                 Size = new Size(PanelWidth, ContentPanelHeight - 30),
                 BackColor = Operating_Systems.PanelColor,
                 BorderStyle = BorderStyle.FixedSingle,
@@ -141,9 +142,8 @@ namespace Operating_Systems_Project
                 Multiline = true,
                 BorderStyle = BorderStyle.None,
                 ScrollBars = ScrollBars.None,
-                //WordWrap = false,
                 Size = new Size(PanelWidth, ContentPanelHeight - 46), // Fill content panel
-                Location = new Point(8, 8),
+                Location = new Point(leftPadding + 8, 8),
                 ReadOnly = true,
                 Text = "No file loaded. Click 'Read File' to load content."
             };
@@ -154,7 +154,7 @@ namespace Operating_Systems_Project
             // Message / Buttons row (FlowLayoutPanel like FileWriter)
             FlowLayoutPanel buttonFlow = new FlowLayoutPanel
             {
-                Location = new Point(0, currentY),
+                Location = new Point(leftPadding, currentY),
                 Size = new Size(PanelWidth, 48),
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,

@@ -9,18 +9,19 @@ namespace Operating_Systems_Project
         public static void ShowPowerOption(Operating_Systems OperatingSystems)
         {
             const int PanelWidth = 1110;
+            const int LeftPadding = 20;
             int currentY = 62;
 
             Label HeaderLabel = new Label
             {
                 Text = "🔋 Power Options",
+                TextAlign = ContentAlignment.MiddleCenter,
                 Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
                 MinimumSize = new Size(200, 30),
-                Location = new Point(457, 8),
-                Size = new Size(200, 30),
+                Location = new Point(0, 8),
+                Size = new Size(PanelWidth, 30),
 
-                AutoSize = true,
-                TextAlign = ContentAlignment.MiddleCenter,
+                
                 ForeColor = Operating_Systems.HeaderColor,
             };
             OperatingSystems.AddToMainContainer(HeaderLabel);
@@ -28,35 +29,32 @@ namespace Operating_Systems_Project
             Label SubHeaderLabel = new Label
             {
                 Text = "Manage system power states.",
-                Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
-                MinimumSize = new Size(300, 20),
-                Location = new Point(414, 38),
-                Size = new Size(300, 20),
-
-                AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
                 ForeColor = Operating_Systems.TextPrimary,
+
+
+                Location = new Point(0, 38),
+                Size = new Size(PanelWidth, 20),
             };
             OperatingSystems.AddToMainContainer(SubHeaderLabel);
 
             Label WarningLabel = new Label
             {
                 Text = "⚠ Warning: These actions will affect your computer immediately. Make sure to save your work before proceeding.",
-                Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
-                MinimumSize = new Size(300, 20),
-                Location = new Point(240, 60),
-                Size = new Size(300, 20),
-
-                AutoSize = true,
                 TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
                 ForeColor = Color.IndianRed,
+
+                Location = new Point(0, 60),
+                Size = new Size(PanelWidth, 20),
             };
             OperatingSystems.AddToMainContainer(WarningLabel);
 
             // --- Button container ---
             FlowLayoutPanel buttonFlow = new FlowLayoutPanel
             {
-                Location = new Point(0, currentY + 40),
+                Location = new Point(LeftPadding, currentY + 40),
                 Size = new Size(PanelWidth, 100),
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,

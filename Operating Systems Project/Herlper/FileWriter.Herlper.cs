@@ -8,6 +8,7 @@ namespace Operating_Systems_Project
     {
         private static void WriteFile(string path, string content, Label messageLabel, bool append)
         {
+            
             if (string.IsNullOrWhiteSpace(path) || string.IsNullOrEmpty(content))
             {
                 _ = ShowMessage(messageLabel, "⚠ Please fill path and content.", Operating_Systems.ErrorColor);
@@ -21,7 +22,7 @@ namespace Operating_Systems_Project
                 Directory.CreateDirectory(dir);
                 _ = ShowMessage(messageLabel, "✓ Created the directory.", Operating_Systems.ErrorColor);
             }
-
+            
             try
             {
                 string filetype = Path.GetExtension(path).ToLower();

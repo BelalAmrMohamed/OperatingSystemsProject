@@ -2,7 +2,7 @@
 
 namespace Operating_Systems_Project
 {
-    internal partial class FolderMonitor
+    internal partial class FolderWatcher
     {
         private static FileSystemWatcher _watcher;
         private static void StartMonitoring(string path, bool includeSubdirectories)

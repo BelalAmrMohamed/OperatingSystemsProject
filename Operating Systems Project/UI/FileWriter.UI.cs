@@ -12,14 +12,15 @@ namespace Operating_Systems_Project
         {
             const int PanelWidth = 1104;
             const int VerticalSpacing = 16;
-            int currentY = 0; // Tracks vertical position            
+            int currentY = 0; // Tracks vertical position
+            int leftPadding = 15;
 
             Label HeaderLabel = new Label
             {
                 Text = "📝 File Writer",
                 Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold),
                 MinimumSize = new Size(200, 30),
-                Location = new Point(457, 8),
+                Location = new Point(leftPadding + 457, 8),
                 Size = new Size(200, 30),
 
                 AutoSize = true,
@@ -31,7 +32,7 @@ namespace Operating_Systems_Project
                 Text = "Create and write content to text or binary files.",
                 Font = new Font("Segoe UI Semibold", 9F, FontStyle.Italic),
                 MinimumSize = new Size(300, 20),
-                Location = new Point(414, 38),
+                Location = new Point(leftPadding + 414, 38),
                 Size = new Size(300, 20),
 
                 AutoSize = true,
@@ -49,13 +50,13 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI Semibold", 11F),
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
-                Location = new Point(0, currentY)
+                Location = new Point(leftPadding, currentY)
             };
             currentY += labelInputPath.Height + 6;
 
             Panel pathPanel = new Panel
             {
-                Location = new Point(0, currentY),
+                Location = new Point(leftPadding, currentY),
                 Size = new Size(PanelWidth, 36),  // Full width -> Best!!
                 BackColor = Operating_Systems.PanelColor,
                 BorderStyle = BorderStyle.FixedSingle,
@@ -105,14 +106,14 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI Semibold", 11F),
                 ForeColor = Operating_Systems.TextPrimary,
                 AutoSize = true,
-                Location = new Point(0, currentY)
+                Location = new Point(leftPadding, currentY)
             };            
             currentY += contentLabel.Height + 6;
 
             const int ContentPanelHeight = 250; // Increased height to take advantage of remaining space
             Panel contentPanel = new Panel
             {
-                Location = new Point(0, currentY),
+                Location = new Point(leftPadding, currentY),
                 Size = new Size(PanelWidth, ContentPanelHeight - 30),
                 BackColor = Operating_Systems.PanelColor,
                 BorderStyle = BorderStyle.FixedSingle,
@@ -146,7 +147,7 @@ namespace Operating_Systems_Project
                 Font = new Font("Segoe UI", 8F),
                 ForeColor = Operating_Systems.TextSecondary,
                 AutoSize = true,
-                Location = new Point(0, currentY - 30)
+                Location = new Point(leftPadding, currentY - 30)
             };
 
             currentY += 25 + VerticalSpacing;
@@ -159,7 +160,7 @@ namespace Operating_Systems_Project
             // Button/Message container to join them horizontally
             FlowLayoutPanel buttonFlow = new FlowLayoutPanel
             {
-                Location = new Point(0, currentY + 60),
+                Location = new Point(leftPadding, currentY + 60),
                 Size = new Size(PanelWidth, 42),
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
@@ -237,7 +238,9 @@ namespace Operating_Systems_Project
             browseButton.Click += (s, e) => BrowseForFile(pathTextBox);
             writeButton.Click += (s, e) => WriteFile(pathTextBox.Text.Trim(), contentTextBox.Text, messageLabel, AppendContent.Checked);
             clearButton.Click += ClearControls.Invoke;
+
             
+
             // --- Add Controls to Holder ---
             OS.AddToMainContainer(HeaderLabel);
             OS.AddToMainContainer(SubHeaderLabel);
